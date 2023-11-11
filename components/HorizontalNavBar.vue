@@ -22,6 +22,12 @@
       <h1 v-if="this.$route.path == '/conditions'" class="dashboard">
         {{ $t(`Setups Conditions`) }}
       </h1>
+       <h1 v-if="this.$route.path == '/locations'" class="dashboard">
+        {{ $t(`Setups Locations`) }}
+      </h1>
+       <h1 v-if="this.$route.path == '/pricing'" class="dashboard">
+        {{ $t(`Pricing`) }}
+      </h1>
       <div class="flex md:hidden">
         <button id="hamburger">
           <img

@@ -61,7 +61,7 @@
                       >&#8203;</span
                     >
                     <div
-                      class="p-[30px] inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[776px] sm:w-full"
+                      class="p-[30px] media inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[776px] sm:w-full"
                       role="dialog"
                       aria-modal="true"
                       aria-labelledby="modal-headline"
@@ -110,13 +110,13 @@
                         >
                           {{ $t("Payment") }}
                         </div>
-                        <div
+                        <!-- <div
                           data-tabopen="Vehicles"
                           @click="show('Vehicles')"
                           class="tabbtn tab-un-active cursor-pointer px-2 py-1 ml-[26px]"
                         >
                           {{ $t("Products") }}
-                        </div>
+                        </div> -->
                       </div>
 
                       <div
@@ -130,7 +130,7 @@
                           <!-- information -->
                           <div
                             :class="{ 'text-right': lang == 'ar' }"
-                            class="text-lg font-bold rounded-lg w-[50%] mb-[90px]"
+                            class="text-lg font-bold rounded-lg w-[50%] mb-[10px]"
                           >
                             <h1 class="mt-[20px]">
                               {{ $t("Informations") }} :
@@ -172,7 +172,7 @@
                                     for="1"
                                     class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
                                     >{{ $t("Registration code") }}
-                                    <p class="required">*</p>
+
                                     :</label
                                   >
                                   <input
@@ -205,7 +205,7 @@
                                   for="1"
                                   class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
                                   >{{ $t("Vendor name") }}
-                                  <p class="required">*</p>
+
                                   :</label
                                 >
                                 <input
@@ -227,6 +227,64 @@
                                   {{ $t("required") }}
                                 </p>
                               </div>
+                              <!-- vat number  -->
+                              <div class="group mt-[20px]">
+                                <label
+                                  for="1"
+                                  class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                  >{{ $t("Vat Number") }}
+
+                                  :</label
+                                >
+                                <input
+                                  id="1"
+                                  type="text"
+                                  :class="{
+                                    'outline-error':
+                                      emptyField.includes('vat_number'),
+                                  }"
+                                  @input="updateFormattedVatNumber"
+                                  v-model="vat_number"
+                                  placeholder="123-345-564-13433"
+                                  class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                                />
+                                <p
+                                  v-if="emptyField.includes('vendor_name')"
+                                  class="error-message"
+                                >
+                                  {{ $t("Vendor name") }}
+                                  {{ $t("required") }}
+                                </p>
+                              </div>
+                              <!-- SSN number  -->
+                              <div class="group mt-[20px]"></div>
+                              <!-- Models number  -->
+                              <!-- <div class="group mt-[20px]">
+                                <label
+                                  for="1"
+                                  class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                  >{{ $t("Model") }}
+
+                                  :</label
+                                >
+                              
+                                <multiselect
+                                  v-model="selectedModels"
+                                  :options="models"
+                                  track-by="random_id"
+                                  label="brand"
+                                  multiple
+                                  placeholder="Select models"
+                                ></multiselect>
+
+                                <p
+                                  v-if="emptyField.includes('vendor_name')"
+                                  class="error-message"
+                                >
+                                  {{ $t("SSN Number") }}
+                                  {{ $t("required") }}
+                                </p>
+                              </div> -->
                             </div>
                           </div>
                           <!-- contact -->
@@ -242,44 +300,24 @@
                                   <label
                                     for="1"
                                     class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                                    >{{ $t("Phone") }}
-                                    <p class="required">*</p>
-                                    :</label
+                                    >{{ $t("Phone") }} :</label
                                   >
-                                  <input
-                                    id="1"
-                                    type="text"
-                                    v-model="phone"
-                                    :class="{
-                                      'outline-error':
-                                        emptyField.includes('phone'),
-                                    }"
-                                    placeholder="0226281"
-                                    @keypress="isNumber($event)"
-                                    class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                                  <PhoneNumber
+                                    :phoneNumber="phone"
+                                    @update:phoneNumber="UpdatePhoneNumberValue"
                                   />
-                                  <p
-                                    v-if="emptyField.includes('phone')"
-                                    class="error-message"
-                                  >
-                                    {{ $t("Phone") }}
-                                    {{ $t("required") }}
-                                  </p>
                                 </div>
-                                <!-- Vat Number -->
+
+                                <!-- Mobile Number -->
                                 <div class="group mt-[20px]">
                                   <label
                                     for="1"
                                     class="block label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
                                     >{{ $t("mobile_number") }} :</label
                                   >
-                                  <input
-                                    id="1"
-                                    type="text"
-                                    @keypress="isNumber($event)"
-                                    v-model="mobile_number"
-                                    placeholder="01223456789"
-                                    class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                                  <MobileNumber
+                                    :phoneNumber="mobile_number"
+                                    @update:mobileNumber="updateMobileNumber"
                                   />
                                 </div>
                                 <!-- National ID -->
@@ -317,6 +355,34 @@
                                   >
                                     {{ $t("Email is Invalid") }}
                                   </div>
+                                </div>
+                                <div class="group mt-[20px]">
+                                  <label
+                                    :class="{
+                                      'text-right': lang == 'ar',
+                                    }"
+                                    for="1"
+                                    class="block text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                    >{{ $t("Location") }} :</label
+                                  >
+                                  <!-- <select
+                                    class="appearance-none border-select w-full py-1 px-2 bg-white peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                                    name="whatever"
+                                    v-model="location"
+                                    id="frm-whatever"
+                                  >
+                                    <option @click="openAddLocationPopup">
+                                      {{ $t("Add new Location") }}
+                                    </option>
+                                    <option
+                                      v-for="(location, index) in locations"
+                                      :key="index"
+                                      :value="location.Id"
+                                    >
+                                      {{ location.Address }}
+                                    </option>
+                                  </select> -->
+                                  <Location />
                                 </div>
                               </div>
                             </div>
@@ -524,6 +590,7 @@
                       class="font-bold uppercase rounded-full w-full py-4 pl-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:text-sm text-xs"
                       type="text"
                       v-model="search"
+                      @input="searchData"
                       :placeholder="$t('search')"
                     />
 
@@ -717,7 +784,7 @@
                         <button
                           v-if="permissions.includes('can_update_vendor')"
                           class="view-btn"
-                          @click="toggleModal(customer.id, 'open')"
+                          @click="toggleModal(customer.vendorId, 'open')"
                         >
                           <img
                             class="w-[18px] h-[18px]"
@@ -730,7 +797,7 @@
                       <!-- view and edit modal -->
                       <div
                         class="fixed z-10 overflow-y-auto top-0 w-full left-0 hidden"
-                        :id="`modal${customer.id}`"
+                        :id="`modal${customer.vendorId}`"
                       >
                         <div
                           class="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0"
@@ -746,7 +813,7 @@
                           >
 
                           <div
-                            class="p-[30px] inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[776px] sm:w-full"
+                            class="p-[30px] media inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[776px] sm:w-full"
                             role="dialog"
                             aria-modal="true"
                             aria-labelledby="modal-headline"
@@ -763,7 +830,7 @@
                               <button
                                 type="button"
                                 class="py-2 px-4 bg-white text-black rounded mr-2 flex"
-                                @click="toggleModal(customer.id, 'close')"
+                                @click="toggleModal(customer.vendorId, 'close')"
                               >
                                 <img
                                   class="w-[24px]"
@@ -796,13 +863,13 @@
                               >
                                 {{ $t("Payment") }}
                               </div>
-                              <div
+                              <!-- <div
                                 data-tabopen="Vehicles"
                                 @click="show('Vehicles')"
                                 class="tabbtn tab-un-active cursor-pointer px-2 py-1"
                               >
                                 {{ $t("Products") }}
-                              </div>
+                              </div> -->
                             </div>
 
                             <div
@@ -821,7 +888,7 @@
                                 <!-- information -->
                                 <div
                                   :class="{ 'text-right': lang == 'ar' }"
-                                  class="text-lg font-bold rounded-lg w-[50%] mb-[90px]"
+                                  class="text-lg font-bold rounded-lg w-[50%] mb-[10px]"
                                 >
                                   <h1 class="mt-[20px]">
                                     {{ $t("Informations") }} :
@@ -867,7 +934,7 @@
                                           for="1"
                                           class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
                                           >{{ $t("Registration code") }}
-                                          <p class="required">*</p>
+
                                           :</label
                                         >
                                         <input
@@ -902,7 +969,7 @@
                                         for="1"
                                         class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
                                         >{{ $t("Vendor name") }}
-                                        <p class="required">*</p>
+
                                         :</label
                                       >
                                       <input
@@ -926,6 +993,69 @@
                                         {{ $t("required") }}
                                       </p>
                                     </div>
+                                    <!-- vat number -->
+                                    <div class="group mt-[20px]">
+                                      <label
+                                        for="1"
+                                        class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                        >{{ $t("Vat Number ") }}
+
+                                        :</label
+                                      >
+                                      <input
+                                        id="1"
+                                        type="text"
+                                        :class="{
+                                          'outline-error':
+                                            emptyField.includes('vat_number'),
+                                        }"
+                                        v-model="vat_number"
+                                        @input="updateFormattedVatNumber"
+                                        placeholder="123-3454-2345-355"
+                                        class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                                      />
+                                    </div>
+                                    <!-- SSN number  -->
+                                    <div class="group mt-[20px]">
+                                      <label
+                                        for="1"
+                                        class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                        >{{ $t("National ID") }} :</label
+                                      >
+                                      <NationalId
+                                        @update:nationalId="updateNationalId"
+                                        :nationalId="national_id"
+                                      />
+                                    </div>
+                                    <!-- Models number  -->
+                                    <div class="group mt-[20px]">
+                                      <label
+                                        for="1"
+                                        class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                        >{{ $t("Model") }}
+
+                                        :</label
+                                      >
+
+                                      <multiselect
+                                        v-model="selectedModels"
+                                        :options="models"
+                                        track-by="random_id"
+                                        label="brand"
+                                        multiple
+                                        placeholder="Select models"
+                                      ></multiselect>
+
+                                      <p
+                                        v-if="
+                                          emptyField.includes('vendor_name')
+                                        "
+                                        class="error-message"
+                                      >
+                                        {{ $t("SSN Number") }}
+                                        {{ $t("required") }}
+                                      </p>
+                                    </div>
                                   </div>
                                 </div>
                                 <!-- contact -->
@@ -939,48 +1069,33 @@
                                     </h1>
                                     <div class="form-style mt-[20px] p-[30px]">
                                       <!-- Phone -->
+                                      <!-- Phone -->
                                       <div class="group">
                                         <label
                                           for="1"
                                           class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                                          >{{ $t("Phone") }}
-                                          <p class="required">*</p>
-                                          :</label
+                                          >{{ $t("Phone") }} :</label
                                         >
-                                        <input
-                                          id="1"
-                                          type="text"
-                                          v-model="phone"
-                                          :class="{
-                                            'outline-error':
-                                              emptyField.includes('phone'),
-                                          }"
-                                          placeholder="0226281"
-                                          @keypress="isNumber($event)"
-                                          class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                                        <PhoneNumber
+                                          :phoneNumber="phone"
+                                          @update:phoneNumber="
+                                            UpdatePhoneNumberValue
+                                          "
                                         />
-                                        <p
-                                          v-if="emptyField.includes('phone')"
-                                          class="error-message"
-                                        >
-                                          {{ $t("Phone") }}
-                                          {{ $t("required") }}
-                                        </p>
                                       </div>
-                                      <!-- Vat Number -->
+
+                                      <!-- Mobile Number -->
                                       <div class="group mt-[20px]">
                                         <label
                                           for="1"
                                           class="block label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
                                           >{{ $t("mobile_number") }} :</label
                                         >
-                                        <input
-                                          id="1"
-                                          type="text"
-                                          @keypress="isNumber($event)"
-                                          v-model="mobile_number"
-                                          placeholder="01223456789"
-                                          class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                                        <MobileNumber
+                                          :phoneNumber="mobile_number"
+                                          @update:mobileNumber="
+                                            updateMobileNumber
+                                          "
                                         />
                                       </div>
                                       <!-- National ID -->
@@ -1018,6 +1133,36 @@
                                         >
                                           {{ $t("Email is Invalid") }}
                                         </div>
+                                      </div>
+                                      <div class="group mt-[20px]">
+                                        <label
+                                          :class="{
+                                            'text-right': lang == 'ar',
+                                          }"
+                                          for="1"
+                                          class="block text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                          >{{ $t("Location") }} :</label
+                                        >
+                                        <!-- <select
+                                          class="appearance-none border-select w-full py-1 px-2 bg-white peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                                          name="whatever"
+                                          v-model="location"
+                                          id="frm-whatever"
+                                        >
+                                          <option @click="openAddLocationPopup">
+                                            {{ $t("Add new Location") }}
+                                          </option>
+                                          <option
+                                            v-for="(
+                                              location, index
+                                            ) in locations"
+                                            :key="index"
+                                            :value="location.Id"
+                                          >
+                                            {{ location.Address }}
+                                          </option>
+                                        </select> -->
+                                        <Location />
                                       </div>
                                     </div>
                                   </div>
@@ -1313,6 +1458,18 @@
                   </tr>
                 </tbody>
               </table>
+              <div class="mt-[20px]">
+                <pagination
+                  :total-pages="totalPages"
+                  :total="total"
+                  v-model="currentPage"
+                  :per-page="perPage"
+                  :current-page="currentPage"
+                  :has-more-pages="hasMorePages"
+                  @pagechanged="showMore"
+                >
+                </pagination>
+              </div>
             </div>
 
             <div
@@ -1329,6 +1486,333 @@
                 {{ $t("There is No Vendors") }}
               </h1>
             </div>
+            <!-- Add Location popup -->
+            <div
+              class="fixed z-10 overflow-y-auto top-0 w-full left-0 hidden"
+              id="addLocation"
+            >
+              <div
+                class="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0"
+              >
+                <div class="fixed inset-0 transition-opacity">
+                  <div class="absolute inset-0 bg-gray-900 opacity-75" />
+                </div>
+                <span class="hidden sm:inline-block sm:align-middle sm:h-screen"
+                  >&#8203;</span
+                >
+                <div
+                  class="p-[30px] inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[776px] sm:w-full"
+                  role="dialog"
+                  aria-modal="true"
+                  aria-labelledby="modal-headline"
+                >
+                  <div class="absolute w-[50%] ml-[154px] mt-[332px]">
+                    <Loading v-if="loading" :text="'Saving'" />
+                  </div>
+                  <!-- close btn -->
+                  <div
+                    :disabled="loading"
+                    :class="{ 'cusror-disabled': loading }"
+                    class="px-4 py-3 text-left"
+                  >
+                    <button
+                      type="button"
+                      class="py-2 px-4 bg-white text-black rounded mr-2 flex"
+                      @click="addNewLocation('close')"
+                    >
+                      <img
+                        class="w-[24px]"
+                        src="../../assets/imgs/comman/close-square.png"
+                        alt=""
+                      />
+                      <p class="ml-[12px]">
+                        {{ $t("Close") }}
+                      </p>
+                    </button>
+                  </div>
+                  <!-- tabs start -->
+
+                  <div
+                    :disabled="loading"
+                    :class="{ 'cusror-disabled': loading }"
+                    id="Informations"
+                    class="tab mt-1 items-center"
+                  >
+                    <div class="flex items-center justify-space-between">
+                      <!-- information -->
+                      <div
+                        :class="{
+                          'text-right': lang == 'ar',
+                        }"
+                        class="text-lg font-bold rounded-lg w-[100%] mb-[20px]"
+                      >
+                        <h1
+                          :class="[
+                            {
+                              'text-right': lang == 'ar',
+                            },
+                          ]"
+                          class="mt-[20px] text-left"
+                        >
+                          {{ $t("Location") }} :
+                        </h1>
+
+                        <div
+                          :class="{
+                            'text-right': lang == 'ar',
+                          }"
+                          class="form-style mt-[20px] p-[30px]"
+                        >
+                          <!-- Choose country and Street -->
+                          <div
+                            :class="{
+                              'text-right': lang == 'ar',
+                            }"
+                            class="flex"
+                          >
+                            <!-- Employee name -->
+                            <div class="group w-[50%]">
+                              <label
+                                :class="{
+                                  'text-right': lang == 'ar',
+                                }"
+                                for="1"
+                                class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                >{{ $t("Choose Country") }} :
+                                <p class="required">*</p></label
+                              >
+                              <div class="flex">
+                                <select
+                                  v-model="country_name"
+                                  class="appearance-none border-select w-full py-1 px-2 bg-white"
+                                  name="whatever"
+                                  :class="{
+                                    'outline-error':
+                                      emptyField.includes('employee_email') ||
+                                      invalidEmail == true,
+                                  }"
+                                  @change="chooseCountry"
+                                  id="frm-whatever"
+                                >
+                                  <option
+                                    v-for="(country, i) in countries"
+                                    :value="country.name"
+                                    :key="i"
+                                  >
+                                    {{ country.name }}
+                                  </option>
+                                </select>
+
+                                <img
+                                  :class="{
+                                    'arrow-select-arabic': lang == 'ar',
+                                  }"
+                                  class="arrow-select"
+                                  src="../../assets/imgs/comman/Icon.png"
+                                  alt=""
+                                />
+                              </div>
+                              <p
+                                :class="{
+                                  'text-right': lang == 'ar',
+                                }"
+                                v-if="emptyField.includes('country_name')"
+                                class="error-message text-left"
+                              >
+                                {{ $t("Choose Country") }}
+                                {{ $t("required") }}
+                              </p>
+                            </div>
+                            <!-- register code -->
+                            <div
+                              :class="{
+                                'mr-[20px]': lang == 'ar',
+                              }"
+                              class="group ml-[20px] w-[50%]"
+                            >
+                              <label
+                                :class="{
+                                  'text-right': lang == 'ar',
+                                }"
+                                for="1"
+                                class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                >{{ $t("Choose city") }} :
+                                <p class="required">*</p></label
+                              >
+                              <img
+                                :class="{
+                                  'arrow-select-arabic-city': lang == 'ar',
+                                }"
+                                style="left: 677px"
+                                class="arrow-select"
+                                src="../../assets/imgs/comman/Icon.png"
+                                alt=""
+                              />
+                              <select
+                                v-model="city_name"
+                                class="appearance-none border-select w-full py-1 px-2 bg-white"
+                                name="whatever"
+                                id="frm-whatever"
+                              >
+                                <option
+                                  v-for="(city, i) in cities"
+                                  :value="city"
+                                  :key="i"
+                                >
+                                  {{ city }}
+                                </option>
+                              </select>
+                              <p
+                                :class="{
+                                  'text-right': lang == 'ar',
+                                }"
+                                v-if="emptyField.includes('city_name')"
+                                class="error-message text-left"
+                              >
+                                {{ $t("Choose city") }}
+                                {{ $t("required") }}
+                              </p>
+                            </div>
+                          </div>
+                          <!-- Employee EMail and Employee Password -->
+                          <div
+                            :class="{
+                              'text-right': lang == 'ar',
+                            }"
+                            class="flex mt-[20px]"
+                          >
+                            <!-- Employee name -->
+                            <div class="group w-[50%]">
+                              <label
+                                :class="{
+                                  'text-right': lang == 'ar',
+                                }"
+                                for="1"
+                                class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                >{{ $t("Area") }} :</label
+                              >
+                              <input
+                                id="1"
+                                type="text"
+                                v-model="area"
+                                placeholder=""
+                                class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                              />
+                            </div>
+                            <!-- street name -->
+                            <div
+                              :class="{
+                                'mr-[20px]': lang == 'ar',
+                              }"
+                              class="group ml-[20px] w-[50%]"
+                            >
+                              <label
+                                :class="{
+                                  'text-right': lang == 'ar',
+                                }"
+                                for="1"
+                                class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                >{{ $t("street") }} :</label
+                              >
+                              <input
+                                id="1"
+                                type="text"
+                                v-model="street"
+                                placeholder=""
+                                class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                              />
+                            </div>
+                          </div>
+
+                          <!-- Employee Group and Employee position -->
+                          <div
+                            :class="{
+                              'text-right': lang == 'ar',
+                            }"
+                            class="flex mt-[20px]"
+                          >
+                            <div class="group w-[50%]">
+                              <label
+                                :class="{
+                                  'text-right': lang == 'ar',
+                                }"
+                                for="1"
+                                class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                >{{ $t("Building Number") }} :</label
+                              >
+                              <input
+                                id="1"
+                                type="text"
+                                v-model="building_number"
+                                placeholder=""
+                                class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                              />
+                            </div>
+                            <!-- register code -->
+                            <div
+                              :class="{
+                                'mr-[20px]': lang == 'ar',
+                              }"
+                              class="group ml-[20px] w-[50%]"
+                            >
+                              <label
+                                :class="{
+                                  'text-right': lang == 'ar',
+                                }"
+                                for="1"
+                                class="block text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                >{{ $t("Floor") }} :</label
+                              >
+                              <input
+                                id="1"
+                                type="text"
+                                v-model="floor"
+                                placeholder="000012"
+                                class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- tabs end -->
+                  <div
+                    :disabled="loading"
+                    :class="{ 'cusror-disabled': loading }"
+                    class="flex mb-[30px]"
+                  >
+                    <div class="w-[50%]">
+                      <button
+                        :disabled="loading"
+                        :class="{
+                          'cusror-disabled': loading,
+                        }"
+                        @click="addNewLocation('close')"
+                        class="close-btn rounded-lg w-[100%] px-4 py-2 bg-gray-200 hover:bg-gray-300 duration-300"
+                      >
+                        {{ $t("close") }}
+                      </button>
+                    </div>
+                    <div class="w-[50%] ml-[6px]">
+                      <button
+                        type="button"
+                        :disabled="loading"
+                        :class="{
+                          'cusror-disabled': loading,
+                        }"
+                        @click="postLocation('add')"
+                        class="action-btn rounded-lg w-[100%] px-4 py-2 bg-blue-500 text-blue-100 hover:bg-blue-600 duration-300"
+                      >
+                        {{ $t("Add") }}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /Add Location popup -->
           </div>
         </div>
       </div>
@@ -1337,7 +1821,24 @@
 </template>
 
 <script>
+import Multiselect from "vue-multiselect";
+import "vue-multiselect/dist/vue-multiselect.min.css";
+
+import NationalId from "../../components/Inputs/NationalId.vue";
+import PhoneNumber from "../../components/Inputs/PhoneNumber.vue";
+import VatNumber from "../../components/Inputs/VatNumber.vue";
+import Location from "../../components/Inputs/Location.vue";
+
+import MobileNumber from "../../components/Inputs/MobileNumber.vue";
+
 export default {
+  components: {
+    NationalId,
+    PhoneNumber,
+    VatNumber,
+    Location,
+    MobileNumber,
+  },
   data() {
     return {
       vendorTable: [],
@@ -1364,6 +1865,7 @@ export default {
       registration_code: null,
       mobile_number: null,
       vat_number: null,
+      ssn_number: null,
       phone: null,
       email: null,
       address: null,
@@ -1371,6 +1873,7 @@ export default {
       payment_term: null,
       vin_number: null,
       plate_number: null,
+      location: null,
       national_id: null,
       id: "",
 
@@ -1382,20 +1885,57 @@ export default {
       currentPage: 1,
       hasMorePages: true,
       permissions: [],
+      locations: [],
       loading: true,
       lang: "",
       open: false,
+      vat_number: null,
+
+      // data of location
+      // data
+      country_name: null,
+      city_name: null,
+      area: null,
+      street: null,
+      vat_number: null,
+      building_number: null,
+      floor: null,
+      ssn_number: null,
+      employee_id: 0,
+      vendor_id: 0,
+
+      countries: [],
+      cities: [],
+      vendors: [],
+      employee: [],
+      formattedVatNumber: "",
+      models: [],
+      model: [],
+      selectedModels: [],
     };
   },
+  components: {
+    Multiselect,
+  },
   mounted() {
+    // countries
+    this.$axios
+      .get("https://countriesnow.space/api/v0.1/countries/capital")
+      .then((res) => {
+        this.countries = res.data.data;
+      });
     // bring All Data
     this.$axios.$get("/Vendor/GetAllVendor").then((res) => {
+      this.vendor_code = res.NextItem;
       this.vendorTable = res.Vendor.data;
-      this.totalPages = res.Vendor.last_page;
-      this.perPage = res.Vendor.per_page;
-      this.total = res.Vendor.total;
+      this.totalPages = res.Vendor.meta.last_page;
+      this.perPage = res.Vendor.meta.per_page;
+      this.total = res.Vendor.meta.total;
       this.permissions = res.permissions;
       this.loading = false;
+    });
+    this.$axios.$get("/Location/GetAllLocation?page=false").then((res) => {
+      this.locations = res.Location;
     });
     // tabs code
     this.lang = localStorage.getItem("lang");
@@ -1407,8 +1947,79 @@ export default {
     }
     this.open = localStorage.getItem("open");
     // watch language
+
+    this.$axios.post("Cars/getBrands").then((res) => {
+      this.models = res.data.Brands;
+    });
   },
   methods: {
+    // search
+    searchData() {
+      this.$axios
+        .$get(`/Vendor/GetAllVendor?search=${this.search}`)
+        .then((res) => {
+          this.vendorTable = res.Vendor.data;
+          this.totalPages = res.Vendor.meta.last_page;
+          this.perPage = res.Vendor.meta.per_page;
+          this.total = res.Vendor.meta.total;
+          this.permissions = res.permissions;
+          this.loading = false;
+        });
+    },
+    // change and choose country
+    chooseCountry(country) {
+      console.log(country.target.value);
+      let data = {
+        country: country.target.value,
+      };
+      this.$axios
+        .$post("https://countriesnow.space/api/v0.1/countries/cities", data)
+        .then((res) => {
+          this.cities = res.data;
+        });
+    },
+    addNewLocation(status) {
+      document.getElementById(`addLocation`).classList.toggle("hidden");
+      // tabs
+      // Select tabs and tab buttons
+      const tabs = document.querySelectorAll(".tab");
+      const tabBtns = document.querySelectorAll(".tabbtn");
+
+      // each tab button will have a  click event  listener
+      tabBtns.forEach((tabBtn) => {
+        tabBtn.addEventListener("click", () => {
+          // hiding all tabs
+          // tabs.forEach((tab) => {
+          //   tab.classList.add("hidden");
+          // });
+
+          // showing only the tab that this tab button should show
+          const tab = tabBtn.getAttribute("data-tabopen");
+          document.getElementById(tab).classList.remove("hidden");
+
+          //  we will give same styles to all tab
+          if (this.type == "Informations") {
+            tabBtns.forEach((tabBtn) => {
+              tabBtn.className =
+                " px-2 py-1 cursor-pointer ml-[26px] tab-un-active ";
+            });
+            //  we will give special styles to the active tab
+            tabBtn.className = "tab-style cursor-pointer";
+          }
+          tabBtns.forEach((tabBtn) => {
+            tabBtn.className =
+              " px-2 py-1 cursor-pointer ml-[26px] tab-un-active ";
+          });
+
+          //  we will give special styles to the active tab
+          tabBtn.className = "tab-style cursor-pointer";
+        });
+      });
+
+      // post method api
+      // validation messages
+      this.clearLocation();
+    },
     // clear data
     clearData() {
       (this.vendor_code = null),
@@ -1417,14 +2028,28 @@ export default {
         (this.mobile_number = null),
         (this.vat_number = null),
         (this.phone = null),
+        (this.location = null),
         (this.email = null),
         (this.address = null),
+        (this.vat_number = null),
+        (this.ssn_number = null),
         (this.credit_limit = null),
         (this.payment_term = null),
         (this.vin_number = null),
         (this.plate_number = null),
         (this.national_id = null),
         (this.id = "");
+    },
+    // clear location
+    clearLocation() {
+      (this.country_name = null),
+        (this.city_name = null),
+        (this.area = null),
+        (this.street = null),
+        (this.building_number = null),
+        (this.floor = null),
+        (this.employee_id = 0),
+        (this.vendor_id = 0);
     },
     // is validate email
     validateEmail(email) {
@@ -1437,6 +2062,16 @@ export default {
         this.invalidEmail = true;
       }
     },
+    // change type
+    changeType(event) {
+      console.log(event);
+      if (event.target.value == "vendor") {
+        this.employee_id = 0;
+      }
+      if (event.target.value == "employee") {
+        this.vendor_id = 0;
+      }
+    },
     // toggle modal open and close the modal
     toggleModal(id, status) {
       this.emptyField = "";
@@ -1445,12 +2080,16 @@ export default {
       // get data by id
       if (status == "open") {
         this.$axios.$get(`/Vendor/GetVendorById/${id}`).then((res) => {
+          this.location = res.Vendor.location.id;
           this.data = res.Vendor;
+
           this.vendor_code = res.Vendor.vendor_code;
           this.vendor_name = res.Vendor.vendor_name;
           this.mobile_number = res.Vendor.other_mobile_number;
           this.registration_code = res.Vendor.registration_code;
+
           this.vat_number = res.Vendor.vat_number;
+          this.ssn_number = res.Vendor.ssn;
           this.phone = res.Vendor.mobile_number;
           this.email = res.Vendor.email;
           this.address = res.Vendor.address;
@@ -1617,13 +2256,7 @@ export default {
     // post and add customer
 
     postVendor(status) {
-      const requiredFields = [
-        "vendor_name",
-        "vendor_code",
-        "registration_code",
-        "phone",
-        "email",
-      ];
+      const requiredFields = ["vendor_code"];
 
       const emptyFields = requiredFields.filter(
         (field) => this[field] === "" || this[field] === null
@@ -1631,6 +2264,7 @@ export default {
 
       this.emptyField = emptyFields;
       console.log(emptyFields);
+
       if (emptyFields.length != 0) {
         return emptyFields;
       } else if (this.invalidEmail == true) {
@@ -1643,9 +2277,12 @@ export default {
             vendor_code: this.vendor_code,
             email: this.email,
             mobile_number: this.phone,
+            vat_number: this.vat_number,
+            ssn: this.ssn_number,
             other_mobile_number: this.mobile_number,
             registration_code: this.registration_code,
             credit_limit: this.credit_limit,
+            location_id: this.location,
             payment_term: this.payment_term,
             is_active: this.active_vendor,
           };
@@ -1675,13 +2312,7 @@ export default {
     // edit customer
     editVendor() {
       // validation messages
-      const requiredFields = [
-        "vendor_name",
-        "vendor_code",
-        "registration_code",
-        "phone",
-        "email",
-      ];
+      const requiredFields = ["vendor_code"];
 
       const emptyFields = requiredFields.filter(
         (field) => this[field] === "" || this[field] == null
@@ -1704,7 +2335,10 @@ export default {
           registration_code: this.registration_code,
           credit_limit: this.credit_limit,
           payment_term: this.payment_term,
+          vat_number: this.vat_number,
+          ssn: this.ssn_number,
           is_active: this.active_vendor,
+          location_id: this.location,
         };
 
         this.$axios
@@ -1772,6 +2406,80 @@ export default {
           }
         });
       }
+    },
+    // open add location popup
+    openAddLocationPopup() {
+      document.getElementById(`addLocation`).classList.remove("hidden");
+    },
+    postLocation(status) {
+      // this.loading = true;
+      const requiredFields = ["country_name", "city_name"];
+
+      const emptyFields = requiredFields.filter(
+        (field) => this[field] === "" || this[field] === null
+      );
+
+      this.emptyField = emptyFields;
+      console.log(emptyFields);
+      if (emptyFields.length == 0) {
+        if (status == "add") {
+        }
+      }
+      if (emptyFields.length != 0) {
+        return emptyFields;
+      } else if (this.invalidEmail == true) {
+        return;
+      }
+      if (this.errorpasswordValidation == true) {
+        return;
+      }
+
+      let formdata = new FormData();
+
+      formdata.append("vendor_id", this.vendor_id);
+      formdata.append("user_id", this.employee_id);
+      formdata.append("country", this.country_name);
+      formdata.append("city", this.city_name);
+      formdata.append("area", this.area);
+      formdata.append("street", this.street);
+      formdata.append("floor", this.floor);
+      formdata.append("bulding_number", this.building_number);
+      formdata.append("customer_id", 0);
+
+      this.$axios.$post(`/Location/AddLocation`, formdata).then((res) => {
+        if (res.status == 200) {
+          document.getElementById(`addLocation`).classList.toggle("hidden");
+          // this.loading = false;
+          this.$toast.success("Location Added Successfully");
+          // // get data again
+          this.$axios
+            .$get("/Location/GetAllLocation?page=false")
+            .then((res) => {
+              this.locations = res.Location;
+            });
+          this.location = this.locations.length + 7;
+          console.log(this.locations.length + 7, "last one");
+          this.clearLocation();
+        } else {
+          this.$toast.error(res.message);
+        }
+      });
+    },
+    // update vat number
+    updateFormattedVatNumber(number) {
+      // Remove existing dashes and non-digit characters from the input string
+      const cleanedString = this.vat_number.replace(/[^0-9]/g, "");
+
+      // Split the cleaned string into groups of four characters
+      const groups = cleanedString.match(/.{1,4}/g);
+
+      // Join the groups with dashes in between
+      const formattedString = groups ? groups.join("-") : "";
+
+      // Update the formattedString data property
+      this.formattedString = formattedString;
+      console.log(this.formattedString, "number");
+      this.vat_number = this.formattedString;
     },
   },
   watch: {
@@ -1915,5 +2623,48 @@ dropdown input:checked ~ ul {
 .remove-margin-left {
   padding-left: auto !important;
   padding-right: auto !important;
+}
+.border-select {
+  border-radius: 20px;
+  border: 1px solid var(--primary-dark-20, rgba(66, 66, 66, 0.2));
+  background: var(--colors-base-00, #fff);
+
+  /* Shadow/lg */
+  box-shadow: 0px 8px 11px -4px rgba(45, 54, 67, 0.04),
+    0px 20px 24px -4px rgba(45, 54, 67, 0.04);
+  color: var(--colors-primary-slate-400, #8897ae);
+
+  /* Paragraph: 5/Medium */
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 171.429% */
+  letter-spacing: -0.2px;
+}
+.arrow-select {
+  position: absolute;
+  left: 346px;
+  margin-top: 19px;
+  width: 20px;
+}
+.arrow-select-arabic {
+  position: absolute;
+  right: 331px;
+  left: 0px !important;
+  margin-top: 19px;
+  width: 20px;
+}
+.arrow-select-arabic-city {
+  position: absolute;
+  right: 655px;
+  left: 0px !important;
+  margin-top: 19px;
+  width: 20px;
+}
+@media (max-width: 1550px) {
+  .media {
+    height: 650px;
+    overflow-y: auto;
+  }
 }
 </style>

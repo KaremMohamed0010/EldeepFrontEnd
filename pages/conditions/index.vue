@@ -21,9 +21,7 @@
           style="padding-top: 0px"
           class="-mx-4 sm:-mx-8 px-4 py-4 overflow-x-auto add-margin-left remove-margin-left"
         >
-          <div
-            class="inline-block min-w-full shadow-md rounded-lg overflow-hidden"
-          >
+          <div class="inline-block min-w-full rounded-lg overflow-hidden">
             <div class="mb-[13px] flex justify-space-between">
               <!-- add btn -->
               <div
@@ -65,7 +63,7 @@
                       >&#8203;</span
                     >
                     <div
-                      class="p-[30px] inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[75%] sm:w-full"
+                      class="p-[30px] media inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[75%] sm:w-full"
                       role="dialog"
                       aria-modal="true"
                       aria-labelledby="modal-headline"
@@ -112,12 +110,30 @@
                               :class="{ 'text-right': lang == 'ar' }"
                               class="mt-[20px] text-left"
                             >
-                              {{ $t("Conditions") }} :
+                              {{ $t("Add") }} {{ $t("Conditions") }} :
                             </h1>
                             <div class="card p-[20px]">
                               <div
                                 class="text-center flex flex-wrap justify-between"
                               >
+                                <div class="flex items-center mr-4 mb-4">
+                                  <input
+                                    @click="selectCategory(2, 'part')"
+                                    id="radio0"
+                                    type="radio"
+                                    name="radio"
+                                    class="hidden"
+                                  />
+                                  <label
+                                    for="radio0"
+                                    class="flex items-center cursor-pointer"
+                                  >
+                                    <span
+                                      class="w-4 h-4 inline-block mr-1 rounded-full border border-grey"
+                                    ></span>
+                                    {{ $t("Part Name") }}
+                                  </label>
+                                </div>
                                 <div class="flex items-center mr-4 mb-4">
                                   <input
                                     @click="
@@ -262,30 +278,36 @@
                                         <tr>
                                           <th
                                             v-if="organization"
-                                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100"
+                                            class="px-5 py-3 text-center border-b-2 border-gray-200 bg-gray-100"
                                           >
                                             {{ $t("organization") }}
                                           </th>
                                           <th
+                                            class="px-5 py-3 text-center border-b-2 border-gray-200 bg-gray-100"
+                                            v-if="part"
+                                          >
+                                            {{ $t("Parts") }}
+                                          </th>
+                                          <th
                                             v-if="category"
-                                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100"
+                                            class="px-5 py-3 text-center border-b-2 border-gray-200 bg-gray-100"
                                           >
                                             {{ $t("category") }}
                                           </th>
                                           <th
                                             v-if="brand"
-                                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100"
+                                            class="px-5 py-3 text-center border-b-2 border-gray-200 bg-gray-100"
                                           >
                                             {{ $t("brand") }}
                                           </th>
                                           <th
                                             v-if="customer"
-                                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100"
+                                            class="px-5 py-3 text-center border-b-2 border-gray-200 bg-gray-100"
                                           >
                                             {{ $t("customer") }}
                                           </th>
                                           <th
-                                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100"
+                                            class="px-5 py-3 text-center border-b-2 border-gray-200 bg-gray-100"
                                           >
                                             {{ $t("value") }}
                                           </th>
@@ -309,17 +331,38 @@
                                           >
                                             <input
                                               id="2"
+                                              v-model="organizationn"
                                               type="text"
+                                              :class="{
+                                                'rounded-lg border-2 w-[100%] border-red-500 font-bold p-2 my-2 text-center':
+                                                  emptyField.includes(
+                                                    'organizationn'
+                                                  ),
+                                              }"
                                               class="peer h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
                                             />
+                                            <p
+                                              :class="{
+                                                'text-right': lang == 'ar',
+                                              }"
+                                              v-if="
+                                                emptyField.includes(
+                                                  'organizationn'
+                                                )
+                                              "
+                                              class="error-message text-left mt-[12px] ml-[4px]"
+                                            >
+                                              {{ $t("organization") }}
+                                              {{ $t("required") }}
+                                            </p>
                                           </td>
                                           <td
-                                            v-if="category"
+                                            v-if="part"
                                             class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
                                           >
                                             <select
-                                              v-model="branch"
-                                              class="border-select w-full py-1 px-2 bg-white"
+                                              v-model="part_id"
+                                              class="border-select w-[100%] w-full py-1 px-2 bg-white"
                                               name="whatever"
                                               id="frm-whatever"
                                             >
@@ -327,20 +370,37 @@
                                                 value="Select Branch"
                                                 disabled
                                               >
-                                                Select Category
+                                                Select Part Number
                                               </option>
-                                              <option value="Branch 1">
-                                                Branch 1
+                                              <option
+                                                v-for="(
+                                                  parting, index
+                                                ) in allParts"
+                                                :key="index"
+                                                :value="parting.id"
+                                              >
+                                                {{ parting.PartNum }}
                                               </option>
                                             </select>
+                                          </td>
+                                          <td
+                                            v-if="category"
+                                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                                          >
+                                            <input
+                                              id="2"
+                                              v-model="categoryy"
+                                              type="text"
+                                              class="peer w-[100%] h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                                            />
                                           </td>
                                           <td
                                             v-if="brand"
                                             class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
                                           >
                                             <select
-                                              v-model="brand"
-                                              class="border-select w-full py-1 px-2 bg-white"
+                                              v-model="brand_id"
+                                              class="border-select w-[100%] w-full py-1 px-2 bg-white"
                                               name="whatever"
                                               id="frm-whatever"
                                             >
@@ -350,8 +410,14 @@
                                               >
                                                 Select Brand
                                               </option>
-                                              <option value="Branch 1">
-                                                Brand 1
+                                              <option
+                                                v-for="(
+                                                  branding, index
+                                                ) in brands"
+                                                :key="index"
+                                                :value="branding.random_id"
+                                              >
+                                                {{ branding.brand }}
                                               </option>
                                             </select>
                                           </td>
@@ -360,8 +426,8 @@
                                             class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
                                           >
                                             <select
-                                              v-model="customer"
-                                              class="border-select w-full py-1 px-2 bg-white"
+                                              v-model="customer_id"
+                                              class="border-select w-[100%] w-full py-1 px-2 bg-white"
                                               name="whatever"
                                               id="frm-whatever"
                                             >
@@ -371,8 +437,14 @@
                                               >
                                                 Select Customer
                                               </option>
-                                              <option value="Branch 1">
-                                                Customer 1
+                                              <option
+                                                v-for="(
+                                                  customer, index
+                                                ) in allCustomers"
+                                                :key="index"
+                                                :value="customer.id"
+                                              >
+                                                {{ customer.customer_name }}
                                               </option>
                                             </select>
                                           </td>
@@ -380,28 +452,86 @@
                                             class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
                                           >
                                             <input
+                                              v-model="value"
                                               id="2"
+                                              @keypress="isNumber($event)"
+                                              :class="{
+                                                'rounded-lg border-2 w-[100%] border-red-500 font-bold p-2 my-2 w-[100%] text-center':
+                                                  emptyField.includes('value'),
+                                              }"
                                               type="number"
-                                              class="peer h-10 rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                                              class="peer h-10 rounded-md w-[100%] bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
                                             />
+                                            <p
+                                              :class="{
+                                                'text-right': lang == 'ar',
+                                              }"
+                                              v-if="
+                                                emptyField.includes('value')
+                                              "
+                                              class="error-message text-left"
+                                            >
+                                              {{ $t("value") }}
+                                              {{ $t("required") }}
+                                            </p>
                                           </td>
                                           <td
                                             class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100"
                                           >
                                             <input
+                                              v-model="start_date"
                                               id="2"
                                               type="date"
-                                              class="peer h-10 rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                                              :class="{
+                                                'rounded-lg border-2 w-[100%] border-red-500 font-bold p-2 my-2 text-center':
+                                                  emptyField.includes(
+                                                    'start_date'
+                                                  ),
+                                              }"
+                                              class="peer h-10 rounded-md bg-gray-50 w-[100%] px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
                                             />
+                                            <p
+                                              :class="{
+                                                'text-right': lang == 'ar',
+                                              }"
+                                              v-if="
+                                                emptyField.includes(
+                                                  'start_date'
+                                                )
+                                              "
+                                              class="error-message text-left mt-[12px] ml-[4px]"
+                                            >
+                                              {{ $t("start_date") }}
+                                              {{ $t("required") }}
+                                            </p>
                                           </td>
                                           <th
                                             class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100"
                                           >
                                             <input
+                                              v-model="end_date"
                                               id="2"
+                                              :class="{
+                                                'rounded-lg border-2 w-[100%] border-red-500 font-bold p-2 my-2 text-center':
+                                                  emptyField.includes(
+                                                    'end_date'
+                                                  ),
+                                              }"
                                               type="date"
-                                              class="peer h-10 rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                                              class="peer h-10 rounded w-[100%]-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
                                             />
+                                            <p
+                                              :class="{
+                                                'text-right': lang == 'ar',
+                                              }"
+                                              v-if="
+                                                emptyField.includes('end_date')
+                                              "
+                                              class="error-message text-left mt-[12px] ml-[4px]"
+                                            >
+                                              {{ $t("end_date") }}
+                                              {{ $t("required") }}
+                                            </p>
                                           </th>
                                         </tr>
                                       </tbody>
@@ -476,6 +606,7 @@
                       class="font-bold uppercase rounded-full w-full py-4 pl-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:text-sm text-xs"
                       type="text"
                       v-model="search"
+                      @input="searchData"
                       :placeholder="$t('search')"
                     />
 
@@ -575,7 +706,20 @@
                           <p
                             class="text-gray-900 whitespace-no-wrap table-headers"
                           >
-                            {{ $t("Customer") }}
+                            {{ $t("Parts") }}
+                          </p>
+                        </div>
+                      </div>
+                    </td>
+                    <td
+                      class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+                    >
+                      <div class="flex">
+                        <div class="ml-3">
+                          <p
+                            class="text-gray-900 whitespace-no-wrap table-headers"
+                          >
+                            {{ $t("organization") }}
                           </p>
                         </div>
                       </div>
@@ -584,14 +728,14 @@
                       class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
                     >
                       <p class="text-gray-900 whitespace-no-wrap table-headers">
-                        {{ $t("Vendor") }}
+                        {{ $t("category") }}
                       </p>
                     </td>
                     <td
                       class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
                     >
                       <p class="text-gray-900 whitespace-no-wrap table-headers">
-                        {{ $t("Part") }}
+                        {{ $t("brand") }}
                       </p>
                     </td>
 
@@ -599,14 +743,22 @@
                       class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
                     >
                       <p class="text-gray-900 whitespace-no-wrap table-headers">
-                        {{ $t("Car") }}
+                        {{ $t("customer") }}
                       </p>
                     </td>
                     <td
                       class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
                     >
                       <p class="text-gray-900 whitespace-no-wrap table-headers">
-                        {{ $t("ExpiryDate") }}
+                        {{ $t("start_date") }}
+                      </p>
+                    </td>
+
+                    <td
+                      class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+                    >
+                      <p class="text-gray-900 whitespace-no-wrap table-headers">
+                        {{ $t("end_date") }}
                       </p>
                     </td>
 
@@ -630,41 +782,88 @@
                     >
                       <div class="flex">
                         <div class="ml-3">
-                          <p class="text-gray-900 whitespace-no-wrap">
-                            {{ condition.Customer }}
+                          <p
+                            v-if="condition.Part"
+                            class="text-gray-900 whitespace-no-wrap"
+                          >
+                            {{ condition.Part }}
                           </p>
+                          <p v-else>--</p>
                         </div>
                       </div>
                     </td>
                     <td
                       class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
                     >
-                      <p class="text-gray-900 whitespace-no-wrap">
-                        {{ condition.Vendor }}
-                      </p>
+                      <div class="flex">
+                        <div class="ml-3">
+                          <p
+                            v-if="condition.Organization"
+                            class="text-gray-900 whitespace-no-wrap"
+                          >
+                            {{ condition.Organization }}
+                          </p>
+                          <p v-else>--</p>
+                        </div>
+                      </div>
                     </td>
                     <td
                       class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
                     >
-                      <p class="text-gray-900 whitespace-no-wrap">
-                        {{ condition.Part }}
+                      <p
+                        v-if="condition.Category"
+                        class="text-gray-900 whitespace-no-wrap"
+                      >
+                        {{ condition.Category }}
                       </p>
+                      <p v-else>--</p>
+                    </td>
+                    <td
+                      class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+                    >
+                      <p
+                        v-if="condition.Brand"
+                        class="text-gray-900 whitespace-no-wrap"
+                      >
+                        {{ condition.Brand }}
+                      </p>
+                      <p v-else>--</p>
                     </td>
 
                     <td
                       class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
                     >
-                      <p class="text-gray-900 whitespace-no-wrap">
-                        {{ condition.Car }}
+                      <p
+                        v-if="condition.Customer"
+                        class="text-gray-900 whitespace-no-wrap"
+                      >
+                        {{ condition.Customer.customer_name }}
                       </p>
+                      <p v-else>--</p>
                     </td>
 
                     <td
                       class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
                     >
-                      <p class="text-gray-900 whitespace-no-wrap">
+                      <p
+                        v-if="condition.StartDate"
+                        class="text-gray-900 whitespace-no-wrap"
+                      >
+                        {{ condition.StartDate }}
+                      </p>
+                      <p v-else>--</p>
+                    </td>
+
+                    <td
+                      class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+                    >
+                      <p
+                        v-if="condition.ExpiryDate"
+                        class="text-gray-900 whitespace-no-wrap"
+                      >
                         {{ condition.ExpiryDate }}
                       </p>
+                      <p v-else>--</p>
                     </td>
 
                     <td
@@ -702,7 +901,7 @@
                             >&#8203;</span
                           >
                           <div
-                            class="p-[30px] inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[776px] sm:w-full"
+                            class="p-[30px] inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[1352px] sm:w-full"
                             role="dialog"
                             aria-modal="true"
                             aria-labelledby="modal-headline"
@@ -753,225 +952,430 @@
                                     :class="{ 'text-right': lang == 'ar' }"
                                     class="mt-[20px] text-left"
                                   >
-                                    {{ $t("Conditions") }} :
+                                    {{ $t("Edit") }} {{ $t("Conditions") }} :
                                   </h1>
-                                  <div class="form-style mt-[20px] p-[30px]">
-                                    <!-- Employee Group and Employee position -->
-                                    <div class="flex mt-[20px]">
-                                      <div class="group w-[50%]">
+                                  <div class="card p-[20px]">
+                                    <div
+                                      class="text-center flex flex-wrap justify-between"
+                                    >
+                                      <div class="flex items-center mr-4 mb-4">
+                                        <input
+                                          @click="selectCategory(2, 'part')"
+                                          :id="`radio0` + condition.ConditionID"
+                                          type="radio"
+                                          name="radio"
+                                          class="hidden"
+                                        />
                                         <label
-                                          :class="{
-                                            'text-right': lang == 'ar',
-                                          }"
-                                          for="1"
-                                          class="block text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                                          >{{ $t("Customer") }} :</label
+                                          :for="
+                                            `radio0` + condition.ConditionID
+                                          "
+                                          class="flex items-center cursor-pointer"
                                         >
-                                        <div class="flex">
-                                          <select
-                                            class="appearance-none border-select w-full py-1 px-2 bg-white"
-                                            name="whatever"
-                                            v-model="customer_id"
-                                            @input="carForCustomer"
-                                            id="frm-whatever"
-                                          >
-                                            <option
-                                              v-for="(
-                                                customer, index
-                                              ) in allCustomers"
-                                              :key="index"
-                                              :value="customer.id"
-                                            >
-                                              {{ customer.customer_name }}
-                                            </option>
-                                          </select>
-                                        </div>
+                                          <span
+                                            class="w-4 h-4 inline-block mr-1 rounded-full border border-grey"
+                                          ></span>
+                                          {{ $t("Part Name") }}
+                                        </label>
                                       </div>
-                                      <!-- register code -->
-                                      <div class="group ml-[20px] w-[50%]">
+                                      <div class="flex items-center mr-4 mb-4">
+                                        <input
+                                          @click="
+                                            selectCategory(
+                                              2,
+                                              'organization',
+                                              'category'
+                                            )
+                                          "
+                                          :id="
+                                            `radio11` + condition.ConditionID
+                                          "
+                                          type="radio"
+                                          name="radio"
+                                          class="hidden"
+                                        />
                                         <label
-                                          :class="{
-                                            'text-right': lang == 'ar',
-                                          }"
-                                          for="1"
-                                          class="block text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                                          >{{ $t("Cars") }} :</label
+                                          :for="
+                                            `radio11` + condition.ConditionID
+                                          "
+                                          class="flex items-center cursor-pointer"
                                         >
-                                        <div class="flex">
-                                          <select
-                                            class="appearance-none border-select w-full py-1 px-2 bg-white"
-                                            name="whatever"
-                                            v-model="car_id"
-                                            id="frm-whatever"
-                                          >
-                                            <option
-                                              v-for="(car, index) in allCars"
-                                              :key="index"
-                                              :value="car.id"
-                                            >
-                                              {{ car.plate_number }}
-                                            </option>
-                                          </select>
-                                        </div>
+                                          <span
+                                            class="w-4 h-4 inline-block mr-1 rounded-full border border-grey"
+                                          ></span>
+                                          {{ $t("organization") }} /
+                                          {{ $t("category") }}</label
+                                        >
                                       </div>
-                                    </div>
-                                    <!--Branch and Area-->
-                                    <div class="flex mt-[20px]">
-                                      <div class="group w-[50%]">
+                                      <div class="flex items-center mr-4 mb-4">
+                                        <input
+                                          @click="
+                                            selectCategory(
+                                              2,
+                                              'organization',
+                                              'brand'
+                                            )
+                                          "
+                                          :id="
+                                            `radio12` + condition.ConditionID
+                                          "
+                                          type="radio"
+                                          name="radio"
+                                          class="hidden"
+                                        />
                                         <label
-                                          :class="{
-                                            'text-right': lang == 'ar',
-                                          }"
-                                          for="1"
-                                          class="block text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                                          >{{ $t("Vendor") }} :</label
+                                          :for="
+                                            `radio12` + condition.ConditionID
+                                          "
+                                          class="flex items-center cursor-pointer"
                                         >
-                                        <div class="flex">
-                                          <select
-                                            class="appearance-none border-select w-full py-1 px-2 bg-white"
-                                            name="whatever"
-                                            v-model="vendor_id"
-                                            id="frm-whatever"
-                                          >
-                                            <option
-                                              v-for="(
-                                                vendor, index
-                                              ) in allVendors"
-                                              :key="index"
-                                              :value="vendor.id"
-                                            >
-                                              {{ vendor.vendor_name }}
-                                            </option>
-                                          </select>
-                                        </div>
+                                          <span
+                                            class="w-4 h-4 inline-block mr-1 rounded-full border border-grey"
+                                          ></span>
+                                          {{ $t("organization") }} /
+                                          {{ $t("brand") }}</label
+                                        >
                                       </div>
-                                      <!-- register code -->
-                                      <div class="group ml-[20px] w-[50%]">
+                                      <div class="flex items-center mr-4 mb-4">
+                                        <input
+                                          @click="
+                                            selectCategory(
+                                              2,
+                                              'organization',
+                                              'customer'
+                                            )
+                                          "
+                                          :id="
+                                            `radio13` + condition.ConditionID
+                                          "
+                                          type="radio"
+                                          name="radio"
+                                          class="hidden"
+                                        />
                                         <label
-                                          :class="{
-                                            'text-right': lang == 'ar',
-                                          }"
-                                          for="1"
-                                          class="block text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                                          >{{ $t("Parts") }} :</label
+                                          :for="
+                                            `radio13` + condition.ConditionID
+                                          "
+                                          class="flex items-center cursor-pointer"
                                         >
-                                        <select
-                                          class="appearance-none border-select w-full py-1 px-2 bg-white"
-                                          name="whatever"
-                                          v-model="part_id"
-                                          id="frm-whatever"
+                                          <span
+                                            class="w-4 h-4 inline-block mr-1 rounded-full border border-grey"
+                                          ></span>
+                                          {{ $t("organization") }} /
+                                          {{ $t("customer") }}</label
                                         >
-                                          <option
-                                            v-for="(part, index) in allParts"
-                                            :key="index"
-                                            :value="part.id"
-                                          >
-                                            {{ part.PartNameEN }}
-                                          </option>
-                                        </select>
-                                      </div>
-                                    </div>
-                                    <!--Start date and End Date-->
-                                    <div class="flex mt-[20px]">
-                                      <div class="group w-[50%]">
-                                        <label
-                                          :class="{
-                                            'text-right': lang == 'ar',
-                                          }"
-                                          for="1"
-                                          class="block text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                                          >{{
-                                            $t("Price || Percentage")
-                                          }}
-                                          :</label
-                                        >
-                                        <div>
-                                          <select
-                                            class="appearance-none border-select w-full py-1 px-2 bg-white"
-                                            name="whatever"
-                                            v-model="status"
-                                            id="frm-whatever"
-                                          >
-                                            <option value="price">
-                                              {{ $t("Price") }}
-                                            </option>
-                                            <option value="percentage">
-                                              {{ $t("Percentage") }}
-                                            </option>
-                                          </select>
-                                        </div>
-                                      </div>
-                                      <div
-                                        v-if="status == 'price'"
-                                        class="group w-[50%] ml-[20px]"
-                                      >
-                                        <label
-                                          :class="{
-                                            'text-right': lang == 'ar',
-                                          }"
-                                          for="1"
-                                          class="block text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                                          >{{ $t("Price") }} :</label
-                                        >
-                                        <div>
-                                          <input
-                                            v-model="price"
-                                            @keypress="isNumber($event)"
-                                            class="date-input w-[100%] p-[5px]"
-                                            type="text"
-                                          />
-                                        </div>
                                       </div>
 
-                                      <div
-                                        v-if="status == 'percentage'"
-                                        class="group w-[50%] ml-[20px]"
-                                      >
+                                      <div class="flex items-center mr-4 mb-4">
+                                        <input
+                                          @click="
+                                            selectCategory(
+                                              3,
+                                              'organization',
+                                              'category',
+                                              'brand'
+                                            )
+                                          "
+                                          :id="
+                                            `radio14` + condition.ConditionID
+                                          "
+                                          type="radio"
+                                          name="radio"
+                                          class="hidden"
+                                        />
                                         <label
-                                          :class="{
-                                            'text-right': lang == 'ar',
-                                          }"
-                                          for="1"
-                                          class="block text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                                          >{{ $t("Percentage") }} :</label
+                                          :for="
+                                            `radio14` + condition.ConditionID
+                                          "
+                                          class="flex items-center cursor-pointer"
                                         >
-                                        <div>
-                                          <input
-                                            v-model="percentage"
-                                            @keypress="isNumber($event)"
-                                            class="date-input w-[100%] p-[5px]"
-                                            type="text"
-                                          />
+                                          <span
+                                            class="w-4 h-4 inline-block mr-1 rounded-full border border-grey"
+                                          ></span>
+                                          {{ $t("organization") }} /
+                                          {{ $t("category") }} /
+                                          {{ $t("brand") }}</label
+                                        >
+                                      </div>
+                                      <div class="flex items-center mr-4 mb-4">
+                                        <input
+                                          @click="
+                                            selectCategory(
+                                              4,
+                                              'organization',
+                                              'category',
+                                              'brand',
+                                              'customer'
+                                            )
+                                          "
+                                          :id="
+                                            `radio15` + condition.ConditionID
+                                          "
+                                          type="radio"
+                                          name="radio"
+                                          class="hidden"
+                                        />
+                                        <label
+                                          for="radio15"
+                                          class="flex items-center cursor-pointer"
+                                        >
+                                          <span
+                                            class="w-4 h-4 inline-block mr-1 rounded-full border border-grey"
+                                          ></span>
+                                          {{ $t("organization") }} /
+                                          {{ $t("category") }} /
+                                          {{ $t("brand") }} /
+                                          {{ $t("customer") }}</label
+                                        >
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <!-- table  -->
+                                  <div class="container mx-auto px-4 sm:px-8">
+                                    <div class="py-8">
+                                      <div
+                                        class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto"
+                                      >
+                                        <div
+                                          class="inline-block min-w-full shadow-md rounded-lg overflow-hidden"
+                                        >
+                                          <table
+                                            class="min-w-full leading-normal"
+                                          >
+                                            <thead>
+                                              <tr>
+                                                <th
+                                                  v-if="organization"
+                                                  class="px-5 py-3 text-center border-b-2 border-gray-200 bg-gray-100"
+                                                >
+                                                  {{ $t("organization") }}
+                                                </th>
+                                                <th
+                                                  class="px-5 py-3 text-center border-b-2 border-gray-200 bg-gray-100"
+                                                  v-if="part"
+                                                >
+                                                  {{ $t("Parts") }}
+                                                </th>
+                                                <th
+                                                  v-if="category"
+                                                  class="px-5 py-3 text-center border-b-2 border-gray-200 bg-gray-100"
+                                                >
+                                                  {{ $t("category") }}
+                                                </th>
+                                                <th
+                                                  v-if="brand"
+                                                  class="px-5 py-3 text-center border-b-2 border-gray-200 bg-gray-100"
+                                                >
+                                                  {{ $t("brand") }}
+                                                </th>
+                                                <th
+                                                  v-if="customer"
+                                                  class="px-5 py-3 text-center border-b-2 border-gray-200 bg-gray-100"
+                                                >
+                                                  {{ $t("customer") }}
+                                                </th>
+                                                <th
+                                                  class="px-5 text-center py-3 border-b-2 border-gray-200 bg-gray-100"
+                                                >
+                                                  {{ $t("value") }}
+                                                </th>
+                                                <th
+                                                  class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100"
+                                                >
+                                                  {{ $t("start_date") }}
+                                                </th>
+                                                <th
+                                                  class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100"
+                                                >
+                                                  {{ $t("end_date") }}
+                                                </th>
+                                              </tr>
+                                            </thead>
+                                            <tbody>
+                                              <tr>
+                                                <td
+                                                  v-if="part"
+                                                  class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                                                >
+                                                  <select
+                                                    v-model="part_id"
+                                                    class="border-select w-[100%] w-full py-1 px-2 bg-white"
+                                                    name="whatever"
+                                                    id="frm-whatever"
+                                                  >
+                                                    <option
+                                                      value="Select Branch"
+                                                      disabled
+                                                    >
+                                                      Select Part Number
+                                                    </option>
+                                                    <option
+                                                      v-for="(
+                                                        parting, index
+                                                      ) in allParts"
+                                                      :key="index"
+                                                      :value="parting.id"
+                                                    >
+                                                      {{ parting.PartNum }}
+                                                    </option>
+                                                  </select>
+                                                </td>
+                                                <td
+                                                  v-if="organization"
+                                                  class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                                                >
+                                                  <input
+                                                    id="2"
+                                                    v-model="organizationn"
+                                                    type="text"
+                                                    :class="{
+                                                      'rounded-lg border-2 w-[100%] border-red-500 font-bold p-2 my-2 text-center':
+                                                        emptyField.includes(
+                                                          'organizationn'
+                                                        ),
+                                                    }"
+                                                    class="peer h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                                                  />
+                                                  <p
+                                                    :class="{
+                                                      'text-right':
+                                                        lang == 'ar',
+                                                    }"
+                                                    v-if="
+                                                      emptyField.includes(
+                                                        'organizationn'
+                                                      )
+                                                    "
+                                                    class="error-message text-left mt-[12px] ml-[4px]"
+                                                  >
+                                                    {{ $t("organization") }}
+                                                    {{ $t("required") }}
+                                                  </p>
+                                                </td>
+                                                <td
+                                                  v-if="category"
+                                                  class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                                                >
+                                                  <input
+                                                    id="2"
+                                                    v-model="categoryy"
+                                                    type="text"
+                                                    class="peer h-10 w-full w-[100%] rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                                                  />
+                                                </td>
+                                                <td
+                                                  v-if="brand"
+                                                  class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                                                >
+                                                  <select
+                                                    v-model="brand_id"
+                                                    class="border-select w-full w-[100%] py-1 px-2 bg-white"
+                                                    name="whatever"
+                                                    id="frm-whatever"
+                                                  >
+                                                    <option
+                                                      value="Select Branch"
+                                                      disabled
+                                                    >
+                                                      Select Brand
+                                                    </option>
+                                                    <option
+                                                      v-for="(
+                                                        branding, index
+                                                      ) in brands"
+                                                      :key="index"
+                                                      :value="branding.random_id"
+                                                    >
+                                                      {{ branding.brand }}
+                                                    </option>
+                                                  </select>
+                                                </td>
+                                                <td
+                                                  v-if="customer"
+                                                  class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                                                >
+                                                  <select
+                                                    v-model="customer_id"
+                                                    class="border-select w-full w-[100%] py-1 px-2 bg-white"
+                                                    name="whatever"
+                                                    id="frm-whatever"
+                                                  >
+                                                    <option
+                                                      value="Select Branch"
+                                                      disabled
+                                                    >
+                                                      Select Customer
+                                                    </option>
+                                                    <option
+                                                      v-for="(
+                                                        customer, index
+                                                      ) in allCustomers"
+                                                      :key="index"
+                                                      :value="customer.id"
+                                                    >
+                                                      {{
+                                                        customer.customer_name
+                                                      }}
+                                                    </option>
+                                                  </select>
+                                                </td>
+                                                <td
+                                                  class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                                                >
+                                                  <input
+                                                    v-model="value"
+                                                    id="2"
+                                                    @keypress="isNumber($event)"
+                                                    :class="{
+                                                      'rounded-lg border-2  border-red-500 font-bold p-2 my-2 text-center':
+                                                        emptyField.includes(
+                                                          'organizationn'
+                                                        ),
+                                                    }"
+                                                    type="number"
+                                                    class="peer w-[100%] h-10 rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                                                  />
+                                                  <p
+                                                    :class="{
+                                                      'text-right':
+                                                        lang == 'ar',
+                                                    }"
+                                                    v-if="
+                                                      emptyField.includes(
+                                                        'value'
+                                                      )
+                                                    "
+                                                    class="error-message text-left"
+                                                  >
+                                                    {{ $t("value") }}
+                                                    {{ $t("required") }}
+                                                  </p>
+                                                </td>
+                                                <td
+                                                  class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100"
+                                                >
+                                                  <input
+                                                    v-model="start_date"
+                                                    id="2"
+                                                    type="date"
+                                                    class="peer h-10 rounded-md w-[100%] bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                                                  />
+                                                </td>
+                                                <th
+                                                  class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100"
+                                                >
+                                                  <input
+                                                    v-model="end_date"
+                                                    id="2"
+                                                    type="date"
+                                                    class="peer h-10 rounded-md w-[100%] bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                                                  />
+                                                </th>
+                                              </tr>
+                                            </tbody>
+                                          </table>
                                         </div>
                                       </div>
-                                      <!-- register code -->
-                                    </div>
-                                    <div class="group w-[50%] mt-[20px]">
-                                      <label
-                                        :class="{ 'text-right': lang == 'ar' }"
-                                        for="1"
-                                        class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                                        >{{ $t("Expiration date") }}
-                                        <p class="required">*</p>
-                                        :</label
-                                      >
-                                      <div>
-                                        <input
-                                          v-model="expired_date"
-                                          class="date-input w-[100%] p-[5px]"
-                                          type="date"
-                                        />
-                                      </div>
-                                      <p
-                                        :class="{ 'text-right': lang == 'ar' }"
-                                        v-if="
-                                          emptyField.includes('expired_date')
-                                        "
-                                        class="error-message text-left"
-                                      >
-                                        {{ $t("Expiration date") }}
-                                        {{ $t("required") }}
-                                      </p>
                                     </div>
                                   </div>
                                 </div>
@@ -1043,7 +1447,7 @@
                             >&#8203;</span
                           >
                           <div
-                            class="p-[30px] inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[785px] sm:w-full"
+                            class="p-[30px] media inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[785px] sm:w-full"
                             role="dialog"
                             aria-modal="true"
                             aria-labelledby="modal-headline"
@@ -1083,7 +1487,7 @@
                             >
                               <h1 class="flex are-you-sure-delete-text">
                                 {{ $t("Are You Sure You want to Delete ?") }}
-                                {{ condition.Customer }}
+                                {{ condition.Organization }}
                                 <img
                                   class="w-[20px] ml-[15px]"
                                   src="../../assets/imgs/comman/delete-removebg-preview.png"
@@ -1158,7 +1562,7 @@
                 />
               </div>
               <h1 class="text-center no-data">
-                {{ $t("There is No Employee") }}
+                {{ $t("There is No Condition") }}
               </h1>
             </div>
           </div>
@@ -1193,11 +1597,11 @@ export default {
       search: "",
 
       // data
-      customer_id: null,
+      customer_id: 0,
       status: null,
       car_id: null,
       vendor_id: null,
-      part_id: null,
+      part_id: 0,
       expired_date: null,
       price: null,
       percentage: null,
@@ -1209,6 +1613,7 @@ export default {
       allCars: [],
       allVendors: [],
       allParts: [],
+      customerss: [],
 
       // pagination data
       page: 1,
@@ -1222,12 +1627,21 @@ export default {
       loading: true,
       lang: "",
       allBranches: [],
+      brands: [],
       // tables
       organization: true,
+      organizationn: 0,
+      categoryy: "",
+      brand_id: 0,
+      value: "",
+      start_date: "",
+      end_date: "",
+
       category: false,
       brand: false,
       customer: false,
       open: false,
+      part: false,
     };
   },
   mounted() {
@@ -1248,6 +1662,7 @@ export default {
     this.$axios.$get(`/Vendor/GetAllVendor`).then((res) => {
       this.allVendors = res.Vendor.data;
     });
+    //
 
     // bring all parts
 
@@ -1268,8 +1683,25 @@ export default {
 
     // get side bar is open or closed
     this.open = localStorage.getItem("open");
+
+    this.$axios.$post("/Cars/getBrands").then((res) => {
+      this.brands = res.Brands;
+    });
   },
   methods: {
+    // search Data
+    searchData() {
+      this.$axios
+        .$get(`/Condition/GetConditions?search=${this.search}`)
+        .then((res) => {
+          this.conditionTable = res.Conditions.data;
+          this.totalPages = res.Conditions.meta.last_page;
+          this.perPage = res.Conditions.meta.per_page;
+          this.total = res.Conditions.meta.total;
+          this.permissions = res.permission;
+          this.loading = false;
+        });
+    },
     carForCustomer(id) {
       console.log(id.target.value);
       this.$axios
@@ -1278,16 +1710,32 @@ export default {
           this.allCars = res.Cars;
         });
     },
+    // is number
+    // allow numbers only
+    isNumber: function (evt) {
+      evt = evt ? evt : window.event;
+      var charCode = evt.which ? evt.which : evt.keyCode;
+      if (
+        charCode > 31 &&
+        (charCode < 48 || charCode > 57) &&
+        charCode !== 46
+      ) {
+        evt.preventDefault();
+      } else {
+        return true;
+      }
+    },
     // clear data
     clearData() {
       // data
-      (this.customer_id = null),
-        (this.car_id = null),
-        (this.vendor_id = null),
-        (this.part_id = null),
-        (this.expired_date = null),
-        (this.price = null),
-        (this.percentage = null);
+      (this.customer_id = 0),
+        (this.organizationn = null),
+        (this.brand_id = 0),
+        (this.category = null),
+        (this.end_date = null),
+        (this.value = null),
+        (this.start_date = null);
+      this.part_id = 0;
     },
     // toggle modal open and close the modal
     toggleModal(id, status) {
@@ -1299,22 +1747,60 @@ export default {
       if (status == "open") {
         this.$axios.$get(`/Condition/GetConditionByID/${id}`).then((res) => {
           this.customer_id = res.Condition.customer_id;
-          this.vendor_id = res.Condition.vendor_id;
-          this.car_id = res.Condition.car_id;
+          this.brand_id = res.Condition.brand_id;
+          this.categoryy = res.Condition.category;
+          this.organizationn = res.Condition.organization;
+          this.end_date = res.Condition.expiry_date;
+          this.start_date = res.Condition.start_date;
+          this.value = res.Condition.price;
           this.part_id = res.Condition.part_id;
-          this.expiry_date = res.Condition.expiry_date;
-          if (res.Condition.price) {
-            this.status = "price";
-            this.price = res.Condition.price;
-          } else if (res.Condition.percentage) {
-            this.status = "percentage";
-            this.percentage = res.Condition.percentage;
+
+          if (!res.Condition.brand_id) {
+            this.brand_id = "0";
           }
-          this.$axios
-            .$get(`/Condition/CustomerCarByID/${res.Condition.customer_id}`)
-            .then((res) => {
-              this.allCars = res.Cars;
-            });
+          if (!res.Condition.customer_id) {
+            this.customer_id = "0";
+          }
+          if (
+            res.Condition.customer_id &&
+            res.Condition.brand_id &&
+            res.Condition.category
+          ) {
+            this.selectCategory(
+              4,
+              "organization",
+              "category",
+              "brand",
+              "customer"
+            );
+            let selected = document.getElementById("radio15" + id);
+            console.log(selected, "select");
+            selected.checked = true;
+          } else if (res.Condition.customer_id) {
+            let selected = document.getElementById("radio13" + id);
+            console.log(selected, "select");
+            selected.checked = true;
+            this.selectCategory(2, "organization", "customer");
+          } else if (res.Condition.brand_id) {
+            let selected = document.getElementById("radio12" + id);
+            console.log(selected, "select");
+            selected.checked = true;
+            this.selectCategory(2, "organization", "brand");
+          } else if (res.Condition.brand_id && res.Condition.category) {
+            let selected = document.getElementById("radio14" + id);
+            console.log(selected, "select");
+            selected.checked = true;
+            this.selectCategory(3, "organization", "category", "brand");
+          } else if (res.Condition.category) {
+            let selected = document.getElementById("radio11" + id);
+            console.log(selected, "select");
+            selected.checked = true;
+            this.selectCategory(2, "organization", "category");
+          } else if (res.Condition.part_id) {
+            let selected = document.getElementById("radio0" + id);
+            selected.checked = true;
+            this.selectCategory(2, "part");
+          }
         });
       }
       // Select tabs and tab buttons
@@ -1417,53 +1903,69 @@ export default {
       if (status == 2) {
         if (org == "organization") {
           this.organization = true;
+          this.part = false;
+        }
+        if (org == "part") {
+          this.part = true;
+          this.organization = false;
+          this.category = false;
         }
         if (type1 == "customer") {
           this.customer = true;
           this.brand = false;
           this.category = false;
+          this.part = false;
         }
         if (type1 == "brand") {
           this.brand = true;
           this.customer = false;
           this.category = false;
+          this.part = false;
         }
         if (type1 == "category") {
           this.category = true;
           this.brand = false;
           this.customer = false;
+          this.part = false;
         }
       }
       if (status == 3) {
         if (org == "organization") {
           this.organization = true;
+          this.part = false;
         }
 
         if (type1 == "category") {
           this.category = true;
           this.customer = false;
+          this.part = false;
         }
 
         if (type2 == "brand") {
           this.brand = true;
           this.customer = false;
+          this.part = false;
         }
       }
       if (status == 4) {
         if (org == "organization") {
           this.organization = true;
+          this.part = false;
         }
 
         if (type1 == "category") {
           this.category = true;
+          this.part = false;
         }
 
         if (type2 == "brand") {
           this.brand = true;
+          this.part = false;
         }
 
         if (type3 == "customer") {
           this.customer = true;
+          this.part = false;
         }
       }
     },
@@ -1522,7 +2024,7 @@ export default {
     },
     // post and add condition
     postCondition(status) {
-      const requiredFields = ["expired_date"];
+      const requiredFields = ["value", "start_date", "end_date"];
 
       const emptyFields = requiredFields.filter(
         (field) => this[field] === "" || this[field] == null
@@ -1537,15 +2039,13 @@ export default {
           let formdata = new FormData();
 
           formdata.append("customer_id", this.customer_id);
-          formdata.append("vendor_id", this.vendor_id);
+          formdata.append("organization", this.organizationn);
+          formdata.append("brand_id", this.brand_id);
+          formdata.append("price", this.value);
+          formdata.append("category", this.categoryy);
+          formdata.append("start_date", this.start_date);
+          formdata.append("expiry_date", this.end_date);
           formdata.append("part_id", this.part_id);
-          formdata.append("car_id", this.car_id);
-          formdata.append("expiry_date", this.expired_date);
-          if (this.price != null) {
-            formdata.append("price", this.price);
-          } else if (this.percentage != null) {
-            formdata.append("percentage", this.percentage);
-          }
 
           this.$axios
             .$post(`/Condition/CreateCondition`, formdata)
@@ -1576,7 +2076,7 @@ export default {
     },
     // edit condition
     editCondition() {
-      const requiredFields = ["expired_date"];
+      const requiredFields = ["value", "start_date", "end_date"];
 
       const emptyFields = requiredFields.filter(
         (field) => this[field] === "" || this[field] == null
@@ -1590,15 +2090,14 @@ export default {
         let formdata = new FormData();
 
         formdata.append("customer_id", this.customer_id);
-        formdata.append("vendor_id", this.vendor_id);
+        formdata.append("organization", this.organizationn);
+        formdata.append("brand_id", this.brand_id);
+        formdata.append("price", this.value);
+        formdata.append("category", this.categoryy);
+        formdata.append("start_date", this.start_date);
+        formdata.append("expiry_date", this.end_date);
         formdata.append("part_id", this.part_id);
-        formdata.append("car_id", this.car_id);
-        formdata.append("expiry_date", this.expired_date);
-        if (this.price != null) {
-          formdata.append("price", this.price);
-        } else if (this.percentage != null) {
-          formdata.append("percentage", this.percentage);
-        }
+
         this.$axios
           .$post(`/Condition/UpdateCondition/${this.id}`, formdata)
           .then((res) => {
@@ -1664,6 +2163,19 @@ export default {
                 path: "/conditions",
                 query: { page: this.$route.query.page - 1 },
               });
+            } else {
+              this.$axios
+                .$get(
+                  `/Condition/GetConditions?page=${this.$route.query.page || 1}`
+                )
+                .then((res) => {
+                  this.conditionTable = res.Conditions.data;
+                  this.totalPages = res.Conditions.meta.last_page;
+                  this.perPage = res.Conditions.meta.per_page;
+                  this.total = res.Conditions.meta.total;
+                  this.permissions = res.permission;
+                  this.loading = false;
+                });
             }
             // close the modal
             document
@@ -2063,5 +2575,11 @@ input[type="radio"]:checked + label {
   padding-left: 8px;
   padding-left: 14px;
   padding-top: 13px;
+}
+@media (max-width: 1550px) {
+  .media {
+    height: 650px;
+    overflow-y: auto;
+  }
 }
 </style>

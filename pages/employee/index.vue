@@ -65,7 +65,7 @@
                       >&#8203;</span
                     >
                     <div
-                      class="p-[30px] inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[776px] sm:w-full"
+                      class="p-[30px] media inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[776px] sm:w-full"
                       role="dialog"
                       aria-modal="true"
                       aria-labelledby="modal-headline"
@@ -103,16 +103,18 @@
                         <div
                           data-tabopen="Informations"
                           @click="show('Informations')"
-                          class="tabbtn tab-style cursor-pointer px-2 py-1 font-medium"
+                          :class="{ 'tab-style': showInformation }"
+                          class="tabbtn cursor-pointer px-2 py-1 font-medium"
                         >
                           {{ $t("Informations") }}
                         </div>
                         <div
-                          data-tabopen="Payment"
-                          @click="show('Payment')"
+                          data-tabopen="permission"
+                          @click="show('permission')"
+                          :class="{ 'tab-style': showPermission }"
                           class="tabbtn tab-un-active cursor-pointer px-2 py-1 ml-[26px]"
                         >
-                          {{ $t("Payment") }}
+                          {{ $t("Permission") }}
                         </div>
                       </div>
 
@@ -388,23 +390,26 @@
                                       name="whatever"
                                       id="frm-whatever"
                                     >
-                                      <option value="Requester">
+                                      <option value="1">
+                                        {{ $t("Admin") }}
+                                      </option>
+                                      <option value="2">
                                         {{ $t("Requester") }} &hellip;
                                       </option>
-                                      <option value="Delivery">
-                                        {{ $t("Delivery") }}
-                                      </option>
-                                      <option value="Inventory">
+                                      <option value="3">
                                         {{ $t("Inventory") }}
                                       </option>
-                                      <option value="purchases">
+                                      <option value="4">
+                                        {{ $t("Delivery") }}
+                                      </option>
+                                      <option value="5">
+                                        {{ $t("Pricing") }}
+                                      </option>
+                                      <option value="6">
                                         {{ $t("purchases") }}
                                       </option>
-                                      <option value="Prancing">
-                                        {{ $t("Prancing") }}
-                                      </option>
-                                      <option value="Admin">
-                                        {{ $t("Admin") }}
+                                      <option value="7">
+                                        {{ $t("Financial") }}
                                       </option>
                                     </select>
 
@@ -414,22 +419,6 @@
                                       alt=""
                                     />
                                   </div>
-                                </div>
-                                <!-- register code -->
-                                <div class="group ml-[20px] w-[50%]">
-                                  <label
-                                    :class="{ 'text-right': lang == 'ar' }"
-                                    for="1"
-                                    class="block text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                                    >{{ $t("Employee Position") }} :</label
-                                  >
-                                  <input
-                                    id="1"
-                                    type="text"
-                                    v-model="employee_position"
-                                    placeholder="000012"
-                                    class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
-                                  />
                                 </div>
                               </div>
                               <!--Branch and Area-->
@@ -604,123 +593,618 @@
                           'cusror-disabled': loading,
                           'text-right': lang == 'ar',
                         }"
-                        v-if="showPayemnt"
+                        v-if="showPermission"
                         id="Payment"
                         class="tab mt-1 items-center"
                       >
-                        <h2 class="font-semibold text-2xl mt-[20px]">
-                          {{ $t("payment") }} :
+                        <h2
+                          :class="[
+                            {
+                              'text-right': lang == 'ar',
+                            },
+                          ]"
+                          class="font-semibold text-left text-2xl mt-[20px]"
+                        >
+                          {{ $t("Permission") }} :
                         </h2>
-                        <div class="form-style p-[20px] mt-[20px]">
-                          <div class="flex justify-space-between">
-                            <h1 class="active-user">
-                              {{ $t("Credit limit") }}
-                            </h1>
-                            <button
-                              class="flex ltr items-center transition ease-in-out duration-300 w-10 h-4 rounded-full focus:outline-none"
-                              :class="{
-                                'bg-[#1C2E50]': activeCreditLimit,
-                              }"
-                              @click="activeCreditLimit = !activeCreditLimit"
-                            >
-                              <div
-                                class="transition ease-in-out duration-300 rounded-full h-5 w-5 bg-white shadow border"
-                                :class="{
-                                  'transform translate-x-full ':
-                                    activeCreditLimit,
-                                }"
-                              ></div>
-                            </button>
+                        <div class="box pb-[20px]">
+                          <!-- bg row -->
+                          <div class="bg-row">
+                            <div class="flex justify-between items-center">
+                              <!-- Select All -->
+                              <div>
+                                <div class="form__privacy">
+                                  <input
+                                    id="selectAll"
+                                    name="checkbox"
+                                    @change="SelectAll"
+                                    type="checkbox"
+                                    required
+                                    checked
+                                  />
+                                  <label
+                                    class="permission-label"
+                                    for="checkbox"
+                                    >{{ $t("Select All") }}</label
+                                  >
+                                </div>
+                              </div>
+                              <!-- Can View -->
+                              <div>
+                                <label class="permission-label" for="">
+                                  {{ $t("View") }}</label
+                                >
+                                <input
+                                  v-model="isView"
+                                  @input="ViewAll"
+                                  id="viewAll"
+                                  class="input-switch"
+                                  type="checkbox"
+                                />
+                                <label for="viewAll" class="swicthh">
+                                  Toggle
+                                </label>
+                              </div>
+                              <!-- Can ADD -->
+                              <div>
+                                <label class="permission-label" for="">
+                                  {{ $t("Add") }}</label
+                                >
+                                <input
+                                  class="input-switch"
+                                  id="add"
+                                  @input="addAll"
+                                  type="checkbox"
+                                />
+                                <label for="add" class="swicthh">
+                                  Toggle
+                                </label>
+                              </div>
+                              <!-- Can Edit -->
+                              <div>
+                                <label class="permission-label" for="">
+                                  {{ $t("Edit") }}</label
+                                >
+                                <input
+                                  @input="editAll"
+                                  id="edit"
+                                  class="input-switch"
+                                  type="checkbox"
+                                />
+                                <label for="edit" class="swicthh">
+                                  Toggle
+                                </label>
+                              </div>
+                              <!-- Can Delete -->
+                              <div>
+                                <label class="permission-label" for="">
+                                  {{ $t("Delete") }}</label
+                                >
+                                <input
+                                  @input="deleteAll"
+                                  id="delete"
+                                  class="input-switch"
+                                  type="checkbox"
+                                />
+                                <label for="delete" class="swicthh">
+                                  Toggle
+                                </label>
+                              </div>
+                            </div>
                           </div>
-                          <!-- credit limit -->
-                          <div
-                            :disabled="disabled"
-                            :class="{
-                              'cursor-diabled': activeCreditLimit == false,
-                            }"
-                            class="group mt-[20px]"
-                          >
-                            <label
-                              for="1"
-                              class="block label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                              >{{ $t("Credit limit") }} :</label
+                          <div class="container mx-auto">
+                            <!-- Customer -->
+                            <div
+                              class="grid box-grey grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 p-[15px] mt-[12px] ml-[10px] mr-[10px]"
                             >
-                            <input
-                              id="1"
-                              type="text"
-                              v-model="start_date"
-                              placeholder="20.000 L.E"
-                              :disabled="disabled"
-                              class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
-                            />
-                          </div>
+                              <!-- customer -->
 
-                          <!-- payment -->
-                          <div class="flex justify-space-between mt-[20px]">
-                            <h1 class="active-user">
-                              {{ $t("Payment") }}
-                            </h1>
-                            <button
-                              class="flex ltr items-center transition ease-in-out duration-300 w-10 h-4 rounded-full focus:outline-none"
-                              :class="{
-                                'bg-[#1C2E50]': activePayment,
-                              }"
-                              @click="activePayment = !activePayment"
-                            >
+                              <!-- select all -->
                               <div
-                                class="transition ease-in-out duration-300 rounded-full h-5 w-5 bg-white shadow border"
-                                :class="{
-                                  'transform translate-x-full ': activePayment,
-                                }"
-                              ></div>
-                            </button>
-                          </div>
+                                :class="{ 'text-right': lang == 'ar' }"
+                                class="text-left"
+                              >
+                                <input
+                                  id="customer"
+                                  name="checkbox"
+                                  type="checkbox"
+                                  required
+                                  checked
+                                />
+                                <label
+                                  class="permission-label"
+                                  for="checkbox"
+                                  >{{ $t("Customer") }}</label
+                                >
+                              </div>
 
-                          <div
-                            :disabled="disabledPayment"
-                            :class="{
-                              'cursor-diabled': activePayment == false,
-                            }"
-                            class="group mt-[20px]"
-                          >
-                            <label
-                              for="1"
-                              class="block label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                              >{{ $t("Payment") }} :</label
+                              <!-- can delete -->
+                              <div>
+                                <input
+                                  id="ViewCustomer"
+                                  name="checkbox"
+                                  @input="
+                                    checkStatus(
+                                      'can_view_customer',
+                                      'ViewCustomer'
+                                    )
+                                  "
+                                  type="checkbox"
+                                  required
+                                />
+                              </div>
+
+                              <!-- can View -->
+                              <div>
+                                <input
+                                  id="addcustomer"
+                                  name="checkbox"
+                                  type="checkbox"
+                                  @input="
+                                    checkStatus(
+                                      'can_add_customer',
+                                      'addcustomer'
+                                    )
+                                  "
+                                  required
+                                />
+                              </div>
+                              <!-- can Add -->
+                              <div>
+                                <input
+                                  id="editcustomer"
+                                  name="checkbox"
+                                  type="checkbox"
+                                  @input="
+                                    checkStatus(
+                                      'can_edit_customer',
+                                      'editcustomer'
+                                    )
+                                  "
+                                  required
+                                />
+                              </div>
+                              <!-- can Edit  -->
+                              <div>
+                                <input
+                                  id="deletecustomer"
+                                  name="checkbox"
+                                  type="checkbox"
+                                  @input="
+                                    checkStatus(
+                                      'can_delete_customer',
+                                      'deletecustomer'
+                                    )
+                                  "
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <!-- vendor -->
+                            <div
+                              class="grid box-grey grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 p-[15px] mt-[12px] ml-[10px] mr-[10px]"
                             >
-                            <input
-                              id="1"
-                              type="text"
-                              v-model="end_date"
-                              placeholder="14%"
-                              :disabled="disabledPayment"
-                              class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
-                            />
+                              <!-- customer -->
+                              <!-- select all -->
+                              <div
+                                :class="{ 'text-right': lang == 'ar' }"
+                                class="text-left"
+                              >
+                                <input
+                                  id="vendor"
+                                  name="checkbox"
+                                  type="checkbox"
+                                  required
+                                  checked
+                                />
+                                <label
+                                  class="permission-label"
+                                  for="checkbox"
+                                  >{{ $t("Vendor") }}</label
+                                >
+                              </div>
+
+                              <!-- can delete -->
+                              <div>
+                                <input
+                                  id="viewvendor"
+                                  name="checkbox"
+                                  type="checkbox"
+                                  @input="
+                                    checkStatus('can_view_vendor', 'viewvendor')
+                                  "
+                                  required
+                                />
+                              </div>
+
+                              <!-- can View -->
+                              <div>
+                                <input
+                                  id="addvendor"
+                                  name="checkbox"
+                                  type="checkbox"
+                                  @input="
+                                    checkStatus('can_add_vendor', 'addvendor')
+                                  "
+                                  required
+                                />
+                              </div>
+                              <!-- can Add -->
+                              <div>
+                                <input
+                                  id="editvendor"
+                                  name="checkbox"
+                                  type="checkbox"
+                                  @input="
+                                    checkStatus('can_edit_vendor', 'editvendor')
+                                  "
+                                  required
+                                />
+                              </div>
+                              <!-- can Edit  -->
+                              <div>
+                                <input
+                                  id="deletevendor"
+                                  name="checkbox"
+                                  type="checkbox"
+                                  @input="
+                                    checkStatus(
+                                      'can_delete_vendor',
+                                      'deletevendor'
+                                    )
+                                  "
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <!-- Employee -->
+                            <div
+                              class="grid box-grey grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 p-[15px] mt-[12px] ml-[10px] mr-[10px]"
+                            >
+                              <!-- customer -->
+
+                              <!-- select all -->
+                              <div
+                                :class="{ 'text-right': lang == 'ar' }"
+                                class="text-left"
+                              >
+                                <input
+                                  id="employee"
+                                  name="checkbox"
+                                  type="checkbox"
+                                  required
+                                  checked
+                                />
+                                <label
+                                  class="permission-label"
+                                  for="checkbox"
+                                  >{{ $t("Employee") }}</label
+                                >
+                              </div>
+
+                              <!-- can delete -->
+                              <div>
+                                <input
+                                  id="ViewEmployee"
+                                  name="checkbox"
+                                  type="checkbox"
+                                  @input="
+                                    checkStatus(
+                                      'can_view_employee',
+                                      'ViewEmployee'
+                                    )
+                                  "
+                                  required
+                                />
+                              </div>
+
+                              <!-- can View -->
+                              <div>
+                                <input
+                                  id="addEmployeee"
+                                  name="checkbox"
+                                  type="checkbox"
+                                  @input="
+                                    checkStatus(
+                                      'can_add_employee',
+                                      'addEmployeee'
+                                    )
+                                  "
+                                  required
+                                />
+                              </div>
+                              <!-- can Add -->
+                              <div>
+                                <input
+                                  id="editEmployee"
+                                  name="checkbox"
+                                  type="checkbox"
+                                  @input="
+                                    checkStatus(
+                                      'can_edit_employee',
+                                      'editEmployee'
+                                    )
+                                  "
+                                  required
+                                />
+                              </div>
+                              <!-- can Edit  -->
+                              <div>
+                                <input
+                                  id="deleteEmployeee"
+                                  name="checkbox"
+                                  type="checkbox"
+                                  @input="
+                                    checkStatus(
+                                      'can_delete_employee',
+                                      'deleteEmployeee'
+                                    )
+                                  "
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <!-- Parts -->
+                            <div
+                              class="grid box-grey grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 p-[15px] mt-[12px] ml-[10px] mr-[10px]"
+                            >
+                              <!-- customer -->
+
+                              <!-- select all -->
+                              <div
+                                :class="{ 'text-right': lang == 'ar' }"
+                                class="text-left"
+                              >
+                                <input
+                                  id="parts"
+                                  name="checkbox"
+                                  type="checkbox"
+                                  required
+                                  checked
+                                />
+                                <label
+                                  class="permission-label"
+                                  for="checkbox"
+                                  >{{ $t("Parts") }}</label
+                                >
+                              </div>
+
+                              <!-- can delete -->
+                              <div>
+                                <input
+                                  id="viewParts"
+                                  name="checkbox"
+                                  type="checkbox"
+                                  @input="
+                                    checkStatus('can_view_parts', 'viewParts')
+                                  "
+                                  required
+                                />
+                              </div>
+
+                              <!-- can View -->
+                              <div>
+                                <input
+                                  id="addParts"
+                                  name="checkbox"
+                                  type="checkbox"
+                                  @input="
+                                    checkStatus('can_add_parts', 'addParts')
+                                  "
+                                  required
+                                />
+                              </div>
+                              <!-- can Add -->
+                              <div>
+                                <input
+                                  id="editParts"
+                                  name="checkbox"
+                                  type="checkbox"
+                                  @input="
+                                    checkStatus('can_edit_parts', 'editParts')
+                                  "
+                                  required
+                                />
+                              </div>
+                              <!-- can Edit  -->
+                              <div>
+                                <input
+                                  id="deleteParts"
+                                  name="checkbox"
+                                  type="checkbox"
+                                  @input="
+                                    checkStatus(
+                                      'can_delete_parts',
+                                      'deleteParts'
+                                    )
+                                  "
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <!-- Condition -->
+                            <div
+                              class="grid box-grey grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 p-[15px] mt-[12px] ml-[10px] mr-[10px]"
+                            >
+                              <!-- customer -->
+
+                              <!-- select all -->
+                              <div
+                                :class="{ 'text-right': lang == 'ar' }"
+                                class="text-left"
+                              >
+                                <input
+                                  id="condition"
+                                  name="checkbox"
+                                  type="checkbox"
+                                  required
+                                  checked
+                                />
+                                <label
+                                  class="permission-label"
+                                  for="checkbox"
+                                  >{{ $t("Condition") }}</label
+                                >
+                              </div>
+
+                              <!-- can delete -->
+                              <div>
+                                <input
+                                  id="viewcondition"
+                                  name="checkbox"
+                                  type="checkbox"
+                                  @input="
+                                    checkStatus(
+                                      'can_view_condition',
+                                      'viewcondition'
+                                    )
+                                  "
+                                  required
+                                />
+                              </div>
+
+                              <!-- can View -->
+                              <div>
+                                <input
+                                  id="addcondition"
+                                  name="checkbox"
+                                  type="checkbox"
+                                  @input="
+                                    checkStatus(
+                                      'can_add_condition',
+                                      'addcondition'
+                                    )
+                                  "
+                                  required
+                                />
+                              </div>
+                              <!-- can Add -->
+                              <div>
+                                <input
+                                  id="editcondition"
+                                  name="checkbox"
+                                  type="checkbox"
+                                  @input="
+                                    checkStatus(
+                                      'can_edit_condition',
+                                      'editcondition'
+                                    )
+                                  "
+                                  required
+                                />
+                              </div>
+                              <!-- can Edit  -->
+                              <div>
+                                <input
+                                  id="deletecondition"
+                                  name="checkbox"
+                                  @input="
+                                    checkStatus(
+                                      'can_delete_condition',
+                                      'deletecondition'
+                                    )
+                                  "
+                                  type="checkbox"
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <!-- Location -->
+                            <div
+                              class="grid box-grey grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 p-[15px] mt-[12px] ml-[10px] mr-[10px]"
+                            >
+                              <!-- customer -->
+
+                              <!-- select all -->
+                              <div
+                                :class="{ 'text-right': lang == 'ar' }"
+                                class="text-left"
+                              >
+                                <input
+                                  id="location"
+                                  name="checkbox"
+                                  type="checkbox"
+                                  required
+                                  checked
+                                />
+                                <label
+                                  class="permission-label"
+                                  for="checkbox"
+                                  >{{ $t("Locations") }}</label
+                                >
+                              </div>
+
+                              <!-- can delete -->
+                              <div>
+                                <input
+                                  id="viewlocation"
+                                  name="checkbox"
+                                  type="checkbox"
+                                  @input="
+                                    checkStatus(
+                                      'can_view_location',
+                                      'viewlocation'
+                                    )
+                                  "
+                                  required
+                                />
+                              </div>
+
+                              <!-- can View -->
+                              <div>
+                                <input
+                                  id="addlocation"
+                                  name="checkbox"
+                                  type="checkbox"
+                                  @input="
+                                    checkStatus(
+                                      'can_add_location',
+                                      'addlocation'
+                                    )
+                                  "
+                                  required
+                                />
+                              </div>
+                              <!-- can Add -->
+                              <div>
+                                <input
+                                  id="editlocation"
+                                  name="checkbox"
+                                  type="checkbox"
+                                  @input="
+                                    checkStatus(
+                                      'can_edit_location',
+                                      'editlocation'
+                                    )
+                                  "
+                                  required
+                                />
+                              </div>
+                              <!-- can Edit  -->
+                              <div>
+                                <input
+                                  id="deletelocation"
+                                  name="checkbox"
+                                  type="checkbox"
+                                  @input="
+                                    checkStatus(
+                                      'can_delete_location',
+                                      'deletelocation'
+                                    )
+                                  "
+                                  required
+                                />
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
 
-                      <div
-                        :disabled="loading"
-                        :class="[
-                          {
-                            'cusror-disabled': loading,
-                            'text-right': lang == 'ar',
-                          },
-                        ]"
-                        v-if="showVichels"
-                        id="Vehicles"
-                        class="tab mt-1 items-center"
-                      >
-                        <h2 class="font-semibold text-2xl mt-[20px]">
-                          {{ $t("Vehicles Active") }} :
-                        </h2>
-                      </div>
                       <!-- tabs end -->
                       <div
                         :disabled="loading"
                         :class="{ 'cusror-disabled': loading }"
-                        class="flex mb-[30px]"
+                        class="flex mb-[30px] mt-[12px]"
                       >
                         <div class="w-[50%]">
                           <button
@@ -747,7 +1231,6 @@
                   </div>
                 </div>
               </div>
-
               <div
                 :class="{
                   'w-fulll': !permissions.includes('can_add_member'),
@@ -778,6 +1261,7 @@
                       class="font-bold uppercase rounded-full w-full py-4 pl-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:text-sm text-xs"
                       type="text"
                       v-model="search"
+                      @input="searchData"
                       :placeholder="$t('search')"
                     />
 
@@ -936,6 +1420,16 @@
                         {{ $t("Total time") }}
                       </p>
                     </td>
+                    <td
+                      v-if="permissions.includes('can_update_member')"
+                      class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+                    >
+                      {{ $t("Activation Status") }}
+                    </td>
+
+                    <td
+                      class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+                    ></td>
 
                     <td
                       v-if="permissions.includes('can_update_member')"
@@ -991,13 +1485,27 @@
                         {{ employee.Effiency }}
                       </p>
                     </td>
-
                     <td
                       class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
                     >
                       <p class="text-gray-900 whitespace-no-wrap">
                         {{ employee.TotalTime }}
                       </p>
+                    </td>
+
+                    <td
+                      class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+                    >
+                      <input
+                        class="input-switch"
+                        :id="'switch-' + index"
+                        :checked="employee.Status == 1"
+                        @change="toggleActivation(index, employee.EmployeeId)"
+                        type="checkbox"
+                      />
+                      <label :for="'switch-' + index" class="swicthh">
+                        Toggle
+                      </label>
                     </td>
 
                     <td
@@ -1035,7 +1543,7 @@
                             >&#8203;</span
                           >
                           <div
-                            class="p-[30px] inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[776px] sm:w-full"
+                            class="p-[30px] media inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[776px] sm:w-full"
                             role="dialog"
                             aria-modal="true"
                             aria-labelledby="modal-headline"
@@ -1081,10 +1589,10 @@
                               </div>
                               <div
                                 data-tabopen="Payment"
-                                @click="show('Payment')"
+                                @click="show('permission')"
                                 class="tabbtn tab-un-active cursor-pointer px-2 py-1 ml-[26px]"
                               >
-                                {{ $t("Payment") }}
+                                {{ $t("Permission") }}
                               </div>
                             </div>
 
@@ -1352,27 +1860,31 @@
                                         >
                                         <div class="flex">
                                           <select
+                                            v-model="employee_group"
                                             class="appearance-none border-select w-full py-1 px-2 bg-white"
                                             name="whatever"
                                             id="frm-whatever"
                                           >
-                                            <option value="Requester">
+                                            <option value="1">
+                                              {{ $t("Admin") }}
+                                            </option>
+                                            <option value="2">
                                               {{ $t("Requester") }} &hellip;
                                             </option>
-                                            <option value="Delivery">
-                                              {{ $t("Delivery") }}
-                                            </option>
-                                            <option value="Inventory">
+                                            <option value="3">
                                               {{ $t("Inventory") }}
                                             </option>
-                                            <option value="purchases">
+                                            <option value="4">
+                                              {{ $t("Delivery") }}
+                                            </option>
+                                            <option value="5">
+                                              {{ $t("Pricing") }}
+                                            </option>
+                                            <option value="6">
                                               {{ $t("purchases") }}
                                             </option>
-                                            <option value="Prancing">
-                                              {{ $t("Prancing") }}
-                                            </option>
-                                            <option value="Admin">
-                                              {{ $t("Admin") }}
+                                            <option value="7">
+                                              {{ $t("Financial") }}
                                             </option>
                                           </select>
 
@@ -1382,27 +1894,6 @@
                                             alt=""
                                           />
                                         </div>
-                                      </div>
-                                      <!-- register code -->
-                                      <div class="group ml-[20px] w-[50%]">
-                                        <label
-                                          :class="{
-                                            'text-right': lang == 'ar',
-                                          }"
-                                          for="1"
-                                          class="block text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                                          >{{
-                                            $t("Employee Position")
-                                          }}
-                                          :</label
-                                        >
-                                        <input
-                                          id="1"
-                                          type="text"
-                                          v-model="employee_position"
-                                          placeholder="000012"
-                                          class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
-                                        />
                                       </div>
                                     </div>
                                     <!--Branch and Area-->
@@ -1549,104 +2040,629 @@
                                 'cusror-disabled': loading,
                                 'text-right': lang == 'ar',
                               }"
-                              v-if="showPayemnt"
+                              v-if="showPermission"
                               id="Payment"
                               class="tab mt-1 items-center"
                             >
-                              <h2 class="font-semibold text-2xl mt-[20px]">
-                                {{ $t("payment") }} :
+                              <h2
+                                :class="[
+                                  {
+                                    'text-right': lang == 'ar',
+                                  },
+                                ]"
+                                class="font-semibold text-left text-2xl mt-[20px]"
+                              >
+                                {{ $t("Permission") }} :
                               </h2>
-                              <div class="form-style p-[20px] mt-[20px]">
-                                <div class="flex justify-space-between">
-                                  <h1 class="active-user">
-                                    {{ $t("Credit limit") }}
-                                  </h1>
-                                  <button
-                                    class="flex ltr items-center transition ease-in-out duration-300 w-10 h-4 rounded-full focus:outline-none"
-                                    :class="{
-                                      'bg-[#1C2E50]': activeCreditLimit,
-                                    }"
-                                    @click="
-                                      activeCreditLimit = !activeCreditLimit
-                                    "
+                              <div class="box pb-[20px]">
+                                <!-- bg row -->
+                                <div class="bg-row">
+                                  <div
+                                    class="flex justify-between items-center"
                                   >
-                                    <div
-                                      class="transition ease-in-out duration-300 rounded-full h-5 w-5 bg-white shadow border"
-                                      :class="{
-                                        'transform translate-x-full ':
-                                          activeCreditLimit,
-                                      }"
-                                    ></div>
-                                  </button>
+                                    <!-- Select All -->
+                                    <div>
+                                      <div class="form__privacy">
+                                        <input
+                                          id="selectAllEdit"
+                                          name="checkbox"
+                                          @change="SelectAllEdit"
+                                          type="checkbox"
+                                          required
+                                          checked
+                                        />
+                                        <label
+                                          class="permission-label"
+                                          for="selectAllEdit"
+                                          >{{ $t("Select All") }}</label
+                                        >
+                                      </div>
+                                    </div>
+                                    <!-- Can View -->
+                                    <div>
+                                      <label class="permission-label" for="">
+                                        {{ $t("View") }}</label
+                                      >
+                                      <input
+                                        v-model="isView"
+                                        @input="ViewAllEdit"
+                                        id="viewAllEditt"
+                                        class="input-switch"
+                                        type="checkbox"
+                                      />
+                                      <label for="viewAllEditt" class="swicthh">
+                                        Toggle
+                                      </label>
+                                    </div>
+                                    <!-- Can ADD -->
+                                    <div>
+                                      <label class="permission-label" for="">
+                                        {{ $t("Add") }}</label
+                                      >
+                                      <input
+                                        class="input-switch"
+                                        id="addEdit"
+                                        @input="addAllEdit"
+                                        type="checkbox"
+                                      />
+                                      <label for="addEdit" class="swicthh">
+                                        Toggle
+                                      </label>
+                                    </div>
+                                    <!-- Can Edit -->
+                                    <div>
+                                      <label class="permission-label" for="">
+                                        {{ $t("Edit") }}</label
+                                      >
+                                      <input
+                                        @input="editAllEdit"
+                                        id="editEdit"
+                                        class="input-switch"
+                                        type="checkbox"
+                                      />
+                                      <label for="editEdit" class="swicthh">
+                                        Toggle
+                                      </label>
+                                    </div>
+                                    <!-- Can Delete -->
+                                    <div>
+                                      <label class="permission-label" for="">
+                                        {{ $t("Delete") }}</label
+                                      >
+                                      <input
+                                        @input="deleteAllEdit"
+                                        id="deleteEdit"
+                                        class="input-switch"
+                                        type="checkbox"
+                                      />
+                                      <label for="deleteEdit" class="swicthh">
+                                        Toggle
+                                      </label>
+                                    </div>
+                                  </div>
                                 </div>
-                                <!-- credit limit -->
-                                <div
-                                  :disabled="disabled"
-                                  :class="{
-                                    'cursor-diabled':
-                                      activeCreditLimit == false,
-                                  }"
-                                  class="group mt-[20px]"
-                                >
-                                  <label
-                                    for="1"
-                                    class="block label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                                    >{{ $t("Credit limit") }} :</label
+                                <div class="container mx-auto">
+                                  <!-- Customer -->
+                                  <div
+                                    class="grid box-grey grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 p-[15px] mt-[12px] ml-[10px] mr-[10px]"
                                   >
-                                  <input
-                                    id="1"
-                                    type="text"
-                                    v-model="start_date"
-                                    placeholder="20.000 L.E"
-                                    :disabled="disabled"
-                                    class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
-                                  />
-                                </div>
+                                    <!-- customer -->
 
-                                <!-- payment -->
-                                <div
-                                  class="flex justify-space-between mt-[20px]"
-                                >
-                                  <h1 class="active-user">
-                                    {{ $t("Payment") }}
-                                  </h1>
-                                  <button
-                                    class="flex ltr items-center transition ease-in-out duration-300 w-10 h-4 rounded-full focus:outline-none"
-                                    :class="{
-                                      'bg-[#1C2E50]': activePayment,
-                                    }"
-                                    @click="activePayment = !activePayment"
-                                  >
+                                    <!-- select all -->
                                     <div
-                                      class="transition ease-in-out duration-300 rounded-full h-5 w-5 bg-white shadow border"
-                                      :class="{
-                                        'transform translate-x-full ':
-                                          activePayment,
-                                      }"
-                                    ></div>
-                                  </button>
-                                </div>
+                                      :class="{ 'text-right': lang == 'ar' }"
+                                      class="text-left"
+                                    >
+                                      <input
+                                        id="customerEdit"
+                                        name="checkbox"
+                                        type="checkbox"
+                                        required
+                                        checked
+                                      />
+                                      <label
+                                        class="permission-label"
+                                        for="customerEdit"
+                                        >{{ $t("Customer") }}</label
+                                      >
+                                    </div>
 
-                                <div
-                                  :disabled="disabledPayment"
-                                  :class="{
-                                    'cursor-diabled': activePayment == false,
-                                  }"
-                                  class="group mt-[20px]"
-                                >
-                                  <label
-                                    for="1"
-                                    class="block label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                                    >{{ $t("Payment") }} :</label
+                                    <!-- can delete -->
+                                    <div>
+                                      <input
+                                        id="ViewCustomerEdit"
+                                        name="checkbox"
+                                        @input="
+                                          checkStatus(
+                                            'can_view_customer',
+                                            'ViewCustomerEdit'
+                                          )
+                                        "
+                                        type="checkbox"
+                                        required
+                                      />
+                                    </div>
+
+                                    <!-- can View -->
+                                    <div>
+                                      <input
+                                        id="addcustomerEdit"
+                                        name="checkbox"
+                                        type="checkbox"
+                                        @input="
+                                          checkStatus(
+                                            'can_add_customer',
+                                            'addcustomerEdit'
+                                          )
+                                        "
+                                        required
+                                      />
+                                    </div>
+                                    <!-- can Add -->
+                                    <div>
+                                      <input
+                                        id="editcustomerEdit"
+                                        name="checkbox"
+                                        type="checkbox"
+                                        @input="
+                                          checkStatus(
+                                            'can_edit_customer',
+                                            'editcustomerEdit'
+                                          )
+                                        "
+                                        required
+                                      />
+                                    </div>
+                                    <!-- can Edit  -->
+                                    <div>
+                                      <input
+                                        id="deletecustomerEdit"
+                                        name="checkbox"
+                                        type="checkbox"
+                                        @input="
+                                          checkStatus(
+                                            'can_delete_customer',
+                                            'deletecustomerEdit'
+                                          )
+                                        "
+                                        required
+                                      />
+                                    </div>
+                                  </div>
+                                  <!-- vendor -->
+                                  <div
+                                    class="grid box-grey grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 p-[15px] mt-[12px] ml-[10px] mr-[10px]"
                                   >
-                                  <input
-                                    id="1"
-                                    type="text"
-                                    v-model="end_date"
-                                    placeholder="14%"
-                                    :disabled="disabledPayment"
-                                    class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
-                                  />
+                                    <!-- customer -->
+                                    <!-- select all -->
+                                    <div
+                                      :class="{ 'text-right': lang == 'ar' }"
+                                      class="text-left"
+                                    >
+                                      <input
+                                        id="vendorEdit"
+                                        name="checkbox"
+                                        type="checkbox"
+                                        required
+                                        checked
+                                      />
+                                      <label
+                                        class="permission-label"
+                                        for="checkbox"
+                                        >{{ $t("Vendor") }}</label
+                                      >
+                                    </div>
+
+                                    <!-- can delete -->
+                                    <div>
+                                      <input
+                                        id="viewvendorEdit"
+                                        name="checkbox"
+                                        type="checkbox"
+                                        @input="
+                                          checkStatus(
+                                            'can_view_vendor',
+                                            'viewvendorEdit'
+                                          )
+                                        "
+                                        required
+                                      />
+                                    </div>
+
+                                    <!-- can View -->
+                                    <div>
+                                      <input
+                                        id="addvendorEdit"
+                                        name="checkbox"
+                                        type="checkbox"
+                                        @input="
+                                          checkStatus(
+                                            'can_add_vendor',
+                                            'addvendorEdit'
+                                          )
+                                        "
+                                        required
+                                      />
+                                    </div>
+                                    <!-- can Add -->
+                                    <div>
+                                      <input
+                                        id="editvendorEdit"
+                                        name="checkbox"
+                                        type="checkbox"
+                                        @input="
+                                          checkStatus(
+                                            'can_edit_vendor',
+                                            'editvendor'
+                                          )
+                                        "
+                                        required
+                                      />
+                                    </div>
+                                    <!-- can Edit  -->
+                                    <div>
+                                      <input
+                                        id="deletevendorEdit"
+                                        name="checkbox"
+                                        type="checkbox"
+                                        @input="
+                                          checkStatus(
+                                            'can_delete_vendor',
+                                            'deletevendorEdit'
+                                          )
+                                        "
+                                        required
+                                      />
+                                    </div>
+                                  </div>
+                                  <!-- Employee -->
+                                  <div
+                                    class="grid box-grey grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 p-[15px] mt-[12px] ml-[10px] mr-[10px]"
+                                  >
+                                    <!-- customer -->
+
+                                    <!-- select all -->
+                                    <div
+                                      :class="{ 'text-right': lang == 'ar' }"
+                                      class="text-left"
+                                    >
+                                      <input
+                                        id="employeeEdit"
+                                        name="checkbox"
+                                        type="checkbox"
+                                        required
+                                        checked
+                                      />
+                                      <label
+                                        class="permission-label"
+                                        for="checkbox"
+                                        >{{ $t("Employee") }}</label
+                                      >
+                                    </div>
+
+                                    <!-- can delete -->
+                                    <div>
+                                      <input
+                                        id="ViewEmployeeEdit"
+                                        name="checkbox"
+                                        type="checkbox"
+                                        @input="
+                                          checkStatus(
+                                            'can_view_employee',
+                                            'ViewEmployeeEdit'
+                                          )
+                                        "
+                                        required
+                                      />
+                                    </div>
+
+                                    <!-- can View -->
+                                    <div>
+                                      <input
+                                        id="addEmployeeeEdit"
+                                        name="checkbox"
+                                        type="checkbox"
+                                        @input="
+                                          checkStatus(
+                                            'can_add_employee',
+                                            'addEmployeeeEdit'
+                                          )
+                                        "
+                                        required
+                                      />
+                                    </div>
+                                    <!-- can Add -->
+                                    <div>
+                                      <input
+                                        id="editEmployeeEdit"
+                                        name="checkbox"
+                                        type="checkbox"
+                                        @input="
+                                          checkStatus(
+                                            'can_edit_employee',
+                                            'editEmployeeEdit'
+                                          )
+                                        "
+                                        required
+                                      />
+                                    </div>
+                                    <!-- can Edit  -->
+                                    <div>
+                                      <input
+                                        id="deleteEmployeeeEdit"
+                                        name="checkbox"
+                                        type="checkbox"
+                                        @input="
+                                          checkStatus(
+                                            'can_delete_employee',
+                                            'deleteEmployeeeEdit'
+                                          )
+                                        "
+                                        required
+                                      />
+                                    </div>
+                                  </div>
+                                  <!-- Parts -->
+                                  <div
+                                    class="grid box-grey grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 p-[15px] mt-[12px] ml-[10px] mr-[10px]"
+                                  >
+                                    <!-- customer -->
+
+                                    <!-- select all -->
+                                    <div
+                                      :class="{ 'text-right': lang == 'ar' }"
+                                      class="text-left"
+                                    >
+                                      <input
+                                        id="partsEdit"
+                                        name="checkbox"
+                                        type="checkbox"
+                                        required
+                                        checked
+                                      />
+                                      <label
+                                        class="permission-label"
+                                        for="checkbox"
+                                        >{{ $t("Parts") }}</label
+                                      >
+                                    </div>
+
+                                    <!-- can delete -->
+                                    <div>
+                                      <input
+                                        id="viewPartsEdit"
+                                        name="checkbox"
+                                        type="checkbox"
+                                        @input="
+                                          checkStatus(
+                                            'can_view_parts',
+                                            'viewPartsEdit'
+                                          )
+                                        "
+                                        required
+                                      />
+                                    </div>
+
+                                    <!-- can View -->
+                                    <div>
+                                      <input
+                                        id="addPartsEdit"
+                                        name="checkbox"
+                                        type="checkbox"
+                                        @input="
+                                          checkStatus(
+                                            'can_add_parts',
+                                            'addPartsEdit'
+                                          )
+                                        "
+                                        required
+                                      />
+                                    </div>
+                                    <!-- can Add -->
+                                    <div>
+                                      <input
+                                        id="editPartsEdit"
+                                        name="checkbox"
+                                        type="checkbox"
+                                        @input="
+                                          checkStatus(
+                                            'can_edit_parts',
+                                            'editPartsEdit'
+                                          )
+                                        "
+                                        required
+                                      />
+                                    </div>
+                                    <!-- can Edit  -->
+                                    <div>
+                                      <input
+                                        id="deletePartsEdit"
+                                        name="checkbox"
+                                        type="checkbox"
+                                        @input="
+                                          checkStatus(
+                                            'can_delete_parts',
+                                            'deletePartsEdit'
+                                          )
+                                        "
+                                        required
+                                      />
+                                    </div>
+                                  </div>
+                                  <!-- Condition -->
+                                  <div
+                                    class="grid box-grey grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 p-[15px] mt-[12px] ml-[10px] mr-[10px]"
+                                  >
+                                    <!-- customer -->
+
+                                    <!-- select all -->
+                                    <div
+                                      :class="{ 'text-right': lang == 'ar' }"
+                                      class="text-left"
+                                    >
+                                      <input
+                                        id="conditionEdit"
+                                        name="checkbox"
+                                        type="checkbox"
+                                        required
+                                        checked
+                                      />
+                                      <label
+                                        class="permission-label"
+                                        for="checkbox"
+                                        >{{ $t("Condition") }}</label
+                                      >
+                                    </div>
+
+                                    <!-- can delete -->
+                                    <div>
+                                      <input
+                                        id="viewconditionEdit"
+                                        name="checkbox"
+                                        type="checkbox"
+                                        @input="
+                                          checkStatus(
+                                            'can_view_condition',
+                                            'viewconditionEdit'
+                                          )
+                                        "
+                                        required
+                                      />
+                                    </div>
+
+                                    <!-- can View -->
+                                    <div>
+                                      <input
+                                        id="addconditionEdit"
+                                        name="checkbox"
+                                        type="checkbox"
+                                        @input="
+                                          checkStatus(
+                                            'can_add_condition',
+                                            'addconditionEdit'
+                                          )
+                                        "
+                                        required
+                                      />
+                                    </div>
+                                    <!-- can Add -->
+                                    <div>
+                                      <input
+                                        id="editconditionEdit"
+                                        name="checkbox"
+                                        type="checkbox"
+                                        @input="
+                                          checkStatus(
+                                            'can_edit_condition',
+                                            'editconditionEdit'
+                                          )
+                                        "
+                                        required
+                                      />
+                                    </div>
+                                    <!-- can Edit  -->
+                                    <div>
+                                      <input
+                                        id="deleteconditionEdit"
+                                        name="checkbox"
+                                        @input="
+                                          checkStatus(
+                                            'can_delete_condition',
+                                            'deletecondition'
+                                          )
+                                        "
+                                        type="checkbox"
+                                        required
+                                      />
+                                    </div>
+                                  </div>
+                                  <!-- Location -->
+                                  <div
+                                    class="grid box-grey grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 p-[15px] mt-[12px] ml-[10px] mr-[10px]"
+                                  >
+                                    <!-- customer -->
+
+                                    <!-- select all -->
+                                    <div
+                                      :class="{ 'text-right': lang == 'ar' }"
+                                      class="text-left"
+                                    >
+                                      <input
+                                        id="locationEdit"
+                                        name="checkbox"
+                                        type="checkbox"
+                                        required
+                                        checked
+                                      />
+                                      <label
+                                        class="permission-label"
+                                        for="checkbox"
+                                        >{{ $t("Locations") }}</label
+                                      >
+                                    </div>
+
+                                    <!-- can delete -->
+                                    <div>
+                                      <input
+                                        id="viewlocationEdit"
+                                        name="checkbox"
+                                        type="checkbox"
+                                        @input="
+                                          checkStatus(
+                                            'can_view_location',
+                                            'viewlocation'
+                                          )
+                                        "
+                                        required
+                                      />
+                                    </div>
+
+                                    <!-- can View -->
+                                    <div>
+                                      <input
+                                        id="addlocationEdit"
+                                        name="checkbox"
+                                        type="checkbox"
+                                        @input="
+                                          checkStatus(
+                                            'can_add_location',
+                                            'addlocationEdit'
+                                          )
+                                        "
+                                        required
+                                      />
+                                    </div>
+                                    <!-- can Add -->
+                                    <div>
+                                      <input
+                                        id="editlocationEdit"
+                                        name="checkbox"
+                                        type="checkbox"
+                                        @input="
+                                          checkStatus(
+                                            'can_edit_location',
+                                            'editlocationEdit'
+                                          )
+                                        "
+                                        required
+                                      />
+                                    </div>
+                                    <!-- can Edit  -->
+                                    <div>
+                                      <input
+                                        id="deletelocationEdit"
+                                        name="checkbox"
+                                        type="checkbox"
+                                        @input="
+                                          checkStatus(
+                                            'can_delete_location',
+                                            'deletelocationEdit'
+                                          )
+                                        "
+                                        required
+                                      />
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -1669,6 +2685,7 @@
                             </div>
                             <!-- tabs end -->
                             <div
+                              style="margin-top: 25px"
                               :disabled="loading"
                               :class="{ 'cusror-disabled': loading }"
                               class="flex mb-[30px]"
@@ -1857,11 +2874,12 @@ export default {
     return {
       employeeTable: [],
       showInformation: true,
-      showPayemnt: false,
+      showPermission: false,
       showVichels: false,
       type: "Informations",
       active_vendor: true,
       activeCreditLimit: false,
+      activate: false,
       disabled: true,
       activePayment: false,
       errorpasswordValidation: false,
@@ -1882,7 +2900,7 @@ export default {
       employee_code: null,
       employee_position: null,
       vat_number: null,
-      branch_id: null,
+      branch_id: 0,
 
       employee_email: null,
       area: null,
@@ -1891,6 +2909,7 @@ export default {
       password: null,
       target: null,
       unit_of_target: null,
+      location: null,
       national_id: null,
       id: "",
       // image: null,
@@ -1907,12 +2926,23 @@ export default {
       loading: true,
       lang: "",
       allBranches: [],
+      locations: [],
       open: false,
+
+      // is View
+      isView: false,
+      canAddAll: false,
+      canViewAll: false,
+      canEditAll: false,
+      canDeleteAll: false,
+      permission: [],
+      unPermissioned: [],
     };
   },
   mounted() {
     // bring All Data
     this.$axios.$get("/Member/GetAllMember").then((res) => {
+      this.employee_code = res.NextItem
       this.employeeTable = res.Employee.data;
       this.totalPages = res.Employee.meta.last_page;
       this.perPage = res.Employee.meta.per_page;
@@ -1920,6 +2950,7 @@ export default {
       this.permissions = res.permission;
       this.loading = false;
     });
+
     // tabs code
     this.lang = localStorage.getItem("lang");
 
@@ -1939,6 +2970,20 @@ export default {
     this.open = localStorage.getItem("open");
   },
   methods: {
+    // seacrh data
+    // search
+    searchData() {
+      this.$axios
+        .$get(`/Member/GetAllMember?search=${this.search}`)
+        .then((res) => {
+          this.employeeTable = res.Employee.data;
+          this.totalPages = res.Employee.meta.last_page;
+          this.perPage = res.Employee.meta.per_page;
+          this.total = res.Employee.meta.total;
+          this.permissions = res.permission;
+          this.loading = false;
+        });
+    },
     loadFile(event) {
       var image = document.getElementById("output");
       image.src = URL.createObjectURL(event.target.files[0]);
@@ -1957,7 +3002,7 @@ export default {
         (this.employee_code = null),
         (this.employee_position = null),
         (this.password = null),
-        (this.branch_id = null),
+        (this.branch_id = 0),
         (this.employee_email = null),
         (this.area = null),
         (this.start_date = null),
@@ -1965,6 +3010,7 @@ export default {
         (this.vin_number = null),
         (this.unit_of_target = null),
         (this.national_id = null),
+        (this.location = null),
         (this.id = "");
       this.target = null;
     },
@@ -2010,7 +3056,6 @@ export default {
           this.unit_of_target = res.user.unit_of_target;
           this.employee_code = res.user.code;
           (this.branch_id = res.user.branch_id),
-            (this.area = res.data.area),
             (this.start_date = res.user.start_date);
           this.end_date == res.user.end_date;
           this.image = res.user.image;
@@ -2061,15 +3106,11 @@ export default {
       if (type == "Informations") {
         this.showInformation = true;
         this.showVichels = false;
-        this.showPayemnt = false;
-      } else if (type == "Payment") {
-        this.showPayemnt = true;
+        this.showPermission = false;
+      } else if (type == "permission") {
+        this.showPermission = true;
         this.showInformation = false;
         this.showVichels = false;
-      } else if (type == "Vehicles") {
-        this.showVichels = true;
-        this.showPayemnt = false;
-        this.showInformation = false;
       }
     },
     // allow numbers only
@@ -2192,18 +3233,29 @@ export default {
           let formdata = new FormData();
 
           formdata.append("group", this.employee_group);
+          formdata.append("role_id", this.employee_group);
           formdata.append("name", this.employee_name);
           formdata.append("email", this.employee_email);
           formdata.append("password", this.password);
           formdata.append("position", this.employee_position);
           formdata.append("target", this.target);
           formdata.append("unit_of_target", this.unit_of_target);
+          formdata.append("location_id", this.location);
           formdata.append("code", this.employee_code);
           formdata.append("branch_id", this.branch_id);
           formdata.append("area", this.area);
           formdata.append("start_date", this.start_date);
           formdata.append("end_date", this.end_date);
           formdata.append("image", this.image);
+
+          for (let i = 0; i < this.permission.length; i++) {
+            formdata.append(this.permission[i], 1);
+          }
+
+          for (let i = 0; i < this.unPermissioned.length; i++) {
+            formdata.append(this.unPermissioned[i], 0);
+            console.log(this.unPermissioned[i], "");
+          }
 
           this.$axios.$post(`/Member/AddMember`, formdata).then((res) => {
             if (res.status == 200) {
@@ -2260,13 +3312,16 @@ export default {
         formdata.append("position", this.employee_position);
         formdata.append("target", this.target);
         formdata.append("unit_of_target", this.unit_of_target);
+        formdata.append("location_id", this.location);
         formdata.append("code", this.employee_code);
         formdata.append("branch_id", this.branch_id);
         formdata.append("area", this.area);
         formdata.append("start_date", this.start_date);
         formdata.append("end_date", this.end_date);
         formdata.append("image", this.image);
-
+        for (let i = 0; i < this.permission.length; i++) {
+          formdata.append(this.permission[i], 1);
+        }
         this.$axios
           .$post(`/Member/UpdateMember/${this.id}`, formdata)
           .then((res) => {
@@ -2370,6 +3425,1677 @@ export default {
     },
     removeFile() {
       this.image = "";
+    },
+    isActivated(index) {
+      // Return a boolean indicating if the item at the given index is activated
+      // Adjust this logic based on your specific requirements
+      return this.employeeTable[index].isActive;
+    },
+    toggleActivation(index, employeeId) {
+      const item = this.employeeTable[index];
+      item.isActive = !item.isActive;
+
+      const checkboxId = "switch-" + index;
+      const checkbox = document.getElementById(checkboxId);
+
+      if (checkbox) {
+        checkbox.checked = item.isActive;
+
+        // Perform activation or deactivation logic for the item
+        this.$axios
+          .$get(`Member/DeactivateMember/${employeeId}`)
+          .then((res) => {});
+      }
+    },
+    // select all
+    SelectAll(checkbox, id) {
+      if (checkbox.target.checked == true) {
+        // customer
+        const Customer = document.getElementById("customer");
+        Customer.checked = true;
+        // vendor
+        const Vendor = document.getElementById("vendor");
+        Vendor.checked = true;
+        // emlpoyee
+        const Employee = document.getElementById("employee");
+        Employee.checked = true;
+        // parts
+        const Parts = document.getElementById("parts");
+        Parts.checked = true;
+
+        // condition
+        const Condition = document.getElementById("condition");
+        Condition.checked = true;
+
+        // locations
+
+        const Locations = document.getElementById("location");
+        Locations.checked = true;
+      }
+      if (checkbox.target.checked == false) {
+        const Customer = document.getElementById("customer");
+        Customer.checked = false;
+        // vendor
+        const Vendor = document.getElementById("vendor");
+        Vendor.checked = false;
+        // emlpoyee
+        const Employee = document.getElementById("employee");
+        Employee.checked = false;
+        // parts
+        const Parts = document.getElementById("parts");
+        Parts.checked = false;
+
+        // condition
+        const Condition = document.getElementById("condition");
+        Condition.checked = false;
+
+        // locations
+
+        const Locations = document.getElementById("location");
+        Locations.checked = false;
+      }
+    },
+    // select all
+    SelectAllEdit(checkbox, id) {
+      if (checkbox.target.checked == true) {
+        // customer
+        const Customer = document.getElementById("customerEdit");
+        Customer.checked = true;
+        // vendor
+        const Vendor = document.getElementById("vendorEdit");
+        Vendor.checked = true;
+        // emlpoyee
+        const Employee = document.getElementById("employeeEdit");
+        Employee.checked = true;
+        // parts
+        const Parts = document.getElementById("partsEdit");
+        Parts.checked = true;
+
+        // condition
+        const Condition = document.getElementById("conditionEdit");
+        Condition.checked = true;
+
+        // locations
+
+        const Locations = document.getElementById("locationEdit");
+        Locations.checked = true;
+      }
+      if (checkbox.target.checked == false) {
+        const Customer = document.getElementById("customerEdit");
+        Customer.checked = false;
+        // vendor
+        const Vendor = document.getElementById("vendorEdit");
+        Vendor.checked = false;
+        // emlpoyee
+        const Employee = document.getElementById("employeeEdit");
+        Employee.checked = false;
+        // parts
+        const Parts = document.getElementById("partsEdit");
+        Parts.checked = false;
+
+        // condition
+        const Condition = document.getElementById("conditionEdit");
+        Condition.checked = false;
+
+        // locations
+
+        const Locations = document.getElementById("locationEdit");
+        Locations.checked = false;
+      }
+    },
+    // view All
+    ViewAll(check) {
+      if (check.target.checked == true) {
+        // view customer
+        const ViewCustomer = document.getElementById("ViewCustomer");
+        ViewCustomer.checked = true;
+        // view Vendor
+        const ViewVendor = document.getElementById("viewvendor");
+        ViewVendor.checked = true;
+        // view Employee
+
+        const ViewEmployee = document.getElementById("ViewEmployee");
+        ViewEmployee.checked = true;
+
+        // view Parts
+        const ViewParts = document.getElementById("viewParts");
+        ViewParts.checked = true;
+        // condition
+
+        const ViewCondition = document.getElementById("viewcondition");
+        ViewCondition.checked = true;
+
+        const viewLocation = document.getElementById("viewlocation");
+        viewLocation.checked = true;
+
+        this.canViewAll = true;
+
+        this.permission.push(
+          "can_view_customer",
+          "can_view_vendor",
+          "can_view_employee",
+          "can_view_parts",
+          "can_view_condition",
+          "can_view_location"
+        );
+
+        console.log(this.permission, "permission ");
+        this.unPermissioned.push(
+          "can_add_customer",
+          "can_add_vendor",
+          "can_add_employee",
+          "can_add_parts",
+          "can_add_condition",
+          "can_add_location",
+          "can_edit_customer",
+          "can_edit_vendor",
+          "can_edit_employee",
+          "can_edit_parts",
+          "can_edit_condition",
+          "can_edit_location",
+          "can_delete_customer",
+          "can_delete_vendor",
+          "can_delete_employee",
+          "can_delete_parts",
+          "can_delete_condition",
+          "can_delete_location"
+        );
+
+        // checked depend o
+      }
+
+      if (check.target.checked == false) {
+        const ViewCustomer = document.getElementById("ViewCustomer");
+        ViewCustomer.checked = false;
+        // view Vendor
+        const ViewVendor = document.getElementById("viewvendor");
+        ViewVendor.checked = false;
+        // view Employee
+
+        const ViewEmployee = document.getElementById("ViewEmployee");
+        ViewEmployee.checked = false;
+
+        // view Parts
+        const ViewParts = document.getElementById("viewParts");
+        ViewParts.checked = false;
+        // condition
+
+        const ViewCondition = document.getElementById("viewcondition");
+        ViewCondition.checked = false;
+
+        const viewLocation = document.getElementById("viewlocation");
+        viewLocation.checked = false;
+
+        this.canViewAll = false;
+        this.permission = [];
+        console.log(this.permission);
+
+        this.unPermissioned.push(
+          "can_view_customer",
+          "can_view_vendor",
+          "can_view_employee",
+          "can_view_parts",
+          "can_view_condition",
+          "can_view_location",
+          "can_add_customer",
+          "can_add_vendor",
+          "can_add_employee",
+          "can_add_parts",
+          "can_add_condition",
+          "can_add_location",
+          "can_edit_customer",
+          "can_edit_vendor",
+          "can_edit_employee",
+          "can_edit_parts",
+          "can_edit_condition",
+          "can_edit_location",
+          "can_delete_customer",
+          "can_delete_vendor",
+          "can_delete_employee",
+          "can_delete_parts",
+          "can_delete_condition",
+          "can_delete_location"
+        );
+      }
+    },
+    // viewAllEdit
+    ViewAllEdit(check) {
+      if (check.target.checked == true) {
+        // view customer
+        const ViewCustomer = document.getElementById("ViewCustomerEdit");
+        ViewCustomer.checked = true;
+        // view Vendor
+        const ViewVendor = document.getElementById("viewvendorEdit");
+        ViewVendor.checked = true;
+        // view Employee
+
+        const ViewEmployee = document.getElementById("ViewEmployeeEdit");
+        ViewEmployee.checked = true;
+
+        // view Parts
+        const ViewParts = document.getElementById("viewPartsEdit");
+        ViewParts.checked = true;
+        // condition
+
+        const ViewCondition = document.getElementById("viewconditionEdit");
+        ViewCondition.checked = true;
+
+        const viewLocation = document.getElementById("viewlocationEdit");
+        viewLocation.checked = true;
+
+        this.canViewAll = true;
+
+        this.permission.push(
+          "can_view_customer",
+          "can_view_vendor",
+          "can_view_employee",
+          "can_view_parts",
+          "can_view_condition",
+          "can_view_location"
+        );
+
+        this.unPermissioned.push(
+          "can_add_customer",
+          "can_add_vendor",
+          "can_add_employee",
+          "can_add_parts",
+          "can_add_condition",
+          "can_add_location",
+          "can_edit_customer",
+          "can_edit_vendor",
+          "can_edit_employee",
+          "can_edit_parts",
+          "can_edit_condition",
+          "can_edit_location",
+          "can_delete_customer",
+          "can_delete_vendor",
+          "can_delete_employee",
+          "can_delete_parts",
+          "can_delete_condition",
+          "can_delete_location"
+        );
+
+        if (
+          this.canEditAll == true &&
+          this.canEditAll == false &&
+          this.canDeleteAll == false
+        ) {
+          this.unPermissioned.push(
+            "can_edit_customer",
+            "can_edit_vendor",
+            "can_edit_employee",
+            "can_edit_parts",
+            "can_edit_condition",
+            "can_edit_location",
+            "can_delete_customer",
+            "can_delete_vendor",
+            "can_delete_employee",
+            "can_delete_parts",
+            "can_delete_condition",
+            "can_delete_location",
+            "can_add_customer",
+            "can_add_vendor",
+            "can_add_employee",
+            "can_add_parts",
+            "can_add_condition",
+            "can_add_location"
+          );
+        }
+        if (
+          this.canEditAll == false &&
+          this.canEditAll == true &&
+          this.canDeleteAll == false
+        ) {
+          this.unPermissioned.push(
+            "can_edit_customer",
+            "can_edit_vendor",
+            "can_edit_employee",
+            "can_edit_parts",
+            "can_edit_condition",
+            "can_edit_location",
+            "can_delete_customer",
+            "can_delete_vendor",
+            "can_delete_employee",
+            "can_delete_parts",
+            "can_delete_condition",
+            "can_delete_location",
+            "can_add_customer",
+            "can_add_vendor",
+            "can_add_employee",
+            "can_add_parts",
+            "can_add_condition",
+            "can_add_location"
+          );
+        }
+        if (
+          this.canEditAll == false &&
+          this.canAddAll == false &&
+          this.canDeleteAll == true
+        ) {
+          this.unPermissioned.push(
+            "can_view_customer",
+            "can_view_vendor",
+            "can_view_employee",
+            "can_view_parts",
+            "can_view_condition",
+            "can_view_location",
+            "can_edit_customer",
+            "can_edit_vendor",
+            "can_edit_employee",
+            "can_edit_parts",
+            "can_edit_condition",
+            "can_edit_location",
+            "can_add_customer",
+            "can_add_vendor",
+            "can_add_employee",
+            "can_add_parts",
+            "can_add_condition",
+            "can_add_location"
+          );
+        }
+
+        console.log(this.permission);
+
+        // checked depend o
+      }
+      if (check.target.checked == false) {
+        const ViewCustomer = document.getElementById("ViewCustomerEdit");
+        ViewCustomer.checked = false;
+        // view Vendor
+        const ViewVendor = document.getElementById("viewvendorEdit");
+        ViewVendor.checked = false;
+        // view Employee
+
+        const ViewEmployee = document.getElementById("ViewEmployeeEdit");
+        ViewEmployee.checked = false;
+
+        // view Parts
+        const ViewParts = document.getElementById("viewPartsEdit");
+        ViewParts.checked = false;
+        // condition
+
+        const ViewCondition = document.getElementById("viewconditionEdit");
+        ViewCondition.checked = false;
+
+        const viewLocation = document.getElementById("viewlocationEdit");
+        viewLocation.checked = false;
+
+        this.canViewAll = false;
+        this.permission = [];
+        console.log(this.permission);
+
+        this.unPermissioned.push(
+          "can_view_customer",
+          "can_view_vendor",
+          "can_view_employee",
+          "can_view_parts",
+          "can_view_condition",
+          "can_view_location",
+          "can_add_customer",
+          "can_add_vendor",
+          "can_add_employee",
+          "can_add_parts",
+          "can_add_condition",
+          "can_add_location",
+          "can_edit_customer",
+          "can_edit_vendor",
+          "can_edit_employee",
+          "can_edit_parts",
+          "can_edit_condition",
+          "can_edit_location",
+          "can_delete_customer",
+          "can_delete_vendor",
+          "can_delete_employee",
+          "can_delete_parts",
+          "can_delete_condition",
+          "can_delete_location"
+        );
+      }
+    },
+    // add all
+    // view All
+    addAll(check) {
+      if (check.target.checked == true) {
+        // view customer
+        const addcustomer = document.getElementById("addcustomer");
+        addcustomer.checked = true;
+        // view Vendor
+        const addvendor = document.getElementById("addvendor");
+        addvendor.checked = true;
+        // view Employee
+
+        const addEmployeee = document.getElementById("addEmployeee");
+        addEmployeee.checked = true;
+
+        // view Parts
+        const addParts = document.getElementById("addParts");
+        addParts.checked = true;
+        // condition
+
+        const addcondition = document.getElementById("addcondition");
+        addcondition.checked = true;
+
+        const addlocation = document.getElementById("addlocation");
+        addlocation.checked = true;
+        this.canAddAll = true;
+
+        this.permission.push(
+          "can_add_customer",
+          "can_add_vendor",
+          "can_add_employee",
+          "can_add_parts",
+          "can_add_condition",
+          "can_add_location"
+        );
+
+        if (this.canViewAll == true) {
+          this.unPermissioned.push(
+            "can_edit_customer",
+            "can_edit_vendor",
+            "can_edit_employee",
+            "can_edit_parts",
+            "can_edit_condition",
+            "can_edit_location",
+            "can_delete_customer",
+            "can_delete_vendor",
+            "can_delete_employee",
+            "can_delete_parts",
+            "can_delete_condition",
+            "can_delete_location"
+          );
+        }
+        if (
+          this.canViewAll == true &&
+          this.canEditAll == false &&
+          this.canDeleteAll == false
+        ) {
+          this.unPermissioned.push(
+            "can_edit_customer",
+            "can_edit_vendor",
+            "can_edit_employee",
+            "can_edit_parts",
+            "can_edit_condition",
+            "can_edit_location",
+            "can_delete_customer",
+            "can_delete_vendor",
+            "can_delete_employee",
+            "can_delete_parts",
+            "can_delete_condition",
+            "can_delete_location"
+          );
+        }
+        if (
+          this.canViewAll == false &&
+          this.canEditAll == true &&
+          this.canDeleteAll == false
+        ) {
+          this.unPermissioned.push(
+            "can_view_customer",
+            "can_view_vendor",
+            "can_view_employee",
+            "can_view_parts",
+            "can_view_condition",
+            "can_view_location",
+            "can_delete_customer",
+            "can_delete_vendor",
+            "can_delete_employee",
+            "can_delete_parts",
+            "can_delete_condition",
+            "can_delete_location"
+          );
+        }
+        if (
+          this.canViewAll == false &&
+          this.canAddAll == false &&
+          this.canDeleteAll == true
+        ) {
+          this.unPermissioned.push(
+            "can_view_customer",
+            "can_view_vendor",
+            "can_view_employee",
+            "can_view_parts",
+            "can_view_condition",
+            "can_view_location",
+            "can_edit_customer",
+            "can_edit_vendor",
+            "can_edit_employee",
+            "can_edit_parts",
+            "can_edit_condition",
+            "can_edit_location"
+          );
+        }
+      }
+
+      if (check.target.checked == false) {
+        const addcustomer = document.getElementById("addcustomer");
+        addcustomer.checked = false;
+        // view Vendor
+        const addvendor = document.getElementById("addvendor");
+        addvendor.checked = false;
+        // view Employee
+
+        const addEmployeee = document.getElementById("addEmployeee");
+        addEmployeee.checked = false;
+
+        // view Parts
+        const addParts = document.getElementById("addParts");
+        addParts.checked = false;
+        // condition
+
+        const addcondition = document.getElementById("addcondition");
+        addcondition.checked = false;
+
+        const addlocation = document.getElementById("addlocation");
+        addlocation.checked = false;
+
+        this.canAddAll = false;
+
+        this.permission = [];
+        if (
+          this.canViewAll == true &&
+          this.canEditAll == false &&
+          this.canDeleteAll == false
+        ) {
+          this.unPermissioned.push(
+            "can_edit_customer",
+            "can_edit_vendor",
+            "can_edit_employee",
+            "can_edit_parts",
+            "can_edit_condition",
+            "can_edit_location",
+            "can_delete_customer",
+            "can_delete_vendor",
+            "can_delete_employee",
+            "can_delete_parts",
+            "can_delete_condition",
+            "can_delete_location",
+            "can_add_customer",
+            "can_add_vendor",
+            "can_add_employee",
+            "can_add_parts",
+            "can_add_condition",
+            "can_add_location"
+          );
+        }
+        if (
+          this.canViewAll == false &&
+          this.canEditAll == true &&
+          this.canDeleteAll == false
+        ) {
+          this.unPermissioned.push(
+            "can_view_customer",
+            "can_view_vendor",
+            "can_view_employee",
+            "can_view_parts",
+            "can_view_condition",
+            "can_view_location",
+            "can_delete_customer",
+            "can_delete_vendor",
+            "can_delete_employee",
+            "can_delete_parts",
+            "can_delete_condition",
+            "can_delete_location",
+            "can_add_customer",
+            "can_add_vendor",
+            "can_add_employee",
+            "can_add_parts",
+            "can_add_condition",
+            "can_add_location"
+          );
+        }
+        if (
+          this.canViewAll == false &&
+          this.canAddAll == false &&
+          this.canDeleteAll == true
+        ) {
+          this.unPermissioned.push(
+            "can_view_customer",
+            "can_view_vendor",
+            "can_view_employee",
+            "can_view_parts",
+            "can_view_condition",
+            "can_view_location",
+            "can_edit_customer",
+            "can_edit_vendor",
+            "can_edit_employee",
+            "can_edit_parts",
+            "can_edit_condition",
+            "can_edit_location",
+            "can_add_customer",
+            "can_add_vendor",
+            "can_add_employee",
+            "can_add_parts",
+            "can_add_condition",
+            "can_add_location"
+          );
+        }
+      }
+    },
+    addAllEdit(check) {
+      if (check.target.checked == true) {
+        // view customer
+        const addcustomer = document.getElementById("addcustomerEdit");
+        addcustomer.checked = true;
+        // view Vendor
+        const addvendor = document.getElementById("addvendorEdit");
+        addvendor.checked = true;
+        // view Employee
+
+        const addEmployeee = document.getElementById("addEmployeeeEdit");
+        addEmployeee.checked = true;
+
+        // view Parts
+        const addParts = document.getElementById("addPartsEdit");
+        addParts.checked = true;
+        // condition
+
+        const addcondition = document.getElementById("addconditionEdit");
+        addcondition.checked = true;
+
+        const addlocation = document.getElementById("addlocationEdit");
+        addlocation.checked = true;
+
+        this.permission.push(
+          "can_add_customer",
+          "can_add_vendor",
+          "can_add_employee",
+          "can_add_parts",
+          "can_add_condition",
+          "can_add_location"
+        );
+        console.log(this.permission);
+        this.canAddAll = true;
+
+        if (this.canViewAll == true) {
+          this.unPermissioned.push(
+            "can_edit_customer",
+            "can_edit_vendor",
+            "can_edit_employee",
+            "can_edit_parts",
+            "can_edit_condition",
+            "can_edit_location",
+            "can_delete_customer",
+            "can_delete_vendor",
+            "can_delete_employee",
+            "can_delete_parts",
+            "can_delete_condition",
+            "can_delete_location"
+          );
+        }
+        if (
+          this.canViewAll == true &&
+          this.canEditAll == false &&
+          this.canDeleteAll == false
+        ) {
+          this.unPermissioned.push(
+            "can_edit_customer",
+            "can_edit_vendor",
+            "can_edit_employee",
+            "can_edit_parts",
+            "can_edit_condition",
+            "can_edit_location",
+            "can_delete_customer",
+            "can_delete_vendor",
+            "can_delete_employee",
+            "can_delete_parts",
+            "can_delete_condition",
+            "can_delete_location"
+          );
+        }
+        if (
+          this.canViewAll == false &&
+          this.canEditAll == true &&
+          this.canDeleteAll == false
+        ) {
+          this.unPermissioned.push(
+            "can_view_customer",
+            "can_view_vendor",
+            "can_view_employee",
+            "can_view_parts",
+            "can_view_condition",
+            "can_view_location",
+            "can_delete_customer",
+            "can_delete_vendor",
+            "can_delete_employee",
+            "can_delete_parts",
+            "can_delete_condition",
+            "can_delete_location"
+          );
+        }
+        if (
+          this.canViewAll == false &&
+          this.canAddAll == false &&
+          this.canDeleteAll == true
+        ) {
+          this.unPermissioned.push(
+            "can_view_customer",
+            "can_view_vendor",
+            "can_view_employee",
+            "can_view_parts",
+            "can_view_condition",
+            "can_view_location",
+            "can_edit_customer",
+            "can_edit_vendor",
+            "can_edit_employee",
+            "can_edit_parts",
+            "can_edit_condition",
+            "can_edit_location"
+          );
+        }
+      }
+
+      if (check.target.checked == false) {
+        const addcustomer = document.getElementById("addcustomerEdit");
+        addcustomer.checked = false;
+        // view Vendor
+        const addvendor = document.getElementById("addvendorEdit");
+        addvendor.checked = false;
+        // view Employee
+
+        const addEmployeee = document.getElementById("addEmployeeeEdit");
+        addEmployeee.checked = false;
+
+        // view Parts
+        const addParts = document.getElementById("addPartsEdit");
+        addParts.checked = false;
+        // condition
+
+        const addcondition = document.getElementById("addconditionEdit");
+        addcondition.checked = false;
+
+        const addlocation = document.getElementById("addlocationEdit");
+        addlocation.checked = false;
+
+        this.canAddAll = false;
+
+        this.permission = [];
+        this.unPermissioned.push(
+          "can_add_customer",
+          "can_add_vendor",
+          "can_add_employee",
+          "can_add_parts",
+          "can_add_condition",
+          "can_add_location",
+          "can_edit_customer",
+          "can_edit_vendor",
+          "can_edit_employee",
+          "can_edit_parts",
+          "can_edit_condition",
+          "can_edit_location",
+          "can_delete_customer",
+          "can_delete_vendor",
+          "can_delete_employee",
+          "can_delete_parts",
+          "can_delete_condition",
+          "can_delete_location"
+        );
+        if (
+          this.canViewAll == true &&
+          this.canEditAll == false &&
+          this.canDeleteAll == false
+        ) {
+          this.unPermissioned.push(
+            "can_edit_customer",
+            "can_edit_vendor",
+            "can_edit_employee",
+            "can_edit_parts",
+            "can_edit_condition",
+            "can_edit_location",
+            "can_delete_customer",
+            "can_delete_vendor",
+            "can_delete_employee",
+            "can_delete_parts",
+            "can_delete_condition",
+            "can_delete_location",
+            "can_add_customer",
+            "can_add_vendor",
+            "can_add_employee",
+            "can_add_parts",
+            "can_add_condition",
+            "can_add_location"
+          );
+        }
+        if (
+          this.canViewAll == false &&
+          this.canEditAll == true &&
+          this.canDeleteAll == false
+        ) {
+          this.unPermissioned.push(
+            "can_view_customer",
+            "can_view_vendor",
+            "can_view_employee",
+            "can_view_parts",
+            "can_view_condition",
+            "can_view_location",
+            "can_delete_customer",
+            "can_delete_vendor",
+            "can_delete_employee",
+            "can_delete_parts",
+            "can_delete_condition",
+            "can_delete_location",
+            "can_add_customer",
+            "can_add_vendor",
+            "can_add_employee",
+            "can_add_parts",
+            "can_add_condition",
+            "can_add_location"
+          );
+        }
+        if (
+          this.canViewAll == false &&
+          this.canAddAll == false &&
+          this.canDeleteAll == true
+        ) {
+          this.unPermissioned.push(
+            "can_view_customer",
+            "can_view_vendor",
+            "can_view_employee",
+            "can_view_parts",
+            "can_view_condition",
+            "can_view_location",
+            "can_edit_customer",
+            "can_edit_vendor",
+            "can_edit_employee",
+            "can_edit_parts",
+            "can_edit_condition",
+            "can_edit_location",
+            "can_add_customer",
+            "can_add_vendor",
+            "can_add_employee",
+            "can_add_parts",
+            "can_add_condition",
+            "can_add_location"
+          );
+        }
+      }
+    },
+    // edit all
+    editAll(check) {
+      if (check.target.checked == true) {
+        // view customer
+        const editcustomer = document.getElementById("editcustomer");
+        editcustomer.checked = true;
+        // view Vendor
+        const editvendor = document.getElementById("editvendor");
+        editvendor.checked = true;
+        // view Employee
+
+        const editEmployee = document.getElementById("editEmployee");
+        editEmployee.checked = true;
+
+        // view Parts
+        const editParts = document.getElementById("editParts");
+        editParts.checked = true;
+        // condition
+
+        const editcondition = document.getElementById("editcondition");
+        editcondition.checked = true;
+
+        const editlocation = document.getElementById("editlocation");
+        editlocation.checked = true;
+
+        this.canEditAll = true;
+
+        if (this.canViewAll == true && this.canAddAll == true) {
+          this.unPermissioned.push(
+            "can_delete_customer",
+            "can_delete_vendor",
+            "can_delete_employee",
+            "can_delete_parts",
+            "can_delete_condition",
+            "can_delete_location"
+          );
+        }
+
+        this.permission.push(
+          "can_edit_customer",
+          "can_edit_vendor",
+          "can_edit_employee",
+          "can_edit_parts",
+          "can_edit_condition",
+          "can_edit_location"
+        );
+      }
+      if (check.target.checked == false) {
+        // view customer
+        const editcustomer = document.getElementById("editcustomer");
+        editcustomer.checked = false;
+        // view Vendor
+        const editvendor = document.getElementById("editvendor");
+        editvendor.checked = false;
+        // view Employee
+
+        const editEmployee = document.getElementById("editEmployee");
+        editEmployee.checked = false;
+
+        // view Parts
+        const editParts = document.getElementById("editParts");
+        editParts.checked = false;
+        // condition
+
+        const editcondition = document.getElementById("editcondition");
+        editcondition.checked = false;
+
+        const editlocation = document.getElementById("editlocation");
+        editlocation.checked = false;
+
+        this.canEditAll = false;
+
+        this.permission = [];
+        if (this.canViewAll == true && this.canAddAll == true) {
+          this.unPermissioned.push(
+            "can_edit_customer",
+            "can_edit_vendor",
+            "can_edit_employee",
+            "can_edit_parts",
+            "can_edit_condition",
+            "can_edit_location",
+            "can_delete_customer",
+            "can_delete_vendor",
+            "can_delete_employee",
+            "can_delete_parts",
+            "can_delete_condition",
+            "can_delete_location"
+          );
+        }
+      }
+    },
+    // edit all
+    editAllEdit(check) {
+      if (check.target.checked == true) {
+        // view customer
+        const editcustomer = document.getElementById("editcustomerEdit");
+        editcustomer.checked = true;
+        // view Vendor
+        const editvendor = document.getElementById("editvendorEdit");
+        editvendor.checked = true;
+        // view Employee
+
+        const editEmployee = document.getElementById("editEmployeeEdit");
+        editEmployee.checked = true;
+
+        // view Parts
+        const editParts = document.getElementById("editPartsEdit");
+        editParts.checked = true;
+        // condition
+
+        const editcondition = document.getElementById("editconditionEdit");
+        editcondition.checked = true;
+
+        const editlocation = document.getElementById("editlocationEdit");
+        editlocation.checked = true;
+
+        this.canEditAll = true;
+
+        this.permission.push(
+          "can_edit_customer",
+          "can_edit_vendor",
+          "can_edit_employee",
+          "can_edit_parts",
+          "can_edit_condition",
+          "can_edit_location"
+        );
+
+        if (this.canViewAll == true && this.canAddAll == true) {
+          this.unPermissioned.push(
+            "can_delete_customer",
+            "can_delete_vendor",
+            "can_delete_employee",
+            "can_delete_parts",
+            "can_delete_condition",
+            "can_delete_location"
+          );
+        }
+        if (
+          this.canViewAll == true &&
+          this.canAddAll == false &&
+          this.canDeleteAll == false
+        ) {
+          this.unPermissioned.push(
+            "can_add_customer",
+            "can_add_vendor",
+            "can_add_employee",
+            "can_add_parts",
+            "can_add_condition",
+            "can_add_location",
+            "can_delete_customer",
+            "can_delete_vendor",
+            "can_delete_employee",
+            "can_delete_parts",
+            "can_delete_condition",
+            "can_delete_location"
+          );
+        }
+        if (
+          this.canViewAll == false &&
+          this.canAddAll == true &&
+          this.canDeleteAll == false
+        ) {
+          this.unPermissioned.push(
+            "can_view_customer",
+            "can_view_vendor",
+            "can_view_employee",
+            "can_view_parts",
+            "can_view_condition",
+            "can_view_location",
+            "can_delete_customer",
+            "can_delete_vendor",
+            "can_delete_employee",
+            "can_delete_parts",
+            "can_delete_condition",
+            "can_delete_location"
+          );
+        }
+        if (
+          this.canViewAll == false &&
+          this.canAddAll == false &&
+          this.canDeleteAll == true
+        ) {
+          this.unPermissioned.push(
+            "can_view_customer",
+            "can_view_vendor",
+            "can_view_employee",
+            "can_view_parts",
+            "can_view_condition",
+            "can_view_location",
+            "can_add_customer",
+            "can_add_vendor",
+            "can_add_employee",
+            "can_add_parts",
+            "can_add_condition",
+            "can_add_location"
+          );
+        }
+
+        console.log(this.permission);
+      }
+      if (check.target.checked == false) {
+        // view customer
+        const editcustomer = document.getElementById("editcustomerEdit");
+        editcustomer.checked = false;
+        // view Vendor
+        const editvendor = document.getElementById("editvendorEdit");
+        editvendor.checked = false;
+        // view Employee
+
+        const editEmployee = document.getElementById("editEmployeeEdit");
+        editEmployee.checked = false;
+
+        // view Parts
+        const editParts = document.getElementById("editPartsEdit");
+        editParts.checked = false;
+        // condition
+
+        const editcondition = document.getElementById("editconditionEdit");
+        editcondition.checked = false;
+
+        const editlocation = document.getElementById("editlocationEdit");
+        editlocation.checked = false;
+
+        this.canEditAll = false;
+
+        this.permission = [];
+
+        if (this.canViewAll == true && this.canAddAll == true) {
+          this.unPermissioned.push(
+            "can_edit_customer",
+            "can_edit_vendor",
+            "can_edit_employee",
+            "can_edit_parts",
+            "can_edit_condition",
+            "can_edit_location",
+            "can_delete_customer",
+            "can_delete_vendor",
+            "can_delete_employee",
+            "can_delete_parts",
+            "can_delete_condition",
+            "can_delete_location"
+          );
+        }
+        if (
+          this.canViewAll == true &&
+          this.canAddAll == false &&
+          this.canDeleteAll == false
+        ) {
+          this.unPermissioned.push(
+            "can_add_customer",
+            "can_add_vendor",
+            "can_add_employee",
+            "can_add_parts",
+            "can_add_condition",
+            "can_add_location",
+            "can_delete_customer",
+            "can_delete_vendor",
+            "can_delete_employee",
+            "can_delete_parts",
+            "can_delete_condition",
+            "can_delete_location",
+            "can_edit_customer",
+            "can_edit_vendor",
+            "can_edit_employee",
+            "can_edit_parts",
+            "can_edit_condition",
+            "can_edit_location"
+          );
+        }
+        if (
+          this.canViewAll == false &&
+          this.canAddAll == true &&
+          this.canDeleteAll == false
+        ) {
+          this.unPermissioned.push(
+            "can_view_customer",
+            "can_view_vendor",
+            "can_view_employee",
+            "can_view_parts",
+            "can_view_condition",
+            "can_view_location",
+            "can_delete_customer",
+            "can_delete_vendor",
+            "can_delete_employee",
+            "can_delete_parts",
+            "can_delete_condition",
+            "can_delete_location",
+            "can_edit_customer",
+            "can_edit_vendor",
+            "can_edit_employee",
+            "can_edit_parts",
+            "can_edit_condition",
+            "can_edit_location"
+          );
+        }
+        if (
+          this.canViewAll == false &&
+          this.canAddAll == false &&
+          this.canDeleteAll == true
+        ) {
+          this.unPermissioned.push(
+            "can_view_customer",
+            "can_view_vendor",
+            "can_view_employee",
+            "can_view_parts",
+            "can_view_condition",
+            "can_view_location",
+            "can_add_customer",
+            "can_add_vendor",
+            "can_add_employee",
+            "can_add_parts",
+            "can_add_condition",
+            "can_add_location",
+            "can_edit_customer",
+            "can_edit_vendor",
+            "can_edit_employee",
+            "can_edit_parts",
+            "can_edit_condition",
+            "can_edit_location"
+          );
+        }
+      }
+    },
+    // delete all
+    deleteAll(check) {
+      if (check.target.checked == true) {
+        // view customer
+        const deletecustomer = document.getElementById("deletecustomer");
+        deletecustomer.checked = true;
+        // view Vendor
+        const deletevendor = document.getElementById("deletevendor");
+        deletevendor.checked = true;
+        // view Employee
+
+        const deleteEmployeee = document.getElementById("deleteEmployeee");
+        deleteEmployeee.checked = true;
+
+        // view Parts
+        const deleteParts = document.getElementById("deleteParts");
+        deleteParts.checked = true;
+        // condition
+
+        const deletecondition = document.getElementById("deletecondition");
+        deletecondition.checked = true;
+
+        const deletelocation = document.getElementById("deletelocation");
+        deletelocation.checked = true;
+
+        this.canDeleteAll = true;
+
+        this.permission.push(
+          "can_delete_customer",
+          "can_delete_vendor",
+          "can_delete_employee",
+          "can_delete_parts",
+          "can_delete_condition",
+          "can_delete_location"
+        );
+
+        if (
+          this.canViewAll == true &&
+          this.canAddAll == true &&
+          this.canEditAll == true
+        ) {
+          this.unPermissioned = [];
+        }
+        if (
+          this.canViewAll == true &&
+          this.canAddAll == false &&
+          this.canEditAll == false
+        ) {
+          this.unPermissioned.push(
+            "can_add_customer",
+            "can_add_vendor",
+            "can_add_employee",
+            "can_add_parts",
+            "can_add_condition",
+            "can_add_location",
+            "can_edit_customer",
+            "can_edit_vendor",
+            "can_edit_employee",
+            "can_edit_parts",
+            "can_edit_condition",
+            "can_edit_location"
+          );
+        }
+        if (
+          this.canViewAll == false &&
+          this.canAddAll == true &&
+          this.canEditAll == false
+        ) {
+          this.unPermissioned.push(
+            "can_view_customer",
+            "can_view_vendor",
+            "can_view_employee",
+            "can_view_parts",
+            "can_view_condition",
+            "can_view_location",
+            "can_edit_customer",
+            "can_edit_vendor",
+            "can_edit_employee",
+            "can_edit_parts",
+            "can_edit_condition",
+            "can_edit_location"
+          );
+        }
+        if (
+          this.canViewAll == false &&
+          this.canAddAll == false &&
+          this.canEditAll == true
+        ) {
+          this.unPermissioned.push(
+            "can_view_customer",
+            "can_view_vendor",
+            "can_view_employee",
+            "can_view_parts",
+            "can_view_condition",
+            "can_view_location",
+            "can_add_customer",
+            "can_add_vendor",
+            "can_add_employee",
+            "can_add_parts",
+            "can_add_condition",
+            "can_add_location"
+          );
+        }
+      }
+      if (check.target.checked == false) {
+        // view customer
+        const deletecustomer = document.getElementById("deletecustomer");
+        deletecustomer.checked = false;
+        // view Vendor
+        const deletevendor = document.getElementById("deletevendor");
+        deletevendor.checked = false;
+        // view Employee
+
+        const deleteEmployeee = document.getElementById("deleteEmployeee");
+        deleteEmployeee.checked = false;
+
+        // view Parts
+        const deleteParts = document.getElementById("deleteParts");
+        deleteParts.checked = false;
+        // condition
+
+        const deletecondition = document.getElementById("deletecondition");
+        deletecondition.checked = false;
+
+        const deletelocation = document.getElementById("deletelocation");
+        deletelocation.checked = false;
+
+        this.canDeleteAll = false;
+        this.permission = [];
+        if (
+          this.canViewAll == true &&
+          this.canAddAll == true &&
+          this.canEditAll == true
+        ) {
+          this.unPermissioned.push(
+            "can_delete_customer",
+            "can_delete_vendor",
+            "can_delete_employee",
+            "can_delete_parts",
+            "can_delete_condition",
+            "can_delete_location"
+          );
+        }
+        if (
+          this.canViewAll == true &&
+          this.canAddAll == false &&
+          this.canEditAll == false
+        ) {
+          this.unPermissioned.push(
+            "can_add_customer",
+            "can_add_vendor",
+            "can_add_employee",
+            "can_add_parts",
+            "can_add_condition",
+            "can_add_location",
+            "can_edit_customer",
+            "can_edit_vendor",
+            "can_edit_employee",
+            "can_edit_parts",
+            "can_edit_condition",
+            "can_edit_location",
+            "can_delete_customer",
+            "can_delete_vendor",
+            "can_delete_employee",
+            "can_delete_parts",
+            "can_delete_condition",
+            "can_delete_location"
+          );
+        }
+        if (
+          this.canViewAll == false &&
+          this.canAddAll == true &&
+          this.canEditAll == false
+        ) {
+          this.unPermissioned.push(
+            "can_view_customer",
+            "can_view_vendor",
+            "can_view_employee",
+            "can_view_parts",
+            "can_view_condition",
+            "can_view_location",
+            "can_edit_customer",
+            "can_edit_vendor",
+            "can_edit_employee",
+            "can_edit_parts",
+            "can_edit_condition",
+            "can_edit_location",
+            "can_delete_customer",
+            "can_delete_vendor",
+            "can_delete_employee",
+            "can_delete_parts",
+            "can_delete_condition",
+            "can_delete_location"
+          );
+        }
+        if (
+          this.canViewAll == false &&
+          this.canAddAll == false &&
+          this.canEditAll == true
+        ) {
+          this.unPermissioned.push(
+            "can_view_customer",
+            "can_view_vendor",
+            "can_view_employee",
+            "can_view_parts",
+            "can_view_condition",
+            "can_view_location",
+            "can_add_customer",
+            "can_add_vendor",
+            "can_add_employee",
+            "can_add_parts",
+            "can_add_condition",
+            "can_add_location",
+            "can_delete_customer",
+            "can_delete_vendor",
+            "can_delete_employee",
+            "can_delete_parts",
+            "can_delete_condition",
+            "can_delete_location"
+          );
+        }
+      }
+    },
+    // delete all
+    deleteAllEdit(check) {
+      if (check.target.checked == true) {
+        // view customer
+        const deletecustomer = document.getElementById("deletecustomerEdit");
+        deletecustomer.checked = true;
+        // view Vendor
+        const deletevendor = document.getElementById("deletevendorEdit");
+        deletevendor.checked = true;
+        // view Employee
+
+        const deleteEmployeee = document.getElementById("deleteEmployeeeEdit");
+        deleteEmployeee.checked = true;
+
+        // view Parts
+        const deleteParts = document.getElementById("deletePartsEdit");
+        deleteParts.checked = true;
+        // condition
+
+        const deletecondition = document.getElementById("deleteconditionEdit");
+        deletecondition.checked = true;
+
+        const deletelocation = document.getElementById("deletelocationEdit");
+        deletelocation.checked = true;
+
+        this.canDeleteAll = true;
+        this.permission.push(
+          "can_delete_customer",
+          "can_delete_vendor",
+          "can_delete_employee",
+          "can_delete_parts",
+          "can_delete_condition",
+          "can_delete_location"
+        );
+        if (
+          this.canViewAll == true &&
+          this.canAddAll == true &&
+          this.canEditAll == true
+        ) {
+          this.unPermissioned = [];
+        }
+        if (
+          this.canViewAll == true &&
+          this.canAddAll == false &&
+          this.canEditAll == false
+        ) {
+          this.unPermissioned.push(
+            "can_add_customer",
+            "can_add_vendor",
+            "can_add_employee",
+            "can_add_parts",
+            "can_add_condition",
+            "can_add_location",
+            "can_edit_customer",
+            "can_edit_vendor",
+            "can_edit_employee",
+            "can_edit_parts",
+            "can_edit_condition",
+            "can_edit_location"
+          );
+        }
+        if (
+          this.canViewAll == false &&
+          this.canAddAll == true &&
+          this.canEditAll == false
+        ) {
+          this.unPermissioned.push(
+            "can_view_customer",
+            "can_view_vendor",
+            "can_view_employee",
+            "can_view_parts",
+            "can_view_condition",
+            "can_view_location",
+            "can_edit_customer",
+            "can_edit_vendor",
+            "can_edit_employee",
+            "can_edit_parts",
+            "can_edit_condition",
+            "can_edit_location"
+          );
+        }
+        if (
+          this.canViewAll == false &&
+          this.canAddAll == false &&
+          this.canEditAll == true
+        ) {
+          this.unPermissioned.push(
+            "can_view_customer",
+            "can_view_vendor",
+            "can_view_employee",
+            "can_view_parts",
+            "can_view_condition",
+            "can_view_location",
+            "can_add_customer",
+            "can_add_vendor",
+            "can_add_employee",
+            "can_add_parts",
+            "can_add_condition",
+            "can_add_location"
+          );
+        }
+
+        console.log(this.permission);
+      }
+      if (check.target.checked == false) {
+        // view customer
+        const deletecustomer = document.getElementById("deletecustomer");
+        deletecustomer.checked = false;
+        // view Vendor
+        const deletevendor = document.getElementById("deletevendor");
+        deletevendor.checked = false;
+        // view Employee
+
+        const deleteEmployeee = document.getElementById("deleteEmployeee");
+        deleteEmployeee.checked = false;
+
+        // view Parts
+        const deleteParts = document.getElementById("deleteParts");
+        deleteParts.checked = false;
+        // condition
+
+        const deletecondition = document.getElementById("deletecondition");
+        deletecondition.checked = false;
+
+        const deletelocation = document.getElementById("deletelocation");
+        deletelocation.checked = false;
+
+        this.canDeleteAll = false;
+        this.permission = [];
+
+        if (
+          this.canViewAll == true &&
+          this.canAddAll == true &&
+          this.canEditAll == true
+        ) {
+          this.unPermissioned.push(
+            "can_delete_customer",
+            "can_delete_vendor",
+            "can_delete_employee",
+            "can_delete_parts",
+            "can_delete_condition",
+            "can_delete_location"
+          );
+        }
+        if (
+          this.canViewAll == true &&
+          this.canAddAll == false &&
+          this.canEditAll == false
+        ) {
+          this.unPermissioned.push(
+            "can_add_customer",
+            "can_add_vendor",
+            "can_add_employee",
+            "can_add_parts",
+            "can_add_condition",
+            "can_add_location",
+            "can_edit_customer",
+            "can_edit_vendor",
+            "can_edit_employee",
+            "can_edit_parts",
+            "can_edit_condition",
+            "can_edit_location",
+            "can_delete_customer",
+            "can_delete_vendor",
+            "can_delete_employee",
+            "can_delete_parts",
+            "can_delete_condition",
+            "can_delete_location"
+          );
+        }
+        if (
+          this.canViewAll == false &&
+          this.canAddAll == true &&
+          this.canEditAll == false
+        ) {
+          this.unPermissioned.push(
+            "can_view_customer",
+            "can_view_vendor",
+            "can_view_employee",
+            "can_view_parts",
+            "can_view_condition",
+            "can_view_location",
+            "can_edit_customer",
+            "can_edit_vendor",
+            "can_edit_employee",
+            "can_edit_parts",
+            "can_edit_condition",
+            "can_edit_location",
+            "can_delete_customer",
+            "can_delete_vendor",
+            "can_delete_employee",
+            "can_delete_parts",
+            "can_delete_condition",
+            "can_delete_location"
+          );
+        }
+        if (
+          this.canViewAll == false &&
+          this.canAddAll == false &&
+          this.canEditAll == true
+        ) {
+          this.unPermissioned.push(
+            "can_view_customer",
+            "can_view_vendor",
+            "can_view_employee",
+            "can_view_parts",
+            "can_view_condition",
+            "can_view_location",
+            "can_add_customer",
+            "can_add_vendor",
+            "can_add_employee",
+            "can_add_parts",
+            "can_add_condition",
+            "can_add_location",
+            "can_delete_customer",
+            "can_delete_vendor",
+            "can_delete_employee",
+            "can_delete_parts",
+            "can_delete_condition",
+            "can_delete_location"
+          );
+        }
+      }
+    },
+    // status
+    checkStatus(status, id) {
+      console.log(document.getElementById(id).checked);
+      if (
+        document.getElementById(id).checked == true &&
+        !this.permission.includes(status)
+      ) {
+        this.permission.push(status);
+        console.log(this.permission);
+      }
+      if (document.getElementById(id).checked == false) {
+        const index = this.permission.indexOf(status);
+        if (index !== -1) {
+          this.permission.splice(index, 1);
+          console.log(this.permission);
+        }
+      }
     },
   },
   watch: {
@@ -2702,5 +5428,78 @@ input[type="file"] {
   display: inline-flex;
   padding: 0.2em;
   height: 2em;
+}
+
+/* inputs  */
+.input-switch[type="checkbox"] {
+  height: 0;
+  width: 0;
+  visibility: hidden;
+}
+
+.swicthh {
+  cursor: pointer;
+  text-indent: -9999px;
+  width: 55px;
+  height: 20px;
+  background: rgb(221, 221, 221);
+  display: block;
+  border-radius: 100px;
+  position: relative;
+}
+
+.swicthh:after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: 0px;
+  width: 22px;
+  height: 23px;
+  background: #fff;
+  border-radius: 90px;
+  transition: 0.3s;
+  border: 1px solid rgb(221, 221, 221);
+}
+
+.input-switch:checked + .swicthh {
+  background: #1c2e50;
+}
+
+.input-switch:checked + .swicthh:after {
+  left: calc(100% - 0px);
+  transform: translateX(-100%);
+}
+
+.swicthh:active:after {
+  width: 30px;
+}
+/*  permissions style  */
+.box {
+  border: 1px solid rgb(216, 212, 212);
+  border-radius: 6px 6px 0px 0px;
+}
+.bg-row {
+  border-radius: 6px 6px 0px 0px;
+  background: #e9eff6;
+  border: 1px solid #e9eff6;
+  padding: 12px;
+}
+.permission-label {
+  color: #000;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.box-grey {
+  border-radius: 7px;
+  border: 1px solid #e4e2e2;
+  background: #fff;
+}
+@media (max-width: 1550px) {
+  .media {
+    height: 700px;
+    overflow-y: auto;
+  }
 }
 </style>

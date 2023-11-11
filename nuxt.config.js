@@ -22,6 +22,7 @@ export default {
   plugins: [
     "~/plugins/axios",
     { src: "~/plugins/apexcChart.js", mode: "client" },
+   
     // Other plugins
   ], // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -91,6 +92,7 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     vendor: ["vue-apexchart"],
+    
   },
   axios: {
     baseURL: "https://admin.eldeepauto.net/api",

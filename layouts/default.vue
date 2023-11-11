@@ -49,18 +49,59 @@ export default {
     return {
       loading: true,
       lang: "en",
+      permission: {},
     };
   },
   mounted() {
     setTimeout(() => {
       console.log("loading:", this.loading);
-       this.loading = false;
+      this.loading = false;
     }, 2000);
     this.lang = localStorage.getItem("lang");
     if (this.lang == "en") {
       this.$i18n.locale = "en";
     } else if (this.lang == "ar") {
       this.$i18n.locale = "ar";
+    }
+    
+    const permission = localStorage.getItem("permissions");
+    if(permission){
+    this.permission = JSON.parse(permission);
+
+    }
+    console.log(this.permission, "permissiion");
+    if (
+      this.permission.can_view_customer == 0 ||
+      this.$router.path == "/customer"
+    ) {
+      this.$router.push("/dashboard");
+    }
+    if (
+      this.permission.can_view_vendor == 0 ||
+      this.$router.path == "/vendors"
+    ) {
+      this.router.push("/dashboard");
+    }
+    if (
+      this.permission.can_view_employee == 0 ||
+      this.$router.path == "/employee"
+    ) {
+      this.router.push("/dashboard");
+    }
+    if (
+      this.permission.can_view_condition == 0 ||
+      this.$router.path == "/conditions"
+    ) {
+      this.$router.push("/dashboard");
+    }
+    if (
+      this.permission.can_view_location == 0 ||
+      this.$router.path == "/locations"
+    ) {
+      this.$router.push("/dashboard");
+    }
+    if (this.permission.can_view_parts == 0 || this.$router.path == "/parts") {
+      this.$router.push("/dashboard");
     }
   },
   created() {

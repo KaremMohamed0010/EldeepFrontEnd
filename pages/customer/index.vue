@@ -62,7 +62,7 @@
                     >
 
                     <div
-                      class="p-[30px] inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[776px] sm:w-full"
+                      class="p-[30px] media inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[776px] sm:w-full"
                       role="dialog"
                       aria-modal="true"
                       aria-labelledby="modal-headline"
@@ -137,68 +137,64 @@
                               {{ $t("Informations") }} :
                             </h1>
                             <div class="form-style mt-[20px] p-[30px]">
-                              <!-- customer code and registration code -->
-                              <div class="flex">
-                                <!-- customer code -->
-                                <div class="group">
-                                  <label
-                                    for="1"
-                                    class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                                    >{{ $t("customer_code") }}
-                                    <p class="required">*</p>
-                                    :</label
-                                  >
-                                  <input
-                                    id="1"
-                                    type="text"
-                                    v-model="customer_code"
-                                    :class="{
-                                      'outline-error':
-                                        emptyField.includes('customer_code'),
-                                    }"
-                                    placeholder="U-001"
-                                    class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
-                                  />
-                                  <p
-                                    v-if="emptyField.includes('customer_code')"
-                                    class="error-message"
-                                  >
-                                    {{ $t("customer_code") }}
-                                    {{ $t("required") }}
-                                  </p>
-                                </div>
-                                <!-- register code -->
-                                <div class="group ml-[20px]">
-                                  <label
-                                    for="1"
-                                    class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                                    >{{ $t("Registration code") }}
-                                    <p class="required">*</p>
-                                    :</label
-                                  >
-                                  <input
-                                    id="1"
-                                    type="text"
-                                    v-model="registration_code"
-                                    :class="{
-                                      'outline-error':
-                                        emptyField.includes(
-                                          'registration_code'
-                                        ),
-                                    }"
-                                    placeholder="000012"
-                                    class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
-                                  />
-                                  <p
-                                    v-if="
-                                      emptyField.includes('registration_code')
-                                    "
-                                    class="error-message"
-                                  >
-                                    {{ $t("Registration code") }}
-                                    {{ $t("required") }}
-                                  </p>
-                                </div>
+                              <!-- customer code -->
+                              <div class="group">
+                                <label
+                                  for="1"
+                                  class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                  >{{ $t("customer_code") }}
+                                  <p class="required">*</p>
+                                  :</label
+                                >
+
+                                <input
+                                  id="1"
+                                  type="text"
+                                  v-model="customer_code"
+                                  :class="{
+                                    'outline-error':
+                                      emptyField.includes('customer_code'),
+                                  }"
+                                  placeholder="U-001"
+                                  class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                                />
+                                <p
+                                  v-if="emptyField.includes('customer_code')"
+                                  class="error-message"
+                                >
+                                  {{ $t("customer_code") }}
+                                  {{ $t("required") }}
+                                </p>
+                              </div>
+                              <!--  registration code -->
+                              <div class="group mt-[20px]">
+                                <label
+                                  for="1"
+                                  class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                  >{{ $t("Registration code") }}
+
+                                  :</label
+                                >
+                                <input
+                                  id="1"
+                                  type="text"
+                                  v-model="registration_code"
+                                  :class="{
+                                    'outline-error':
+                                      emptyField.includes('registration_code'),
+                                  }"
+                                  placeholder="000012"
+                                  class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                                />
+                                <p
+                                  v-if="
+                                    emptyField.includes('registration_code')
+                                  "
+                                  class="error-message"
+                                >
+                                  {{ $t("Registration code") }}
+                                  {{ $t("required") }}
+                                </p>
                               </div>
                               <!-- customer name -->
                               <div class="group mt-[20px]">
@@ -228,63 +224,30 @@
                                   {{ $t("required") }}
                                 </p>
                               </div>
-                              <!-- Vat Number -->
-                              <div class="group mt-[20px]">
-                                <label
-                                  for="1"
-                                  class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                                  >{{ $t("Vat Number") }}
-                                  <p class="required">*</p>
-                                  :</label
-                                >
-                                <input
-                                  id="1"
-                                  :class="{
-                                    'outline-error':
-                                      emptyField.includes('vat_number'),
-                                  }"
-                                  type="text"
-                                  @keypress="isNumber($event)"
-                                  v-model="vat_number"
-                                  placeholder="14%"
-                                  class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
-                                />
-                                <p
-                                  v-if="emptyField.includes('vat_number')"
-                                  class="error-message"
-                                >
-                                  {{ $t("Vat Number") }}
-                                  {{ $t("required") }}
-                                </p>
-                              </div>
                               <!-- National ID -->
+
+                              <!-- location -->
                               <div class="group mt-[20px]">
                                 <label
-                                  for="1"
-                                  class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                                  >{{ $t("National ID") }}
-                                  <p class="required">*</p>
-                                  :</label
-                                >
-                                <input
-                                  id="1"
-                                  type="text"
                                   :class="{
-                                    'outline-error':
-                                      emptyField.includes('national_id'),
+                                    'text-right': lang == 'ar',
                                   }"
-                                  @keypress="isNumber($event)"
-                                  v-model="national_id"
-                                  placeholder="1023456784937484"
-                                  class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
-                                />
-                                <p
-                                  v-if="emptyField.includes('national_id')"
-                                  class="error-message"
+                                  for="1"
+                                  class="block text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                  >{{ $t("Location") }} :</label
                                 >
-                                  {{ $t("National ID") }}
-                                  {{ $t("required") }}
-                                </p>
+                                <multiselect
+                                  v-model="selectedLocations"
+                                  :options="displayedLocations"
+                                  track-by="Id"
+                                  label="Address"
+                                  multiple
+                                  style="border-radius: 25px"
+                                  placeholder="Select Locations"
+                                  @select="handleLocationSelect"
+                                  @input="handleMultiselectChange"
+                                >
+                                </multiselect>
                               </div>
                             </div>
                           </div>
@@ -301,54 +264,33 @@
                                   <label
                                     for="1"
                                     class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                                    >{{ $t("Phone") }}
-                                    <p class="required">*</p>
-                                    :</label
+                                    >{{ $t("Phone") }} :</label
                                   >
-                                  <input
-                                    id="1"
-                                    type="text"
-                                    v-model="phone"
-                                    :class="{
-                                      'outline-error':
-                                        emptyField.includes('phone'),
-                                    }"
-                                    placeholder="0226281"
-                                    @keypress="isNumber($event)"
-                                    class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                                  <PhoneNumber
+                                    :phoneNumber="phone"
+                                    @update:phoneNumber="UpdatePhoneNumberValue"
                                   />
-                                  <p
-                                    v-if="emptyField.includes('phone')"
-                                    class="error-message"
-                                  >
-                                    {{ $t("Phone") }}
-                                    {{ $t("required") }}
-                                  </p>
                                 </div>
-                                <!-- Vat Number -->
+
+                                <!-- Mobile Number -->
                                 <div class="group mt-[20px]">
                                   <label
                                     for="1"
                                     class="block label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
                                     >{{ $t("mobile_number") }} :</label
                                   >
-                                  <input
-                                    id="1"
-                                    type="text"
-                                    @keypress="isNumber($event)"
-                                    v-model="mobile_number"
-                                    placeholder="01223456789"
-                                    class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                                  <MobileNumber
+                                    :phoneNumber="mobile_number"
+                                    @update:mobileNumber="updateMobileNumber"
                                   />
                                 </div>
+
                                 <!-- National ID -->
                                 <div class="group mt-[20px]">
                                   <label
                                     for="1"
                                     class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                                    >{{ $t("Email") }}
-                                    <p class="required">*</p>
-                                    :</label
+                                    >{{ $t("Email") }} :</label
                                   >
                                   <input
                                     id="1"
@@ -510,14 +452,18 @@
                               class="block label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
                               >{{ $t("Payment") }} :</label
                             >
-                            <input
-                              id="1"
-                              type="text"
+                            <select
+                              style="border-radius: 29px"
                               v-model="payment_term"
-                              placeholder="14%"
-                              :disabled="disabledPayment"
-                              class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
-                            />
+                              class="border-select border-radius-[30px] w-[100%] py-1 px-2 bg-white"
+                              name="whatever"
+                              id="frm-whatever"
+                            >
+                              <option value="Immediately">Immediately</option>
+                              <option value="30 ">30 </option>
+                              <option value="45 ">45 </option>
+                              <option value="60">60</option>
+                            </select>
                           </div>
                         </div>
                       </div>
@@ -538,23 +484,6 @@
                           {{ $t("Vehicles") }} :
                         </h2>
                         <div class="form-style p-[20px] mt-[20px]">
-                          <!-- Vin Number -->
-                          <div class="group mt-[20px]">
-                            <label
-                              for="1"
-                              class="block label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                              >{{ $t("VIN number") }} :</label
-                            >
-                            <input
-                              id="1"
-                              type="text"
-                              @keypress="isNumber($event)"
-                              v-model="vin_number"
-                              placeholder="5YJSA1DG9DFP14705"
-                              class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
-                            />
-                          </div>
-
                           <!-- plate Number -->
                           <div class="group mt-[20px]">
                             <label
@@ -576,8 +505,12 @@
                           <div
                             class="flex justify-space-between mt-[30px] form-style p-[20px]"
                           >
-                            <h1 class="active-user">
+                            <h1 v-if="isCooperate" class="active-user">
                               {{ $t("Cooperate") }}
+                            </h1>
+
+                            <h1 v-if="isCooperate == false" class="active-user">
+                              {{ $t("Individual") }}
                             </h1>
                             <button
                               class="flex ltr items-center transition ease-in-out duration-300 w-10 h-4 rounded-full focus:outline-none"
@@ -591,6 +524,62 @@
                                 }"
                               ></div>
                             </button>
+                          </div>
+
+                          <!-- Vat Number -->
+                          <div v-if="isCooperate" class="group mt-[20px]">
+                            <label
+                              for="1"
+                              class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                              >{{ $t("Vat Number") }} :</label
+                            >
+                            <VatNumber
+                              :VatNumber="vat_number"
+                              @update:VatNumber="UpdateVatNumer"
+                            />
+                          </div>
+                          <!-- register number  -->
+                          <div v-if="isCooperate" class="group mt-[20px]">
+                            <label
+                              for="1"
+                              class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                              >{{ $t("Register Number") }} :</label
+                            >
+                            <input
+                              id="1"
+                              :class="{
+                                'outline-error':
+                                  emptyField.includes('register_number'),
+                              }"
+                              type="text"
+                              v-model="register_number"
+                              placeholder="14%"
+                              class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                            />
+                            <p
+                              v-if="emptyField.includes('register_number')"
+                              class="error-message"
+                            >
+                              {{ $t("Register Number") }}
+                              {{ $t("required") }}
+                            </p>
+                          </div>
+                          <!-- ssn number individual -->
+                          <div
+                            v-if="isCooperate == false"
+                            class="group mt-[20px]"
+                          >
+                            <div class="group mt-[20px]">
+                              <label
+                                for="1"
+                                class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                >{{ $t("National ID") }} :</label
+                              >
+                              <NationalId
+                                @update:nationalId="updateNationalId"
+                                :nationalId="national_id"
+                              />
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -655,6 +644,7 @@
                       class="font-bold uppercase rounded-full w-full py-4 pl-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:text-sm text-xs"
                       type="text"
                       v-model="search"
+                      @input="searchData"
                       :placeholder="$t('search')"
                     />
 
@@ -737,6 +727,7 @@
                 </div>
               </div>
             </div>
+
             <div
               v-if="loading == false && customerTable.length > 0"
               class="p-[20px] bg-table"
@@ -1029,7 +1020,7 @@
                                           for="1"
                                           class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
                                           >{{ $t("Registration code") }}
-                                          <p class="required">*</p>
+
                                           :</label
                                         >
                                         <input
@@ -1090,65 +1081,29 @@
                                         {{ $t("required") }}
                                       </p>
                                     </div>
-                                    <!-- Vat Number -->
+
+                                    <!-- location -->
                                     <div class="group mt-[20px]">
                                       <label
-                                        for="1"
-                                        class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                                        >{{ $t("Vat Number") }}
-                                        <p class="required">*</p>
-                                        :</label
-                                      >
-                                      <input
-                                        id="1"
                                         :class="{
-                                          'outline-error':
-                                            emptyField.includes('vat_number'),
+                                          'text-right': lang == 'ar',
                                         }"
-                                        type="text"
-                                        @keypress="isNumber($event)"
-                                        v-model="vat_number"
-                                        placeholder="14%"
-                                        class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
-                                      />
-                                      <p
-                                        v-if="emptyField.includes('vat_number')"
-                                        class="error-message"
-                                      >
-                                        {{ $t("Vat Number") }}
-                                        {{ $t("required") }}
-                                      </p>
-                                    </div>
-                                    <!-- National ID -->
-                                    <div class="group mt-[20px]">
-                                      <label
                                         for="1"
-                                        class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                                        >{{ $t("National ID") }}
-                                        <p class="required">*</p>
-                                        :</label
+                                        class="block text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                        >{{ $t("Location") }} :</label
                                       >
-                                      <input
-                                        id="1"
-                                        type="text"
-                                        :class="{
-                                          'outline-error':
-                                            emptyField.includes('national_id'),
-                                        }"
-                                        @keypress="isNumber($event)"
-                                        v-model="national_id"
-                                        placeholder="1023456784937484"
-                                        class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
-                                      />
-                                      <p
-                                        v-if="
-                                          emptyField.includes('national_id')
-                                        "
-                                        class="error-message"
+                                      <multiselect
+                                        v-model="selectedLocations"
+                                        :options="displayedLocations"
+                                        track-by="Id"
+                                        label="Address"
+                                        multiple
+                                        style="border-radius: 25px"
+                                        placeholder="Select Locations"
+                                        @select="handleLocationSelect"
+                                        @input="handleMultiselectChange"
                                       >
-                                        {{ $t("National ID") }}
-                                        {{ $t("required") }}
-                                      </p>
+                                      </multiselect>
                                     </div>
                                   </div>
                                 </div>
@@ -1167,29 +1122,14 @@
                                         <label
                                           for="1"
                                           class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                                          >{{ $t("Phone") }}
-                                          <p class="required">*</p>
-                                          :</label
+                                          >{{ $t("Phone") }} :</label
                                         >
-                                        <input
-                                          id="1"
-                                          type="text"
-                                          v-model="phone"
-                                          :class="{
-                                            'outline-error':
-                                              emptyField.includes('phone'),
-                                          }"
-                                          placeholder="0226281"
-                                          @keypress="isNumber($event)"
-                                          class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                                        <PhoneNumber
+                                          :phoneNumber="phone"
+                                          @update:phoneNumber="
+                                            UpdatePhoneNumberValue
+                                          "
                                         />
-                                        <p
-                                          v-if="emptyField.includes('phone')"
-                                          class="error-message"
-                                        >
-                                          {{ $t("Phone") }}
-                                          {{ $t("required") }}
-                                        </p>
                                       </div>
                                       <!-- Vat Number -->
                                       <div class="group mt-[20px]">
@@ -1198,13 +1138,11 @@
                                           class="block label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
                                           >{{ $t("mobile_number") }} :</label
                                         >
-                                        <input
-                                          id="1"
-                                          type="text"
-                                          @keypress="isNumber($event)"
-                                          v-model="mobile_number"
-                                          placeholder="01223456789"
-                                          class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                                        <MobileNumber
+                                          :phoneNumber="mobile_number"
+                                          @update:mobileNumber="
+                                            updateMobileNumber
+                                          "
                                         />
                                       </div>
                                       <!-- National ID -->
@@ -1212,9 +1150,7 @@
                                         <label
                                           for="1"
                                           class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                                          >{{ $t("Email") }}
-                                          <p class="required">*</p>
-                                          :</label
+                                          >{{ $t("Email") }} :</label
                                         >
                                         <input
                                           id="1"
@@ -1385,14 +1321,20 @@
                                     class="block label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
                                     >{{ $t("Payment") }} :</label
                                   >
-                                  <input
-                                    id="1"
-                                    type="text"
+                                  <select
+                                    style="border-radius: 29px"
                                     v-model="payment_term"
-                                    placeholder="14%"
-                                    :disabled="disabledPayment"
-                                    class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
-                                  />
+                                    class="border-select border-radius-[30px] w-[100%] py-1 px-2 bg-white"
+                                    name="whatever"
+                                    id="frm-whatever"
+                                  >
+                                    <option value="Immediately">
+                                      Immediately
+                                    </option>
+                                    <option value="30 ">30 </option>
+                                    <option value="45 ">45 </option>
+                                    <option value="60">60</option>
+                                  </select>
                                 </div>
                               </div>
                             </div>
@@ -1468,6 +1410,63 @@
                                       }"
                                     ></div>
                                   </button>
+                                </div>
+                                <!-- Vat Number -->
+                                <div v-if="isCooperate" class="group mt-[20px]">
+                                  <label
+                                    for="1"
+                                    class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                    >{{ $t("Vat Number") }} :</label
+                                  >
+                                  <VatNumber
+                                    :VatNumber="vat_number"
+                                    @update:VatNumber="UpdateVatNumer"
+                                  />
+                                </div>
+                                <!-- register number  -->
+                                <div v-if="isCooperate" class="group mt-[20px]">
+                                  <label
+                                    for="1"
+                                    class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                    >{{ $t("Register Number") }} :</label
+                                  >
+                                  <input
+                                    id="1"
+                                    :class="{
+                                      'outline-error':
+                                        emptyField.includes('register_number'),
+                                    }"
+                                    type="text"
+                                    v-model="register_number"
+                                    placeholder="14%"
+                                    class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                                  />
+                                  <p
+                                    v-if="
+                                      emptyField.includes('register_number')
+                                    "
+                                    class="error-message"
+                                  >
+                                    {{ $t("Register Number") }}
+                                    {{ $t("required") }}
+                                  </p>
+                                </div>
+                                <!-- ssn number individual -->
+                                <div
+                                  v-if="isCooperate == false"
+                                  class="group mt-[20px]"
+                                >
+                                  <div class="group mt-[20px]">
+                                    <label
+                                      for="1"
+                                      class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                      >{{ $t("National ID") }} :</label
+                                    >
+                                    <NationalId
+                                      @update:nationalId="updateNationalId"
+                                      :nationalId="national_id"
+                                    />
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -1638,6 +1637,302 @@
                 {{ $t("There is No Customers") }}
               </h1>
             </div>
+            <div
+              class="fixed z-10 overflow-y-auto top-0 w-full left-0 hidden"
+              id="addLocation"
+            >
+              <div
+                class="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0"
+              >
+                <div class="fixed inset-0 transition-opacity">
+                  <div class="absolute inset-0 bg-gray-900 opacity-75" />
+                </div>
+                <span class="hidden sm:inline-block sm:align-middle sm:h-screen"
+                  >&#8203;</span
+                >
+                <div
+                  class="p-[30px] media inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[776px] sm:w-full"
+                  role="dialog"
+                  aria-modal="true"
+                  aria-labelledby="modal-headline"
+                >
+                  <!-- close btn -->
+                  <div class="px-4 py-3 text-left">
+                    <button
+                      type="button"
+                      class="py-2 px-4 bg-white text-black rounded mr-2 flex"
+                      @click="addNewLocation('close')"
+                    >
+                      <img
+                        class="w-[24px]"
+                        src="../../assets/imgs/comman/close-square.png"
+                        alt=""
+                      />
+                      <p class="ml-[12px]">
+                        {{ $t("Close") }}
+                      </p>
+                    </button>
+                  </div>
+                  <!-- tabs start -->
+
+                  <div id="Informations" class="tab mt-1 items-center">
+                    <div class="flex items-center justify-space-between">
+                      <!-- information -->
+                      <div
+                        :class="{
+                          'text-right': lang == 'ar',
+                        }"
+                        class="text-lg font-bold rounded-lg w-[100%] mb-[20px]"
+                      >
+                        <h1
+                          :class="[
+                            {
+                              'text-right': lang == 'ar',
+                            },
+                          ]"
+                          class="mt-[20px] text-left"
+                        >
+                          {{ $t("Location") }} :
+                        </h1>
+
+                        <div
+                          :class="{
+                            'text-right': lang == 'ar',
+                          }"
+                          class="form-style mt-[20px] p-[30px]"
+                        >
+                          <!-- Choose country and Street -->
+                          <div
+                            :class="{
+                              'text-right': lang == 'ar',
+                            }"
+                            class="flex"
+                          >
+                            <!-- Employee name -->
+                            <div class="group w-[50%]">
+                              <label
+                                :class="{
+                                  'text-right': lang == 'ar',
+                                }"
+                                for="1"
+                                class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                >{{ $t("Choose Country") }} :
+                                <p class="required">*</p></label
+                              >
+                              <div class="flex">
+                                <select
+                                  v-model="country_name"
+                                  class="appearance-none border-select w-full py-1 px-2 bg-white"
+                                  name="whatever"
+                                  @change="chooseCountry"
+                                  id="frm-whatever"
+                                >
+                                  <option
+                                    v-for="(country, i) in countries"
+                                    :value="country.name"
+                                    :key="i"
+                                  >
+                                    {{ country.name }}
+                                  </option>
+                                </select>
+
+                                <img
+                                  :class="{
+                                    'arrow-select-arabic': lang == 'ar',
+                                  }"
+                                  class="arrow-select"
+                                  src="../../assets/imgs/comman/Icon.png"
+                                  alt=""
+                                />
+                              </div>
+                              <p
+                                :class="{
+                                  'text-right': lang == 'ar',
+                                }"
+                                v-if="emptyField.includes('country_name')"
+                                class="error-message text-left"
+                              >
+                                {{ $t("Choose Country") }}
+                                {{ $t("required") }}
+                              </p>
+                            </div>
+                            <!-- register code -->
+                            <div
+                              :class="{
+                                'mr-[20px]': lang == 'ar',
+                              }"
+                              class="group ml-[20px] w-[50%]"
+                            >
+                              <label
+                                :class="{
+                                  'text-right': lang == 'ar',
+                                }"
+                                for="1"
+                                class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                >{{ $t("Choose city") }} :
+                                <p class="required">*</p></label
+                              >
+                              <img
+                                :class="{
+                                  'arrow-select-arabic-city': lang == 'ar',
+                                }"
+                                style="left: 677px"
+                                class="arrow-select"
+                                src="../../assets/imgs/comman/Icon.png"
+                                alt=""
+                              />
+                              <select
+                                v-model="city_name"
+                                class="appearance-none border-select w-full py-1 px-2 bg-white"
+                                name="whatever"
+                                id="frm-whatever"
+                              >
+                                <option
+                                  v-for="(city, i) in cities"
+                                  :value="city"
+                                  :key="i"
+                                >
+                                  {{ city }}
+                                </option>
+                              </select>
+                              <p
+                                :class="{
+                                  'text-right': lang == 'ar',
+                                }"
+                                v-if="emptyField.includes('city_name')"
+                                class="error-message text-left"
+                              >
+                                {{ $t("Choose city") }}
+                                {{ $t("required") }}
+                              </p>
+                            </div>
+                          </div>
+                          <!-- Employee EMail and Employee Password -->
+                          <div
+                            :class="{
+                              'text-right': lang == 'ar',
+                            }"
+                            class="flex mt-[20px]"
+                          >
+                            <!-- Employee name -->
+                            <div class="group w-[50%]">
+                              <label
+                                :class="{
+                                  'text-right': lang == 'ar',
+                                }"
+                                for="1"
+                                class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                >{{ $t("Area") }} :</label
+                              >
+                              <input
+                                id="1"
+                                type="text"
+                                v-model="area"
+                                placeholder=""
+                                class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                              />
+                            </div>
+                            <!-- street name -->
+                            <div
+                              :class="{
+                                'mr-[20px]': lang == 'ar',
+                              }"
+                              class="group ml-[20px] w-[50%]"
+                            >
+                              <label
+                                :class="{
+                                  'text-right': lang == 'ar',
+                                }"
+                                for="1"
+                                class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                >{{ $t("street") }} :</label
+                              >
+                              <input
+                                id="1"
+                                type="text"
+                                v-model="street"
+                                placeholder=""
+                                class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                              />
+                            </div>
+                          </div>
+
+                          <!-- Employee Group and Employee position -->
+                          <div
+                            :class="{
+                              'text-right': lang == 'ar',
+                            }"
+                            class="flex mt-[20px]"
+                          >
+                            <div class="group w-[50%]">
+                              <label
+                                :class="{
+                                  'text-right': lang == 'ar',
+                                }"
+                                for="1"
+                                class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                >{{ $t("Building Number") }} :</label
+                              >
+                              <input
+                                id="1"
+                                type="text"
+                                v-model="building_number"
+                                placeholder=""
+                                class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                              />
+                            </div>
+                            <!-- register code -->
+                            <div
+                              :class="{
+                                'mr-[20px]': lang == 'ar',
+                              }"
+                              class="group ml-[20px] w-[50%]"
+                            >
+                              <label
+                                :class="{
+                                  'text-right': lang == 'ar',
+                                }"
+                                for="1"
+                                class="block text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                >{{ $t("Floor") }} :</label
+                              >
+                              <input
+                                id="1"
+                                type="text"
+                                v-model="floor"
+                                placeholder="000012"
+                                class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- tabs end -->
+                  <div class="flex mb-[30px]">
+                    <div class="w-[50%]">
+                      <button
+                        @click="addNewLocation('close')"
+                        class="close-btn rounded-lg w-[100%] px-4 py-2 bg-gray-200 hover:bg-gray-300 duration-300"
+                      >
+                        {{ $t("close") }}
+                      </button>
+                    </div>
+                    <div class="w-[50%] ml-[6px]">
+                      <button
+                        type="button"
+                        @click="postLocation('add')"
+                        class="action-btn rounded-lg w-[100%] px-4 py-2 bg-blue-500 text-blue-100 hover:bg-blue-600 duration-300"
+                      >
+                        {{ $t("Add") }}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1646,7 +1941,25 @@
 </template>
 
 <script>
+import NationalId from "../../components/Inputs/NationalId.vue";
+import PhoneNumber from "../../components/Inputs/PhoneNumber.vue";
+import VatNumber from "../../components/Inputs/VatNumber.vue";
+import Location from "../../components/Inputs/Location.vue";
+
+import MobileNumber from "../../components/Inputs/MobileNumber.vue";
+
+import Multiselect from "vue-multiselect";
+import "vue-multiselect/dist/vue-multiselect.min.css";
+
 export default {
+  components: {
+    NationalId,
+    PhoneNumber,
+    VatNumber,
+    Location,
+    MobileNumber,
+    Multiselect,
+  },
   data() {
     return {
       customerTable: [],
@@ -1669,7 +1982,7 @@ export default {
       search: "",
 
       // data
-      customer_code: null,
+      customer_code: "",
       customer_name: null,
       registration_code: null,
       mobile_number: null,
@@ -1683,6 +1996,8 @@ export default {
       plate_number: null,
       national_id: null,
       id: "",
+      register_number: 0,
+      ssn_number: null,
 
       // pagination data
       page: 1,
@@ -1692,18 +2007,52 @@ export default {
       currentPage: 1,
       hasMorePages: true,
       permissions: [],
+      locations: [],
+      location: null,
       loading: true,
       lang: "",
       open: false,
+
+      // data
+      country_name: null,
+      city_name: null,
+      area: null,
+      street: null,
+      vat_number: null,
+      building_number: null,
+      floor: null,
+      ssn_number: null,
+      employee_id: null,
+      vendor_id: null,
+
+      countries: [],
+      cities: [],
+      vendors: [],
+      employee: [],
+      selectedLocations: [],
+
+      // search
+      search: "",
     };
   },
   mounted() {
+    // get all customers
+    // countries
+    this.$axios.$get("/Location/GetAllLocation?page=false").then((res) => {
+      this.locations = res.Location;
+    });
+    this.$axios
+      .get("https://countriesnow.space/api/v0.1/countries/capital")
+      .then((res) => {
+        this.countries = res.data.data;
+      });
     // bring All Data
     this.$axios.$get("/Customer/GetAllCustomer").then((res) => {
       this.customerTable = res.Customer.data;
-      this.totalPages = res.Customer.last_page;
-      this.perPage = res.Customer.per_page;
-      this.total = res.Customer.total;
+      this.customer_code = res.NextItem;
+      this.totalPages = res.Customer.meta.last_page;
+      this.perPage = res.Customer.meta.per_page;
+      this.total = res.Customer.meta.total;
       this.permissions = res.permissions;
       this.loading = false;
     });
@@ -1716,10 +2065,198 @@ export default {
       this.$i18n.locale = "ar";
     }
     this.open = localStorage.getItem("open");
-
     // watch language
   },
   methods: {
+    // handle location select
+    handleLocationSelect(selectedOption) {
+      if (selectedOption.Id === 0) {
+        // Call your function for adding a new location here
+        this.addLocation();
+      }
+    },
+    // show add location poopup
+
+    addLocation() {
+      // open location modal
+      document.getElementById(`addLocation`).classList.remove("hidden");
+    },
+    // multiSelected Locations
+    handleMultiselectChange(selectedValues) {
+      // Handle the selected values from the child component
+
+      console.log("Selected values from child component:", selectedValues);
+    },
+    // update mobile number
+    updateMobileNumber(updateValue) {
+      this.mobile_number = updateValue;
+    },
+    // update Vat Number
+    UpdateVatNumer(updateValue) {
+      this.vat_number = updateValue;
+    },
+    // update National Id
+    updateNationalId(updateValue) {
+      this.national_id = updateValue;
+    },
+    UpdatePhoneNumberValue(updateValue) {
+      this.phone = updateValue;
+    },
+    // search
+    searchData() {
+      this.$axios
+        .$get(`/Customer/GetAllCustomer?search=${this.search}`)
+        .then((res) => {
+          this.customerTable = res.Customer.data;
+          this.totalPages = res.Customer.meta.last_page;
+          this.perPage = res.Customer.meta.per_page;
+          this.total = res.Customer.meta.total;
+          this.permissions = res.permissions;
+          this.loading = false;
+        });
+    },
+
+    // open add location popup
+    openAddLocationPopup() {
+      document.getElementById(`addLocation`).classList.remove("hidden");
+    },
+    // toggle location popup
+    addNewLocation(status) {
+      document.getElementById(`addLocation`).classList.toggle("hidden");
+      // tabs
+      // Select tabs and tab buttons
+      const tabs = document.querySelectorAll(".tab");
+      const tabBtns = document.querySelectorAll(".tabbtn");
+
+      // each tab button will have a  click event  listener
+      tabBtns.forEach((tabBtn) => {
+        tabBtn.addEventListener("click", () => {
+          // hiding all tabs
+          // tabs.forEach((tab) => {
+          //   tab.classList.add("hidden");
+          // });
+
+          // showing only the tab that this tab button should show
+          const tab = tabBtn.getAttribute("data-tabopen");
+          document.getElementById(tab).classList.remove("hidden");
+
+          //  we will give same styles to all tab
+          if (this.type == "Informations") {
+            tabBtns.forEach((tabBtn) => {
+              tabBtn.className =
+                " px-2 py-1 cursor-pointer ml-[26px] tab-un-active ";
+            });
+            //  we will give special styles to the active tab
+            tabBtn.className = "tab-style cursor-pointer";
+          }
+          tabBtns.forEach((tabBtn) => {
+            tabBtn.className =
+              " px-2 py-1 cursor-pointer ml-[26px] tab-un-active ";
+          });
+
+          //  we will give special styles to the active tab
+          tabBtn.className = "tab-style cursor-pointer";
+        });
+      });
+
+      // post method api
+      // validation messages
+      this.clearLocation();
+    },
+    // change and choose country
+    chooseCountry(country) {
+      console.log(country.target.value);
+      let data = {
+        country: country.target.value,
+      };
+      this.$axios
+        .$post("https://countriesnow.space/api/v0.1/countries/cities", data)
+        .then((res) => {
+          this.cities = res.data;
+        });
+    },
+    // clear location
+    clearLocation() {
+      (this.country_name = null),
+        (this.city_name = null),
+        (this.area = null),
+        (this.street = null),
+        (this.building_number = null),
+        (this.floor = null),
+        (this.employee_id = null),
+        (this.vendor_id = null);
+    },
+    // post location
+    postLocation(status) {
+      // this.loading = true;
+      const requiredFields = ["country_name", "city_name"];
+
+      const emptyFields = requiredFields.filter(
+        (field) => this[field] === "" || this[field] === null
+      );
+
+      this.emptyField = emptyFields;
+      console.log(emptyFields);
+      if (emptyFields.length == 0) {
+        if (status == "add") {
+        }
+      }
+
+      let formdata = new FormData();
+
+      formdata.append("vendor_id", this.vendor_id);
+      formdata.append("user_id", this.employee_id);
+      formdata.append("country", this.country_name);
+      formdata.append("city", this.city_name);
+      formdata.append("area", this.area);
+      formdata.append("street", this.street);
+      formdata.append("floor", this.floor);
+      formdata.append("bulding_number", this.building_number);
+      formdata.append("customer_id", null);
+
+      this.$axios.$post(`/Location/AddLocation`, formdata).then((res) => {
+        if (res.status == 200) {
+          document.getElementById(`addLocation`).classList.toggle("hidden");
+          // this.loading = false;
+          this.$toast.success("Location Added Successfully");
+          // // get data again
+          this.$axios
+            .$get("/Location/GetAllLocation?page=false")
+            .then((res) => {
+              this.locations = res.Location;
+              var lastId = this.locations.length + 6;
+
+              console.log(lastId, "last id");
+
+              var lastItem = this.locations.find(
+                (location) => location.Id == lastId
+              );
+              this.selectedLocations.push(lastItem);
+            });
+
+          const hasObjectWithIdZero = this.selectedLocations.find(
+            (obj) => obj.Id === 0
+          );
+
+          if (hasObjectWithIdZero) {
+            // An object with id = 0 exists in selectedLocations
+            this.selectedLocations = this.selectedLocations.filter(
+              (obj) => obj.Id !== 0
+            );
+          }
+
+          // this.selectedLocations.push(lastItem);
+          this.clearLocation();
+        } else {
+          this.$toast.error(res.message);
+        }
+      });
+    },
+    // cat number -
+    vatNumberDashed() {
+      const joy = this.vat_number.match(/.{1,4}/g);
+      this.vat_number = joy.join(" ");
+    },
     // clear data
     clearData() {
       this.customer_code = null;
@@ -1761,11 +2298,14 @@ export default {
           this.customer_name = res.Customer.customer_name;
           this.mobile_number = res.Customer.other_mobile_number;
           this.registration_code = res.Customer.registration_code;
-          this.vat_number = res.Customer.vin_number;
+          this.vat_number = res.Customer.vat_number;
           this.phone = res.Customer.mobile_number;
           this.email = res.Customer.email;
           this.address = res.Customer.address;
           this.national_id = res.Customer.snn;
+          this.location = res.Cudtomer.location;
+          this.ssn_number = res.Customer.snn;
+          this.selectedLocations = res.Cudtomer.Location
           if (res.Customer.credit_limit) {
             this.disable = false;
             this.activeCreditLimit = true;
@@ -1777,7 +2317,7 @@ export default {
             this.activePayment = true;
             this.payment_term = res.Customer.payment_term;
           }
-          this.vin_number = res.Customer.vin_number;
+          this.vat_number = res.Customer.vin_number;
           this.plate_number = res.Customer.plate_number;
           this.isCooperate = res.Customer.corporate;
         });
@@ -1928,17 +2468,8 @@ export default {
       this.clearData();
     },
     // post and add customer
-
     postCustomer(status) {
-      const requiredFields = [
-        "customer_name",
-        "customer_code",
-        "registration_code",
-        "national_id",
-        "phone",
-        "email",
-        "vat_number",
-      ];
+      const requiredFields = ["customer_name", "customer_code"];
 
       const emptyFields = requiredFields.filter(
         (field) => this[field] === "" || this[field] === null
@@ -1953,22 +2484,31 @@ export default {
       } else if (emptyFields.length == 0) {
         if (status == "add") {
           this.loading = true;
-          let data = {
-            customer_name: this.customer_name,
-            customer_code: this.customer_code,
-            mobile_number: this.phone,
-            email: this.email,
-            other_mobile_number: this.mobile_number,
-            registration_code: this.registration_code,
-            credit_limit: this.credit_limit,
-            payment_term: this.payment_term,
-            is_active: this.active_user,
-            corporate: this.isCooperate,
-            address: this.address,
-            snn: this.national_id,
-            vin_number: this.vat_number,
-          };
-          this.$axios.$post(`/Customer/AddCustomer`, data).then((res) => {
+
+          let formdata = new FormData();
+
+          formdata.append("customer_name", this.customer_name);
+          formdata.append("customer_code", this.customer_code);
+          formdata.append("mobile_number", this.mobile_number);
+          formdata.append("registration_code", this.registration_code);
+          formdata.append("credit_limit", this.credit_limit);
+          formdata.append("payment_term", this.payment_term);
+          if (this.active_user == true) {
+            formdata.append("is_active", 1);
+          } else if (this.active_user == false) {
+            formdata.append("is_active", 0);
+          }
+          formdata.append("corporate", this.isCooperate);
+          formdata.append("address", this.address);
+          formdata.append("snn", this.national_id);
+          formdata.append("vat_number", this.vat_number);
+          formdata.append("registry_number", this.register_number);
+
+          this.selectedLocations.forEach((value, index) => {
+            formdata.append(`location_id[${index}]`, value.Id);
+          });
+
+          this.$axios.$post(`/Customer/AddCustomer`, formdata).then((res) => {
             if (res.status == 200) {
               this.loading = false;
               this.$toast.success("Customer Added Successfully");
@@ -1979,9 +2519,9 @@ export default {
                 )
                 .then((res) => {
                   this.customerTable = res.Customer.data;
-                  this.totalPages = res.Customer.last_page;
-                  this.perPage = res.Customer.per_page;
-                  this.total = res.Customer.total;
+                  this.totalPages = res.Customer.meta.last_page;
+                  this.perPage = res.Customer.meta.per_page;
+                  this.total = res.Customer.meta.total;
                   this.permissions = res.permissions;
                 });
               document.getElementById(`addCustomer`).classList.toggle("hidden");
@@ -1998,15 +2538,7 @@ export default {
     // edit customer
     editCustomer() {
       // validation messages
-      const requiredFields = [
-        "customer_name",
-        "customer_code",
-        "registration_code",
-        "national_id",
-        "phone",
-        "email",
-        "vat_number",
-      ];
+      const requiredFields = ["customer_name", "customer_code"];
 
       const emptyFields = requiredFields.filter(
         (field) => this[field] === "" || this[field] == null
@@ -2020,24 +2552,28 @@ export default {
         return;
       } else {
         this.loading = true;
-        let data = {
-          customer_name: this.customer_name,
-          customer_code: this.customer_code,
-          mobile_number: this.phone,
-          email: this.email,
-          other_mobile_number: this.mobile_number,
-          registration_code: this.registration_code,
-          credit_limit: this.credit_limit,
-          payment_term: this.payment_term,
-          is_active: this.active_user,
-          corporate: this.isCooperate,
-          address: this.address,
-          snn: this.national_id,
-          vin_number: this.vat_number,
-        };
+
+        let formdata = new FormData();
+
+        formdata.append("customer_name", this.customer_name);
+        formdata.append("customer_code", this.customer_code);
+        formdata.append("mobile_number", this.mobile_number);
+        formdata.append("registration_code", this.registration_code);
+        formdata.append("credit_limit", this.credit_limit);
+        formdata.append("payment_term", this.payment_term);
+        formdata.append("is_active", this.active_user);
+        formdata.append("corporate", this.isCooperate);
+        formdata.append("address", this.address);
+        formdata.append("snn", this.national_id);
+        formdata.append("vat_number", this.vat_number);
+        formdata.append("registry_number", this.register_number);
+
+        this.selectedLocations.forEach((value, index) => {
+          formdata.append(`location_id[${index}]`, value.Id);
+        });
 
         this.$axios
-          .$post(`/Customer/UpdateCustomer/${this.id}`, data)
+          .$post(`/Customer/UpdateCustomer/${this.id}`, formdata)
           .then((res) => {
             if (res.status == 200) {
               this.loading = false;
@@ -2049,9 +2585,9 @@ export default {
                 )
                 .then((res) => {
                   this.customerTable = res.Customer.data;
-                  this.totalPages = res.Customer.last_page;
-                  this.perPage = res.Customer.per_page;
-                  this.total = res.Customer.total;
+                  this.totalPages = res.Customer.meta.last_page;
+                  this.perPage = res.Customer.meta.per_page;
+                  this.total = res.Customer.meta.total;
                   this.permissions = res.permissions;
                 });
               // document
@@ -2105,6 +2641,16 @@ export default {
       }
     },
   },
+  computed: {
+    displayedLocations() {
+      // Prepend the "Add Location" option to the locations array
+      const addLocationOption = {
+        Id: 0,
+        Address: "Add Location +",
+      };
+      return [addLocationOption, ...this.locations];
+    },
+  },
   watch: {
     // watch credit limit
     activeCreditLimit() {
@@ -2139,9 +2685,10 @@ export default {
       console.log(value);
       this.$axios.$get(`/Customer/GetAllCustomer?page=${value}`).then((res) => {
         this.customerTable = res.Customer.data;
-        this.totalPages = res.Customer.last_page;
-        this.perPage = res.Customer.per_page;
-        this.total = res.Customer.total;
+        this.totalPages = res.Customer.meta.last_page;
+        this.perPage = res.Customer.meta.per_page;
+        this.total = res.Customer.meta.total;
+        this.permissions = res.permissions;
       });
       this.$router.push({ path: "/customer", query: { page: value } });
     },
@@ -2246,5 +2793,48 @@ dropdown input:checked ~ ul {
 .remove-margin-left {
   padding-left: auto !important;
   padding-right: auto !important;
+}
+.arrow-select {
+  position: absolute;
+  left: 346px;
+  margin-top: 19px;
+  width: 20px;
+}
+.arrow-select-arabic {
+  position: absolute;
+  right: 331px;
+  left: 0px !important;
+  margin-top: 19px;
+  width: 20px;
+}
+.arrow-select-arabic-city {
+  position: absolute;
+  right: 655px;
+  left: 0px !important;
+  margin-top: 19px;
+  width: 20px;
+}
+.border-select {
+  border-radius: 20px;
+  border: 1px solid var(--primary-dark-20, rgba(66, 66, 66, 0.2));
+  background: var(--colors-base-00, #fff);
+
+  /* Shadow/lg */
+  box-shadow: 0px 8px 11px -4px rgba(45, 54, 67, 0.04),
+    0px 20px 24px -4px rgba(45, 54, 67, 0.04);
+  color: var(--colors-primary-slate-400, #8897ae);
+
+  /* Paragraph: 5/Medium */
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 171.429% */
+  letter-spacing: -0.2px;
+}
+@media (max-width: 1550px) {
+  .media {
+    height: 700px;
+    overflow-y: auto;
+  }
 }
 </style>

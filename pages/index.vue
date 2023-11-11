@@ -185,7 +185,12 @@ export default {
   },
   mounted() {
     if (this.$cookies.get("token")) {
-      this.$router.push("/dashboard");
+      if (localStorage.getItem("role") == "5") {
+        this.$router.push("/pricing");
+      }
+      if (localStorage.getItem("role") == "1") {
+        this.$router.push("/dashboard");
+      }
     } else if (!this.$cookies.get("token")) {
       this.$router.push("/");
     }
@@ -199,7 +204,7 @@ export default {
     }
   },
   methods: {
-    // check of validation email
+    // // check of validation email
     validateEmail(email) {
       if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
         this.invalidEmail = false;
@@ -227,7 +232,6 @@ export default {
     toggleEyePassword() {
       this.showPassword = !this.showPassword;
     },
-
     // login api
     Login() {
       this.userNotFound = false;
@@ -242,8 +246,15 @@ export default {
         this.$axios.$post("/Auth/Login", data).then((res) => {
           if (res.status == 200) {
             this.$cookies.set("token", res.access_token);
+            localStorage.setItem("role", res.user.Role_id);
             localStorage.setItem("token", "Bearer" + res.access_token);
             localStorage.setItem("name", res.user.Name);
+
+            localStorage.setItem(
+              "permissions",
+              JSON.stringify(res.permissions)
+            );
+
             location.reload();
           } else {
             this.loginBtn = false;

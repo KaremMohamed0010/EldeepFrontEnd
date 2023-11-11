@@ -1,5 +1,5 @@
 <template>
-  <div >
+  <div>
     <div x-data="setup()" x-init="$refs.loading.classList.add('hidden');">
       <div
         class="flex h-screen antialiased text-gray-900 bg-gray-100 dark:bg-dark dark:text-light"
@@ -14,8 +14,8 @@
             class="fixed inset-0 z-10 bg-black bg-opacity-50 lg:hidden"
           ></div>
           <div x-show="isSidebarOpen" class="fixed inset-y-0 z-10 w-16"></div>
-
-          <nav
+          <!-- super admin -->
+          <nav v-if="role == '1'"
             aria-label="Options"
             class="z-20 flex-col items-center flex-shrink-0 hidden w-16 py-4 bg-white border-r-2 border-indigo-100 shadow-md sm:flex"
           >
@@ -48,8 +48,8 @@
               </button>
 
               <!-- Menu button -->
-              <button
-                @click="goToCustomer()"
+              <button 
+                @click="goToPages()"
                 class="transition-colors hover:text-white focus:outline-none focus:ring-offset-white focus:ring-offset-2"
                 :class="
                   this.$route.path != '/dashboard'
@@ -76,9 +76,74 @@
               </button>
             </div>
           </nav>
+          <!-- pricing -->
+           <nav v-if="role == '5'"
+            aria-label="Options"
+            class="z-20 flex-col items-center flex-shrink-0 hidden w-16 py-4 bg-white border-r-2 border-indigo-100 shadow-md sm:flex"
+          >
+            <!-- Logo -->
+            <div class="flex flex-col items-center flex-1 space-y-4">
+              <!-- First Page in Navbar -->
+              <button
+                @click="toggleSecondNavBar()"
+                class="transition-colors hover:text-white focus:outline-none focus:ring-offset-white focus:ring-offset-2"
+              >
+                <img
+                  src="../assets/imgs/comman/hamburger-menu-line-icon-free-vector-removebg-preview.png"
+                  alt=""
+                />
+              </button>
+              <!-- First Page in Navbar -->
+              <button
+                @click="goToPricingPage()"
+                class="transition-colors hover:text-white focus:outline-none focus:ring-offset-white focus:ring-offset-2"
+                :class="
+                  this.$route.path == '/pricing'
+                    ? 'text-white bg-[#EBEBEB] border-4 border-r-[#D11C1C]'
+                    : 'text-gray-500 bg-white'
+                "
+              >
+                <img
+                  src="../assets/imgs/verticalNav/btn-sidebar(1).png"
+                  alt=""
+                />
+              </button>
 
-          <div
-            v-if="this.$route.path != '/dashboard'"
+              <!-- Menu button -->
+              <button 
+                @click="goToStatus()"
+                class="transition-colors hover:text-white focus:outline-none focus:ring-offset-white focus:ring-offset-2"
+                :class="
+                  this.$route.path == '/status'
+                    ? 'text-white bg-[#EBEBEB] border-4 border-r-[#D11C1C]'
+                    : 'text-gray-500 bg-white'
+                "
+              >
+                 <img
+                  src="../assets/imgs/verticalNav/btn-sidebar(1).png"
+                  alt=""
+                />
+              </button>
+            </div>
+
+            <!-- User avatar -->
+            <div
+              class="relative flex items-center flex-shrink-0 p-2"
+              x-data="{ isOpen: false }"
+            >
+              <button @click="logOut()" class="">
+                <img
+                  class=""
+                  src="../assets/imgs/verticalNav/btn-sidebar(3).png"
+                  alt="Ahmed Kamel"
+                />
+                <span class="sr-only">User menu</span>
+              </button>
+            </div>
+          </nav>
+
+          <div 
+            v-if="this.$route.path != '/dashboard' && role == '1'"
             :class="{ 'second-nav-arabic': lang == 'ar' }"
             class="second-nav w-[0%] appear-nav"
           >
@@ -105,6 +170,7 @@
                 >
                   <!-- CUstomer  -->
                   <div
+                    v-if="permission.can_view_customer == 1"
                     @click="goToCustomer()"
                     class="flex items-center pt-[30px] cursor-pointer"
                   >
@@ -128,6 +194,7 @@
                   </div>
                   <!-- Vendor  -->
                   <div
+                    v-if="permission.can_view_vendor == 1"
                     @click="goToVendor()"
                     class="flex items-center pt-[30px] cursor-pointer"
                   >
@@ -149,6 +216,7 @@
                   </div>
                   <!-- Employe   -->
                   <div
+                    v-if="permission.can_view_employee == 1"
                     @click="goToEmployee()"
                     class="flex items-center pt-[30px] cursor-pointer"
                   >
@@ -172,9 +240,10 @@
                     </p>
                   </div>
                   <!-- Parts   -->
-                  <div
+                  <div  v-if="permission.can_view_parts == 1"
+                    :class="{ top: permission.can_view_parts == 1 }"
                     @click="goToParts()"
-                    class="flex top items-center pt-[20px] cursor-pointer"
+                    class="flex items-center pt-[20px] cursor-pointer"
                   >
                     <img
                       :class="{ 'opacity-100': this.$route.path == '/parts' }"
@@ -194,6 +263,7 @@
                   </div>
                   <!-- Conditions   -->
                   <div
+                    v-if="permission.can_view_condition == 1"
                     @click="goToConditions()"
                     class="flex bottom items-center pt-[30px] cursor-pointer"
                   >
@@ -213,6 +283,30 @@
                       class="text-gray-400 f-700 ml-[16px] opacity-80"
                     >
                       {{ $t("Conditions") }}
+                    </p>
+                  </div>
+                  <!-- Locations -->
+                  <div
+                    v-if="permission.can_view_location == 1"
+                    @click="goToLocations()"
+                    class="flex bottom pt-[10px] items-center cursor-pointer"
+                  >
+                    <img
+                      :class="{
+                        'opacity-100': this.$route.path == '/locations',
+                      }"
+                      class="w-[24px] opacity-40"
+                      src="../assets/imgs/verticalNav/Vector(7).png"
+                      alt=""
+                    />
+                    <p
+                      :class="{
+                        'text-black': this.$route.path == '/locations',
+                        'mr-[5px]': lang == 'ar',
+                      }"
+                      class="text-gray-400 f-700 ml-[16px] opacity-80"
+                    >
+                      {{ $t("locations") }}
                     </p>
                   </div>
                 </div>
@@ -237,16 +331,23 @@ export default {
       isSubHeaderOpen: false,
       secondNav: true,
       lang: "",
-      error : false
+      error: false,
+      permission: {},
+      role : ""
     };
   },
   mounted() {
     this.lang = localStorage.getItem("lang");
     window.addEventListener("resize", this.onResize); // Listen for window resize event
     this.onResize();
-    this.error = localStorage.getItem("error")
+    this.error = localStorage.getItem("error");
+
+    const permission = localStorage.getItem("permissions");
+    this.permission = JSON.parse(permission);
+    this.role = localStorage.getItem("role")
+    // console.log(JSON.parse(permission))
   },
- 
+
   beforeDestroy() {
     window.removeEventListener("resize", this.onResize); // Remove event listener when component is destroyed
     this.onResize();
@@ -267,7 +368,6 @@ export default {
       }
       this.currentSidebarTab = "messagesTab";
       this.$router.push("/dashboard");
-      
     },
     // set up btn
     goToCustomer() {
@@ -279,7 +379,7 @@ export default {
       this.currentSidebarTab = "linksTab";
       this.$router.push("/customer");
       //  this.secondNav = false;
-     this.onResize()
+      this.onResize();
     },
     // go to vendor
     goToVendor() {
@@ -290,7 +390,7 @@ export default {
       }
       this.currentSidebarTab = "linksTab";
       this.$router.push("/vendors");
-      this.onResize()
+      this.onResize();
     },
     // go to employee
     goToEmployee() {
@@ -301,7 +401,7 @@ export default {
       }
       this.currentSidebarTab = "linksTab";
       this.$router.push("/employee");
-      this.onResize()
+      this.onResize();
     },
     // got to parts
     goToParts() {
@@ -312,7 +412,7 @@ export default {
       }
       this.currentSidebarTab = "linksTab";
       this.$router.push("/parts");
-      this.onResize()
+      this.onResize();
     },
     // go to conditions
     goToConditions() {
@@ -323,13 +423,71 @@ export default {
       }
       this.currentSidebarTab = "linksTab";
       this.$router.push("/conditions");
-      this.onResize()
+      this.onResize();
+    },
+    // go to locations
+    goToLocations() {
+      if (this.isSidebarOpen && this.currentSidebarTab == "linksTab") {
+        this.isSidebarOpen = false;
+      } else {
+        this.isSidebarOpen = true;
+      }
+      this.currentSidebarTab = "linksTab";
+      this.$router.push("/locations");
+      this.onResize();
+    },
+    // go to pages
+    goToPages() {
+      const permission = localStorage.getItem("permissions");
+      this.permission = JSON.parse(permission);
+      console.log(this.permission, "permissiion");
+      if (
+        this.permission.can_view_customer == 1
+      ) {
+        this.$router.push("/customer");
+      }
+      if (
+        this.permission.can_view_vendor == 1 
+      ) {
+        this.$router.push("/vendors");
+      }
+      if (
+        this.permission.can_view_employee == 1 
+      ) {
+        this.$router.push("/employee");
+      }
+      if (
+        this.permission.can_view_condition == 1 
+      ) {
+        this.$router.push("/conditions");
+      }
+      if (
+        this.permission.can_view_location == 1 
+      ) {
+        this.$router.push("/locations");
+      }
+      if (
+        this.permission.can_view_parts == 1 
+      ) {
+        this.$router.push("/parts");
+      }
+    },
+    // go to pricing 
+    goToPricingPage (){
+       if (this.isSidebarOpen && this.currentSidebarTab == "messagesTab") {
+        this.isSidebarOpen = false;
+      } else {
+        this.isSidebarOpen = true;
+      }
+      this.currentSidebarTab = "messagesTab";
+      this.$router.push("/pricing");
     },
     // logout
     logOut() {
       this.$cookies.set("token", "");
       localStorage.setItem("token", "Bearer", "");
       localStorage.setItem("name", "");
+      localStorage.setItem("permissions" , "");
 
       // this.$router.push("/");
       location.reload();

@@ -63,7 +63,7 @@
                       >&#8203;</span
                     >
                     <div
-                      class="p-[30px] inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[776px] sm:w-full"
+                      class="p-[30px] media inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[776px] sm:w-full"
                       role="dialog"
                       aria-modal="true"
                       aria-labelledby="modal-headline"
@@ -143,38 +143,9 @@
                               <!-- Employee Name and Employee Code -->
                               <div class="flex">
                                 <!-- Employee name -->
-                                <div class="group w-[50%]">
-                                  <label
-                                    for="1"
-                                    class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                                    >{{ $t("Part Name English") }}
-                                    <p class="required">*</p>
-                                    :
-                                  </label>
-
-                                  <input
-                                    id="1"
-                                    type="text"
-                                    v-model="part_name_en"
-                                    :class="{
-                                      'outline-error':
-                                        emptyField.includes('part_name_en'),
-                                    }"
-                                    placeholder="ABS Sensor"
-                                    class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
-                                  />
-                                  <p
-                                    :class="{ 'text-right': lang == 'ar' }"
-                                    v-if="emptyField.includes('part_name_en')"
-                                    class="error-message text-left"
-                                  >
-                                    {{ $t("Part Name English") }}
-                                    {{ $t("required") }}
-                                  </p>
-                                </div>
 
                                 <!-- register code -->
-                                <div class="group ml-[20px] w-[50%]">
+                                <div class="group w-[50%]">
                                   <label
                                     for="1"
                                     class="block flex flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
@@ -315,7 +286,7 @@
                                       >&#8203;</span
                                     >
                                     <div
-                                      class="p-[30px] inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[776px] sm:w-full"
+                                      class="p-[30px] media inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[776px] sm:w-full"
                                       role="dialog"
                                       aria-modal="true"
                                       aria-labelledby="modal-headline"
@@ -728,6 +699,7 @@
                       class="font-bold uppercase rounded-full w-full py-4 pl-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:text-sm text-xs"
                       type="text"
                       v-model="search"
+                      @input="searchData"
                       :placeholder="$t('search')"
                     />
 
@@ -987,7 +959,7 @@
                             >&#8203;</span
                           >
                           <div
-                            class="p-[30px] inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[776px] sm:w-full"
+                            class="p-[30px] media inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[776px] sm:w-full"
                             role="dialog"
                             aria-modal="true"
                             aria-labelledby="modal-headline"
@@ -1073,44 +1045,9 @@
                                     <!-- Employee Name and Employee Code -->
                                     <div class="flex">
                                       <!-- Employee name -->
-                                      <div class="group w-[50%]">
-                                        <label
-                                          for="1"
-                                          class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                                          >{{ $t("Part Name English") }}
-                                          <p class="required">*</p>
-                                          :
-                                        </label>
-
-                                        <input
-                                          id="1"
-                                          type="text"
-                                          v-model="part_name_en"
-                                          :class="{
-                                            'outline-error':
-                                              emptyField.includes(
-                                                'part_name_en'
-                                              ),
-                                          }"
-                                          placeholder="ABS Sensor"
-                                          class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
-                                        />
-                                        <p
-                                          :class="{
-                                            'text-right': lang == 'ar',
-                                          }"
-                                          v-if="
-                                            emptyField.includes('part_name_en')
-                                          "
-                                          class="error-message text-left"
-                                        >
-                                          {{ $t("Part Name English") }}
-                                          {{ $t("required") }}
-                                        </p>
-                                      </div>
 
                                       <!-- register code -->
-                                      <div class="group ml-[20px] w-[50%]">
+                                      <div class="group w-[50%]">
                                         <label
                                           for="1"
                                           class="block flex flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
@@ -1265,7 +1202,7 @@
                                             >&#8203;</span
                                           >
                                           <div
-                                            class="p-[30px] inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[776px] sm:w-full"
+                                            class="p-[30px] media inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[776px] sm:w-full"
                                             role="dialog"
                                             aria-modal="true"
                                             aria-labelledby="modal-headline"
@@ -1844,7 +1781,6 @@ export default {
       search: "",
 
       // data
-      part_name_en: null,
       model: null,
       part_name_ar: null,
       part_number: null,
@@ -1903,6 +1839,17 @@ export default {
     // watch language
   },
   methods: {
+    // search data
+    searchData() {
+      this.$axios.$get(`/Part/GetParts?search=${this.search}`).then((res) => {
+         this.partsTable = res.Parts.data;
+      this.totalPages = res.Parts.meta.last_page;
+      this.perPage = res.Parts.meta.per_page;
+      this.total = res.Parts.meta.total;
+      this.permissions = res.permission;
+      this.loading = false;
+      });
+    },
     loadFile(event) {
       var image = document.getElementById("output");
       image.src = URL.createObjectURL(event.unit.files[0]);
@@ -1916,8 +1863,7 @@ export default {
     },
     // clear data
     clearData() {
-      (this.part_name_en = null),
-        (this.model = null),
+      (this.model = null),
         (this.part_name_ar = null),
         (this.part_number = null),
         (this.vat_number = null),
@@ -1945,7 +1891,6 @@ export default {
       if (status == "open") {
         this.$axios.$get(`/Part/GetPartByID/${id}`).then((res) => {
           this.model = res.Part.Model;
-          this.part_name_en = res.Part.PartNameEN;
           this.employee_email = res.Part.email;
           this.part_number = res.Part.PartNum;
           this.unit = res.Part.Unit;
@@ -2122,7 +2067,7 @@ export default {
     },
     // post and add part
     postParts(status) {
-      const requiredFields = ["part_name_en", "part_name_ar", "part_number"];
+      const requiredFields = ["part_name_ar", "part_number"];
 
       const emptyFields = requiredFields.filter(
         (field) => this[field] === "" || this[field] === null
@@ -2142,7 +2087,6 @@ export default {
           this.loading = true;
           let formdata = new FormData();
 
-          formdata.append("part_name_en", this.part_name_en);
           formdata.append("part_name_ar", this.part_name_ar);
           formdata.append("part_number", this.part_number);
           formdata.append("model", this.model);
@@ -2197,7 +2141,7 @@ export default {
     // edit part
     editParts() {
       // validation messages
-      const requiredFields = ["part_name_en", "part_name_ar", "part_number"];
+      const requiredFields = ["part_name_ar", "part_number"];
 
       const emptyFields = requiredFields.filter(
         (field) => this[field] === "" || this[field] == null
@@ -2213,7 +2157,6 @@ export default {
         this.loading = true;
         let formdata = new FormData();
 
-        formdata.append("part_name_en", this.part_name_en);
         formdata.append("part_name_ar", this.part_name_ar);
         formdata.append("part_number", this.part_number);
         formdata.append("model", this.model);
@@ -2677,5 +2620,11 @@ input[type="file"] {
   display: inline-flex;
   padding: 0.2em;
   height: 2em;
+}
+@media (max-width: 1550px) {
+  .media {
+    height: 650px;
+    overflow-y: auto;
+  }
 }
 </style>
