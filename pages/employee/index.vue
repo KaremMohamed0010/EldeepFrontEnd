@@ -611,6 +611,7 @@
                                   <input
                                     id="selectAll"
                                     name="checkbox"
+                                    v-model="selectAllPages"
                                     @change="SelectAll"
                                     type="checkbox"
                                     required
@@ -629,8 +630,8 @@
                                   {{ $t("View") }}</label
                                 >
                                 <input
-                                  v-model="isView"
                                   @input="ViewAll"
+                                  v-model="selectAllView"
                                   id="viewAll"
                                   class="input-switch"
                                   type="checkbox"
@@ -647,6 +648,7 @@
                                 <input
                                   class="input-switch"
                                   id="add"
+                                  v-model="selectAllAdd"
                                   @input="addAll"
                                   type="checkbox"
                                 />
@@ -662,6 +664,7 @@
                                 <input
                                   @input="editAll"
                                   id="edit"
+                                  v-model="selectAllEdit"
                                   class="input-switch"
                                   type="checkbox"
                                 />
@@ -677,6 +680,7 @@
                                 <input
                                   @input="deleteAll"
                                   id="delete"
+                                  v-model="selectAllDelete"
                                   class="input-switch"
                                   type="checkbox"
                                 />
@@ -701,6 +705,7 @@
                                 <input
                                   id="customer"
                                   name="checkbox"
+                                  v-model="customerPage"
                                   type="checkbox"
                                   required
                                   checked
@@ -717,12 +722,7 @@
                                 <input
                                   id="ViewCustomer"
                                   name="checkbox"
-                                  @input="
-                                    checkStatus(
-                                      'can_view_customer',
-                                      'ViewCustomer'
-                                    )
-                                  "
+                                  v-model="can_view_customer"
                                   type="checkbox"
                                   required
                                 />
@@ -733,13 +733,8 @@
                                 <input
                                   id="addcustomer"
                                   name="checkbox"
+                                  v-model="can_add_customer"
                                   type="checkbox"
-                                  @input="
-                                    checkStatus(
-                                      'can_add_customer',
-                                      'addcustomer'
-                                    )
-                                  "
                                   required
                                 />
                               </div>
@@ -748,13 +743,8 @@
                                 <input
                                   id="editcustomer"
                                   name="checkbox"
+                                  v-model="can_edit_customer"
                                   type="checkbox"
-                                  @input="
-                                    checkStatus(
-                                      'can_edit_customer',
-                                      'editcustomer'
-                                    )
-                                  "
                                   required
                                 />
                               </div>
@@ -764,12 +754,7 @@
                                   id="deletecustomer"
                                   name="checkbox"
                                   type="checkbox"
-                                  @input="
-                                    checkStatus(
-                                      'can_delete_customer',
-                                      'deletecustomer'
-                                    )
-                                  "
+                                  v-model="can_delete_customer"
                                   required
                                 />
                               </div>
@@ -788,6 +773,7 @@
                                   id="vendor"
                                   name="checkbox"
                                   type="checkbox"
+                                  v-model="vendorPage"
                                   required
                                   checked
                                 />
@@ -804,9 +790,7 @@
                                   id="viewvendor"
                                   name="checkbox"
                                   type="checkbox"
-                                  @input="
-                                    checkStatus('can_view_vendor', 'viewvendor')
-                                  "
+                                  v-model="can_view_vendor"
                                   required
                                 />
                               </div>
@@ -817,9 +801,7 @@
                                   id="addvendor"
                                   name="checkbox"
                                   type="checkbox"
-                                  @input="
-                                    checkStatus('can_add_vendor', 'addvendor')
-                                  "
+                                  v-model="can_add_vendor"
                                   required
                                 />
                               </div>
@@ -829,9 +811,7 @@
                                   id="editvendor"
                                   name="checkbox"
                                   type="checkbox"
-                                  @input="
-                                    checkStatus('can_edit_vendor', 'editvendor')
-                                  "
+                                  v-model="can_edit_vendor"
                                   required
                                 />
                               </div>
@@ -841,12 +821,7 @@
                                   id="deletevendor"
                                   name="checkbox"
                                   type="checkbox"
-                                  @input="
-                                    checkStatus(
-                                      'can_delete_vendor',
-                                      'deletevendor'
-                                    )
-                                  "
+                                  v-model="can_delete_vendor"
                                   required
                                 />
                               </div>
@@ -864,6 +839,7 @@
                               >
                                 <input
                                   id="employee"
+                                  v-model="employeePage"
                                   name="checkbox"
                                   type="checkbox"
                                   required
@@ -882,12 +858,7 @@
                                   id="ViewEmployee"
                                   name="checkbox"
                                   type="checkbox"
-                                  @input="
-                                    checkStatus(
-                                      'can_view_employee',
-                                      'ViewEmployee'
-                                    )
-                                  "
+                                  v-model="can_view_employee"
                                   required
                                 />
                               </div>
@@ -898,12 +869,7 @@
                                   id="addEmployeee"
                                   name="checkbox"
                                   type="checkbox"
-                                  @input="
-                                    checkStatus(
-                                      'can_add_employee',
-                                      'addEmployeee'
-                                    )
-                                  "
+                                  v-model="can_add_employee"
                                   required
                                 />
                               </div>
@@ -913,12 +879,7 @@
                                   id="editEmployee"
                                   name="checkbox"
                                   type="checkbox"
-                                  @input="
-                                    checkStatus(
-                                      'can_edit_employee',
-                                      'editEmployee'
-                                    )
-                                  "
+                                  v-model="can_edit_employee"
                                   required
                                 />
                               </div>
@@ -928,12 +889,7 @@
                                   id="deleteEmployeee"
                                   name="checkbox"
                                   type="checkbox"
-                                  @input="
-                                    checkStatus(
-                                      'can_delete_employee',
-                                      'deleteEmployeee'
-                                    )
-                                  "
+                                  v-model="can_delete_employee"
                                   required
                                 />
                               </div>
@@ -951,6 +907,7 @@
                               >
                                 <input
                                   id="parts"
+                                  v-model="partsPage"
                                   name="checkbox"
                                   type="checkbox"
                                   required
@@ -969,9 +926,7 @@
                                   id="viewParts"
                                   name="checkbox"
                                   type="checkbox"
-                                  @input="
-                                    checkStatus('can_view_parts', 'viewParts')
-                                  "
+                                  v-model="can_view_parts"
                                   required
                                 />
                               </div>
@@ -982,9 +937,7 @@
                                   id="addParts"
                                   name="checkbox"
                                   type="checkbox"
-                                  @input="
-                                    checkStatus('can_add_parts', 'addParts')
-                                  "
+                                  v-model="can_add_parts"
                                   required
                                 />
                               </div>
@@ -994,9 +947,7 @@
                                   id="editParts"
                                   name="checkbox"
                                   type="checkbox"
-                                  @input="
-                                    checkStatus('can_edit_parts', 'editParts')
-                                  "
+                                  v-model="can_edit_parts"
                                   required
                                 />
                               </div>
@@ -1006,99 +957,7 @@
                                   id="deleteParts"
                                   name="checkbox"
                                   type="checkbox"
-                                  @input="
-                                    checkStatus(
-                                      'can_delete_parts',
-                                      'deleteParts'
-                                    )
-                                  "
-                                  required
-                                />
-                              </div>
-                            </div>
-                            <!-- Condition -->
-                            <div
-                              class="grid box-grey grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 p-[15px] mt-[12px] ml-[10px] mr-[10px]"
-                            >
-                              <!-- customer -->
-
-                              <!-- select all -->
-                              <div
-                                :class="{ 'text-right': lang == 'ar' }"
-                                class="text-left"
-                              >
-                                <input
-                                  id="condition"
-                                  name="checkbox"
-                                  type="checkbox"
-                                  required
-                                  checked
-                                />
-                                <label
-                                  class="permission-label"
-                                  for="checkbox"
-                                  >{{ $t("Condition") }}</label
-                                >
-                              </div>
-
-                              <!-- can delete -->
-                              <div>
-                                <input
-                                  id="viewcondition"
-                                  name="checkbox"
-                                  type="checkbox"
-                                  @input="
-                                    checkStatus(
-                                      'can_view_condition',
-                                      'viewcondition'
-                                    )
-                                  "
-                                  required
-                                />
-                              </div>
-
-                              <!-- can View -->
-                              <div>
-                                <input
-                                  id="addcondition"
-                                  name="checkbox"
-                                  type="checkbox"
-                                  @input="
-                                    checkStatus(
-                                      'can_add_condition',
-                                      'addcondition'
-                                    )
-                                  "
-                                  required
-                                />
-                              </div>
-                              <!-- can Add -->
-                              <div>
-                                <input
-                                  id="editcondition"
-                                  name="checkbox"
-                                  type="checkbox"
-                                  @input="
-                                    checkStatus(
-                                      'can_edit_condition',
-                                      'editcondition'
-                                    )
-                                  "
-                                  required
-                                />
-                              </div>
-                              <!-- can Edit  -->
-                              <div>
-                                <input
-                                  id="deletecondition"
-                                  name="checkbox"
-                                  @input="
-                                    checkStatus(
-                                      'can_delete_condition',
-                                      'deletecondition'
-                                    )
-                                  "
-                                  type="checkbox"
+                                  v-model="can_delete_parts"
                                   required
                                 />
                               </div>
@@ -1117,6 +976,7 @@
                                 <input
                                   id="location"
                                   name="checkbox"
+                                  v-model="locationPage"
                                   type="checkbox"
                                   required
                                   checked
@@ -1134,12 +994,7 @@
                                   id="viewlocation"
                                   name="checkbox"
                                   type="checkbox"
-                                  @input="
-                                    checkStatus(
-                                      'can_view_location',
-                                      'viewlocation'
-                                    )
-                                  "
+                                  v-model="can_view_location"
                                   required
                                 />
                               </div>
@@ -1150,12 +1005,7 @@
                                   id="addlocation"
                                   name="checkbox"
                                   type="checkbox"
-                                  @input="
-                                    checkStatus(
-                                      'can_add_location',
-                                      'addlocation'
-                                    )
-                                  "
+                                  v-model="can_add_location"
                                   required
                                 />
                               </div>
@@ -1165,12 +1015,7 @@
                                   id="editlocation"
                                   name="checkbox"
                                   type="checkbox"
-                                  @input="
-                                    checkStatus(
-                                      'can_edit_location',
-                                      'editlocation'
-                                    )
-                                  "
+                                  v-model="can_edit_location"
                                   required
                                 />
                               </div>
@@ -1180,12 +1025,7 @@
                                   id="deletelocation"
                                   name="checkbox"
                                   type="checkbox"
-                                  @input="
-                                    checkStatus(
-                                      'can_delete_location',
-                                      'deletelocation'
-                                    )
-                                  "
+                                  v-model="can_delete_location"
                                   required
                                 />
                               </div>
@@ -1771,7 +1611,7 @@
                                           for="1"
                                           class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
                                           >{{ $t("Employee Password") }}
-                                        
+
                                           :</label
                                         >
                                         <div
@@ -2075,7 +1915,6 @@
 
                               <div class="box pb-[20px]">
                                 <!-- bg row -->
-                                {{ permission }}
                                 <div class="bg-row">
                                   <div
                                     class="flex justify-between items-center"
@@ -2084,9 +1923,9 @@
                                     <div>
                                       <div class="form__privacy">
                                         <input
-                                          id="selectAllEdit"
+                                          id="selectAll"
                                           name="checkbox"
-                                          v-model="selectAll"
+                                          v-model="selectAllPages"
                                           @change="SelectAll"
                                           type="checkbox"
                                           required
@@ -2094,7 +1933,7 @@
                                         />
                                         <label
                                           class="permission-label"
-                                          for="selectAllEdit"
+                                          for="checkbox"
                                           >{{ $t("Select All") }}</label
                                         >
                                       </div>
@@ -2105,13 +1944,13 @@
                                         {{ $t("View") }}</label
                                       >
                                       <input
-                                        v-model="isView"
-                                        @input="ViewAllEdit"
-                                        id="viewAllEditt"
+                                        @input="ViewAll"
+                                        v-model="selectAllView"
+                                        id="viewAll"
                                         class="input-switch"
                                         type="checkbox"
                                       />
-                                      <label for="viewAllEditt" class="swicthh">
+                                      <label for="viewAll" class="swicthh">
                                         Toggle
                                       </label>
                                     </div>
@@ -2122,12 +1961,12 @@
                                       >
                                       <input
                                         class="input-switch"
-                                        id="addEdit"
-                                        v-model="allAll"
-                                        @input="addAllEdit"
+                                        id="add"
+                                        v-model="selectAllAdd"
+                                        @input="addAll"
                                         type="checkbox"
                                       />
-                                      <label for="addEdit" class="swicthh">
+                                      <label for="add" class="swicthh">
                                         Toggle
                                       </label>
                                     </div>
@@ -2137,13 +1976,13 @@
                                         {{ $t("Edit") }}</label
                                       >
                                       <input
-                                        @input="editAllEdit"
-                                        id="editEdit"
-                                        v-model="editAll"
+                                        @input="editAll"
+                                        id="edit"
+                                        v-model="selectAllEdit"
                                         class="input-switch"
                                         type="checkbox"
                                       />
-                                      <label for="editEdit" class="swicthh">
+                                      <label for="edit" class="swicthh">
                                         Toggle
                                       </label>
                                     </div>
@@ -2153,13 +1992,13 @@
                                         {{ $t("Delete") }}</label
                                       >
                                       <input
-                                        @input="deleteAllEdit"
-                                        id="deleteEdit"
-                                        v-model="deleteAll"
+                                        @input="deleteAll"
+                                        id="delete"
+                                        v-model="selectAllDelete"
                                         class="input-switch"
                                         type="checkbox"
                                       />
-                                      <label for="deleteEdit" class="swicthh">
+                                      <label for="delete" class="swicthh">
                                         Toggle
                                       </label>
                                     </div>
@@ -2178,16 +2017,16 @@
                                       class="text-left"
                                     >
                                       <input
-                                        id="customerEdit"
+                                        id="customer"
                                         name="checkbox"
-                                        v-model="customerCheck"
+                                        v-model="customerPage"
                                         type="checkbox"
                                         required
                                         checked
                                       />
                                       <label
                                         class="permission-label"
-                                        for="customerEdit"
+                                        for="checkbox"
                                         >{{ $t("Customer") }}</label
                                       >
                                     </div>
@@ -2195,10 +2034,9 @@
                                     <!-- can delete -->
                                     <div>
                                       <input
-                                        id="ViewCustomerEdit"
+                                        id="ViewCustomer"
                                         name="checkbox"
-                                        v-model="ViewCustomer"
-                                        
+                                        v-model="can_view_customer"
                                         type="checkbox"
                                         required
                                       />
@@ -2207,43 +2045,30 @@
                                     <!-- can View -->
                                     <div>
                                       <input
-                                        id="addcustomerEdit"
+                                        id="addcustomer"
                                         name="checkbox"
+                                        v-model="can_add_customer"
                                         type="checkbox"
-                                        v-model="addcustomer"
-                                        
                                         required
                                       />
                                     </div>
                                     <!-- can Add -->
                                     <div>
                                       <input
-                                        id="editcustomerEdit"
+                                        id="editcustomer"
                                         name="checkbox"
-                                        v-model="editcustomerEdit"
+                                        v-model="can_edit_customer"
                                         type="checkbox"
-                                        @input="
-                                          checkStatus(
-                                            'can_edit_customer',
-                                            'editcustomerEdit'
-                                          )
-                                        "
                                         required
                                       />
                                     </div>
                                     <!-- can Edit  -->
                                     <div>
                                       <input
-                                        id="deletecustomerEdit"
+                                        id="deletecustomer"
                                         name="checkbox"
                                         type="checkbox"
-                                        v-model="deletecustomerEdit"
-                                        @input="
-                                          checkStatus(
-                                            'can_delete_customer',
-                                            'deletecustomerEdit'
-                                          )
-                                        "
+                                        v-model="can_delete_customer"
                                         required
                                       />
                                     </div>
@@ -2259,9 +2084,10 @@
                                       class="text-left"
                                     >
                                       <input
-                                        id="vendorEdit"
+                                        id="vendor"
                                         name="checkbox"
                                         type="checkbox"
+                                        v-model="vendorPage"
                                         required
                                         checked
                                       />
@@ -2275,16 +2101,10 @@
                                     <!-- can delete -->
                                     <div>
                                       <input
-                                        id="viewvendorEdit"
+                                        id="viewvendor"
                                         name="checkbox"
-                                        v-model="viewvendorEdit"
                                         type="checkbox"
-                                        @input="
-                                          checkStatus(
-                                            'can_view_vendor',
-                                            'viewvendorEdit'
-                                          )
-                                        "
+                                        v-model="can_view_vendor"
                                         required
                                       />
                                     </div>
@@ -2292,48 +2112,30 @@
                                     <!-- can View -->
                                     <div>
                                       <input
-                                        id="addvendorEdit"
+                                        id="addvendor"
                                         name="checkbox"
                                         type="checkbox"
-                                        v-model="addvendorEdit"
-                                        @input="
-                                          checkStatus(
-                                            'can_add_vendor',
-                                            'addvendorEdit'
-                                          )
-                                        "
+                                        v-model="can_add_vendor"
                                         required
                                       />
                                     </div>
                                     <!-- can Add -->
                                     <div>
                                       <input
-                                        id="editvendorEdit"
+                                        id="editvendor"
                                         name="checkbox"
-                                        v-model="editvendorEdit"
                                         type="checkbox"
-                                        @input="
-                                          checkStatus(
-                                            'can_edit_vendor',
-                                            'editvendor'
-                                          )
-                                        "
+                                        v-model="can_edit_vendor"
                                         required
                                       />
                                     </div>
                                     <!-- can Edit  -->
                                     <div>
                                       <input
-                                        id="deletevendorEdit"
+                                        id="deletevendor"
                                         name="checkbox"
-                                        v-model="deletevendorEdit"
                                         type="checkbox"
-                                        @input="
-                                          checkStatus(
-                                            'can_delete_vendor',
-                                            'deletevendorEdit'
-                                          )
-                                        "
+                                        v-model="can_delete_vendor"
                                         required
                                       />
                                     </div>
@@ -2350,9 +2152,9 @@
                                       class="text-left"
                                     >
                                       <input
-                                        id="employeeEdit"
+                                        id="employee"
+                                        v-model="employeePage"
                                         name="checkbox"
-                                        v-model="employeeEdit"
                                         type="checkbox"
                                         required
                                         checked
@@ -2367,16 +2169,10 @@
                                     <!-- can delete -->
                                     <div>
                                       <input
-                                        id="ViewEmployeeEdit"
+                                        id="ViewEmployee"
                                         name="checkbox"
-                                        v-model="ViewEmployeeEdit"
                                         type="checkbox"
-                                        @input="
-                                          checkStatus(
-                                            'can_view_employee',
-                                            'ViewEmployeeEdit'
-                                          )
-                                        "
+                                        v-model="can_view_employee"
                                         required
                                       />
                                     </div>
@@ -2384,48 +2180,30 @@
                                     <!-- can View -->
                                     <div>
                                       <input
-                                        id="addEmployeeeEdit"
+                                        id="addEmployeee"
                                         name="checkbox"
-                                        v-model="addEmployeeeEdit"
                                         type="checkbox"
-                                        @input="
-                                          checkStatus(
-                                            'can_add_employee',
-                                            'addEmployeeeEdit'
-                                          )
-                                        "
+                                        v-model="can_add_employee"
                                         required
                                       />
                                     </div>
                                     <!-- can Add -->
                                     <div>
                                       <input
-                                        id="editEmployeeEdit"
+                                        id="editEmployee"
                                         name="checkbox"
-                                        v-model="editEmployeeEdit"
                                         type="checkbox"
-                                        @input="
-                                          checkStatus(
-                                            'can_edit_employee',
-                                            'editEmployeeEdit'
-                                          )
-                                        "
+                                        v-model="can_edit_employee"
                                         required
                                       />
                                     </div>
                                     <!-- can Edit  -->
                                     <div>
                                       <input
-                                        id="deleteEmployeeeEdit"
+                                        id="deleteEmployeee"
                                         name="checkbox"
-                                        v-model="deleteEmployeeeEdit"
                                         type="checkbox"
-                                        @input="
-                                          checkStatus(
-                                            'can_delete_employee',
-                                            'deleteEmployeeeEdit'
-                                          )
-                                        "
+                                        v-model="can_delete_employee"
                                         required
                                       />
                                     </div>
@@ -2442,7 +2220,8 @@
                                       class="text-left"
                                     >
                                       <input
-                                        id="partsEdit"
+                                        id="parts"
+                                        v-model="partsPage"
                                         name="checkbox"
                                         type="checkbox"
                                         required
@@ -2458,16 +2237,10 @@
                                     <!-- can delete -->
                                     <div>
                                       <input
-                                        id="viewPartsEdit"
+                                        id="viewParts"
                                         name="checkbox"
                                         type="checkbox"
-                                        v-model="viewPartsEdit"
-                                        @input="
-                                          checkStatus(
-                                            'can_view_parts',
-                                            'viewPartsEdit'
-                                          )
-                                        "
+                                        v-model="can_view_parts"
                                         required
                                       />
                                     </div>
@@ -2475,53 +2248,34 @@
                                     <!-- can View -->
                                     <div>
                                       <input
-                                        id="addPartsEdit"
+                                        id="addParts"
                                         name="checkbox"
                                         type="checkbox"
-                                        v-model="addPartsEdit"
-                                        @input="
-                                          checkStatus(
-                                            'can_add_parts',
-                                            'addPartsEdit'
-                                          )
-                                        "
+                                        v-model="can_add_parts"
                                         required
                                       />
                                     </div>
                                     <!-- can Add -->
                                     <div>
                                       <input
-                                        id="editPartsEdit"
+                                        id="editParts"
                                         name="checkbox"
-                                        v-model="editPartsEdit"
                                         type="checkbox"
-                                        @input="
-                                          checkStatus(
-                                            'can_edit_parts',
-                                            'editPartsEdit'
-                                          )
-                                        "
+                                        v-model="can_edit_parts"
                                         required
                                       />
                                     </div>
                                     <!-- can Edit  -->
                                     <div>
                                       <input
-                                        id="deletePartsEdit"
+                                        id="deleteParts"
                                         name="checkbox"
-                                        v-model="deletePartsEdit"
                                         type="checkbox"
-                                        @input="
-                                          checkStatus(
-                                            'can_delete_parts',
-                                            'deletePartsEdit'
-                                          )
-                                        "
+                                        v-model="can_delete_parts"
                                         required
                                       />
                                     </div>
                                   </div>
-
                                   <!-- Location -->
                                   <div
                                     class="grid box-grey grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 p-[15px] mt-[12px] ml-[10px] mr-[10px]"
@@ -2534,8 +2288,9 @@
                                       class="text-left"
                                     >
                                       <input
-                                        id="locationEdit"
+                                        id="location"
                                         name="checkbox"
+                                        v-model="locationPage"
                                         type="checkbox"
                                         required
                                         checked
@@ -2550,16 +2305,10 @@
                                     <!-- can delete -->
                                     <div>
                                       <input
-                                        id="viewlocationEdit"
+                                        id="viewlocation"
                                         name="checkbox"
                                         type="checkbox"
-                                        v-model="viewlocationEdit"
-                                        @input="
-                                          checkStatus(
-                                            'can_view_location',
-                                            'viewlocation'
-                                          )
-                                        "
+                                        v-model="can_view_location"
                                         required
                                       />
                                     </div>
@@ -2567,48 +2316,30 @@
                                     <!-- can View -->
                                     <div>
                                       <input
-                                        id="addlocationEdit"
+                                        id="addlocation"
                                         name="checkbox"
-                                        v-model="addlocationEdit"
                                         type="checkbox"
-                                        @input="
-                                          checkStatus(
-                                            'can_add_location',
-                                            'addlocationEdit'
-                                          )
-                                        "
+                                        v-model="can_add_location"
                                         required
                                       />
                                     </div>
                                     <!-- can Add -->
                                     <div>
                                       <input
-                                        id="editlocationEdit"
+                                        id="editlocation"
                                         name="checkbox"
-                                        v-model="editlocationEdit"
                                         type="checkbox"
-                                        @input="
-                                          checkStatus(
-                                            'can_edit_location',
-                                            'editlocationEdit'
-                                          )
-                                        "
+                                        v-model="can_edit_location"
                                         required
                                       />
                                     </div>
                                     <!-- can Edit  -->
                                     <div>
                                       <input
-                                        id="deletelocationEdit"
+                                        id="deletelocation"
                                         name="checkbox"
-                                        v-model="deletelocationEdit"
                                         type="checkbox"
-                                        @input="
-                                          checkStatus(
-                                            'can_delete_location',
-                                            'deletelocationEdit'
-                                          )
-                                        "
+                                        v-model="can_delete_location"
                                         required
                                       />
                                     </div>
@@ -3236,31 +2967,48 @@ export default {
       countries: [],
       cities: [],
 
-      // permision keys
-      ViewCustomerEdit: false,
-      AddCustomerEdit: false,
-      editcustomerEdit: false,
-      deletecustomerEdit: false,
+      // permissions select all
+      selectAllPages: false,
+      selectAllView: false,
+      selectAllAdd: false,
+      selectAllEdit: false,
+      selectAllDelete: false,
 
-      viewvendorEdit: false,
-      addvendorEdit: false,
-      editVendorEdit: false,
-      deleteVendorEdit: false,
+      // pages
+      customerPage: false,
+      vendorPage: false,
+      employeePage: false,
+      partsPage: false,
+      locationPage: false,
 
-      viewPartsEdit: false,
-      addPartsEdit: false,
-      editPartsEdit: false,
-      deletePartsEdit: false,
+      // view
+      can_view_customer: false,
+      can_view_vendor: false,
+      can_view_employee: false,
+      can_view_parts: false,
+      can_view_location: false,
 
-      ViewEmployeeEdit: false,
-      addEmployeeeEdit: false,
-      editEmployeeEdit: false,
-      deleteEmployeeeEdit: false,
+      // add
+      can_add_customer: false,
+      can_add_vendor: false,
+      can_add_employee: false,
+      can_add_parts: false,
+      can_add_location: false,
 
-      viewlocationEdit: false,
-      addlocationEdit: false,
-      editlocationEdit: false,
-      deletelocationEdit: false,
+      // edit
+
+      can_edit_customer: false,
+      can_edit_vendor: false,
+      can_edit_employee: false,
+      can_edit_parts: false,
+      can_edit_location: false,
+
+      // delete
+      can_delete_customer: false,
+      can_delete_vendor: false,
+      can_delete_employee: false,
+      can_delete_parts: false,
+      can_delete_location: false,
     };
   },
   components: {
@@ -3543,77 +3291,167 @@ export default {
           this.target = res.user.target;
           this.unit_of_target = res.user.unit_of_target;
           this.employee_code = res.user.code;
-          (this.branch_id = res.user.branch_id),
-            (this.start_date = res.user.start_date);
-          this.end_date == res.user.end_date;
+          this.branch_id = res.user.branch_id;
+          if (res.user.start_date == "null") {
+            this.start_date = null;
+          } else if (res.user.start_date != "null") {
+            this.start_date = res.user.start_date;
+          }
+          if (res.user.end_date == "null") {
+            this.end_date == null;
+          } else if (res.user.end_date != "null") {
+            this.end_date = res.user.end_date;
+          }
+
           this.image = res.user.image;
           this.selectedLocations = res.user.location;
-          this.permission = res.permissions;
+          // customer
+          if (res.permissions.can_view_customer == 1) {
+            this.can_view_customer = true;
+            this.customerPage = true;
+          }
+          if (res.permissions.can_add_customer == 1) {
+            this.can_add_customer = true;
+            this.customerPage = true;
+          }
+          if (res.permissions.can_update_customer == 1) {
+            this.can_edit_customer = true;
+            this.customerPage = true;
+          }
+          if (res.permissions.can_delete_customer == 1) {
+            this.can_delete_customer = true;
+            this.customerPage = true;
+          }
+
+          // vendor
+
+          if (res.permissions.can_view_vendor == 1) {
+            this.can_view_vendor = true;
+            this.vendorPage = true;
+          }
+
+          if (res.permissions.can_add_vendor == 1) {
+            this.can_add_vendor = true;
+            this.vendorPage = true;
+          }
+          if (res.permissions.can_update_vendor == 1) {
+            this.can_edit_vendor = true;
+            this.vendorPage = true;
+          }
+          if (res.permissions.can_delete_vendor == 1) {
+            this.can_delete_vendor = true;
+            this.vendorPage = true;
+          }
+
+          // employee
+
+          if (res.permissions.can_view_employee == 1) {
+            this.can_view_employee = true;
+            this.employeePage = true;
+          }
+          if (res.permissions.can_add_employee == 1) {
+            this.can_add_employee = true;
+            this.employeePage = true;
+          }
+          if (res.permissions.can_update_employee == 1) {
+            this.can_edit_employee = true;
+            this.employeePage = true;
+          }
+          if (res.permissions.can_delete_employee == 1) {
+            this.can_delete_employee = true;
+            this.employeePage = true;
+          }
+
+          // parts
+
+          if (res.permissions.can_view_parts == 1) {
+            this.can_view_parts = true;
+            this.partsPage = true;
+          }
+          if (res.permissions.can_add_parts == 1) {
+            this.can_add_parts = true;
+            this.partsPage = true;
+          }
+          if (res.permissions.can_update_parts == 1) {
+            this.can_edit_parts = true;
+            this.partsPage = true;
+          }
+          if (res.permissions.can_delete_parts == 1) {
+            this.can_delete_parts = true;
+            this.partsPage = true;
+          }
+
+          // location
+
+          if (res.permissions.can_view_location == 1) {
+            this.can_view_location = true;
+            this.locationPage = true;
+          }
+          if (res.permissions.can_add_location == 1) {
+            this.can_add_location = true;
+            this.locationPage = true;
+          }
+          if (res.permissions.can_update_location == 1) {
+            this.can_edit_location = true;
+            this.locationPage = true;
+          }
+          if (res.permissions.can_delete_location == 1) {
+            this.can_delete_location = true;
+            this.locationPage = true;
+          }
+          // select select all
+          if (
+            this.locationPage == true ||
+            this.customerPage == true ||
+            this.vendorPage == true ||
+            this.employeePage == true ||
+            this.parts == true
+          ) {
+            this.selectAllPages = true;
+          }
+
+          // sleect view all
+          if (
+            this.can_view_customer == true ||
+            this.can_view_vendor == true ||
+            this.can_view_employee ||
+            this.can_view_parts ||
+            this.can_view_location
+          ) {
+            this.selectAllView = true;
+          }
+
+          if (
+            this.can_add_customer == true ||
+            this.can_add_vendor == true ||
+            this.can_add_employee ||
+            this.can_add_parts ||
+            this.can_add_location
+          ) {
+            this.selectAllAdd = true;
+          }
+
+          if (
+            this.can_edit_customer == true ||
+            this.can_edit_vendor == true ||
+            this.can_edit_employee ||
+            this.can_edit_parts ||
+            this.can_edit_location
+          ) {
+            this.selectAllEdit = true;
+          }
+
+          if (
+            this.can_delete_customer == true ||
+            this.can_delete_vendor == true ||
+            this.can_delete_employee ||
+            this.can_delete_parts ||
+            this.can_delete_location
+          ) {
+            this.selectAllDelete = true;
+          }
+
           // can view customer
-          if (this.permission.can_view_customer == 1) {
-            this.ViewCustomerEdit = true;
-            this.permission.push(
-              "can_view_customer",
-            );
-
-            this.unPermissioned.push(
-               "can_view_vendor",
-              "can_view_employee",
-              "can_view_parts",
-              "can_view_condition",
-              "can_view_location",
-              "can_add_customer",
-              "can_add_vendor",
-              "can_add_employee",
-              "can_add_parts",
-              "can_add_condition",
-              "can_add_location",
-              "can_edit_customer",
-              "can_edit_vendor",
-              "can_edit_employee",
-              "can_edit_parts",
-              "can_edit_condition",
-              "can_edit_location",
-              "can_delete_customer",
-              "can_delete_vendor",
-              "can_delete_employee",
-              "can_delete_parts",
-              "can_delete_condition",
-              "can_delete_location"
-            );
-          }
-          if (this.permission.can_add_customer == 1) {
-            this.addCustomerEdit = true;
-            this.permission.push(
-              "can_view_customer",
-            );
-
-            this.unPermissioned.push(
-               "can_view_vendor",
-              "can_view_employee",
-              "can_view_parts",
-              "can_view_condition",
-              "can_view_location",
-              "can_add_customer",
-              "can_add_vendor",
-              "can_add_employee",
-              "can_add_parts",
-              "can_add_condition",
-              "can_add_location",
-              "can_edit_customer",
-              "can_edit_vendor",
-              "can_edit_employee",
-              "can_edit_parts",
-              "can_edit_condition",
-              "can_edit_location",
-              "can_delete_customer",
-              "can_delete_vendor",
-              "can_delete_employee",
-              "can_delete_parts",
-              "can_delete_condition",
-              "can_delete_location"
-            );
-          }
         });
 
         // permissions Back
@@ -3808,13 +3646,116 @@ export default {
           formdata.append("end_date", this.end_date);
           formdata.append("image", this.image);
 
-          for (let i = 0; i < this.permission.length; i++) {
-            formdata.append(this.permission[i], 1);
+          // customer
+          if (this.can_view_customer == true) {
+            formdata.append("can_view_customer", 1);
+          } else if (this.can_view_customer == false) {
+            formdata.append("can_view_customer", 0);
+          }
+          if (this.can_add_customer == true) {
+            formdata.append("can_add_customer", 1);
+          } else if (this.can_add_customer == false) {
+            formdata.append("can_add_customer", 0);
+          }
+          if (this.can_edit_customer == true) {
+            formdata.append("can_update_customer", 1);
+          } else if (this.can_edit_customer == false) {
+            formdata.append("can_update_customer", 0);
+          }
+          if (this.can_delete_customer == true) {
+            formdata.append("can_delete_customer", 1);
+          } else if (this.can_delete_customer == false) {
+            formdata.append("can_delete_customer", 0);
           }
 
-          for (let i = 0; i < this.unPermissioned.length; i++) {
-            formdata.append(this.unPermissioned[i], 0);
-            console.log(this.unPermissioned[i], "");
+          // vendor
+
+          if (this.can_view_vendor == true) {
+            formdata.append("can_view_vendor", 1);
+          } else if (this.can_view_vendor == false) {
+            formdata.append("can_view_vendor", 0);
+          }
+          if (this.can_add_vendor == true) {
+            formdata.append("can_add_vendor", 1);
+          } else if (this.can_add_vendor == false) {
+            formdata.append("can_add_vendor", 0);
+          }
+          if (this.can_edit_vendor == true) {
+            formdata.append("can_update_vendor", 1);
+          } else if (this.can_edit_vendor == false) {
+            formdata.append("can_update_vendor", 0);
+          }
+          if (this.can_delete_vendor == true) {
+            formdata.append("can_delete_vendor", 1);
+          } else if (this.can_delete_vendor == false) {
+            formdata.append("can_delete_vendor", 0);
+          }
+
+          // employee
+
+          if (this.can_view_employee == true) {
+            formdata.append("can_view_employee", 1);
+          } else if (this.can_view_employee == false) {
+            formdata.append("can_view_employee", 0);
+          }
+          if (this.can_add_employee == true) {
+            formdata.append("can_add_employee", 1);
+          } else if (this.can_add_employee == false) {
+            formdata.append("can_add_employee", 0);
+          }
+          if (this.can_edit_employee == true) {
+            formdata.append("can_update_employee", 1);
+          } else if (this.can_edit_employee == false) {
+            formdata.append("can_update_employee", 0);
+          }
+          if (this.can_delete_employee == true) {
+            formdata.append("can_delete_employee", 1);
+          } else if (this.can_delete_employee == false) {
+            formdata.append("can_delete_employee", 0);
+          }
+
+          // parts
+          if (this.can_view_parts == true) {
+            formdata.append("can_view_parts", 1);
+          } else if (this.can_view_parts == false) {
+            formdata.append("can_view_parts", 0);
+          }
+          if (this.can_add_parts == true) {
+            formdata.append("can_add_parts", 1);
+          } else if (this.can_add_parts == false) {
+            formdata.append("can_add_parts", 0);
+          }
+          if (this.can_edit_parts == true) {
+            formdata.append("can_update_parts", 1);
+          } else if (this.can_edit_parts == false) {
+            formdata.append("can_update_parts", 0);
+          }
+          if (this.can_delete_parts == true) {
+            formdata.append("can_delete_parts", 1);
+          } else if (this.can_delete_parts == false) {
+            formdata.append("can_delete_parts", 0);
+          }
+
+          // location
+          if (this.can_view_location == true) {
+            formdata.append("can_view_location", 1);
+          } else if (this.can_view_location == false) {
+            formdata.append("can_view_location", 0);
+          }
+          if (this.can_add_location == true) {
+            formdata.append("can_add_location", 1);
+          } else if (this.can_add_location == false) {
+            formdata.append("can_add_location", 0);
+          }
+          if (this.can_edit_location == true) {
+            formdata.append("can_update_location", 1);
+          } else if (this.can_edit_location == false) {
+            formdata.append("can_update_location", 0);
+          }
+          if (this.can_delete_location == true) {
+            formdata.append("can_delete_location", 1);
+          } else if (this.can_delete_location == false) {
+            formdata.append("can_delete_location", 0);
           }
 
           this.selectedLocations.forEach((value, index) => {
@@ -3878,14 +3819,129 @@ export default {
         formdata.append("code", this.employee_code);
         formdata.append("branch_id", this.branch_id);
         formdata.append("area", this.area);
-        formdata.append("start_date", this.start_date);
-        formdata.append("end_date", this.end_date);
+        if (this.start_date != null) {
+          formdata.append("start_date", this.start_date);
+        }
+        if (this.end_date != null) {
+          formdata.append("end_date", this.end_date);
+        }
         formdata.append("image", this.image);
-        formdata.append(`location_id[0]`, 1);
 
         this.selectedLocations.forEach((value, index) => {
           formdata.append(`location_id[${index}]`, value.Id);
         });
+
+        // customer
+        if (this.can_view_customer == true) {
+          formdata.append("can_view_customer", 1);
+        } else if (this.can_view_customer == false) {
+          formdata.append("can_view_customer", 0);
+        }
+        if (this.can_add_customer == true) {
+          formdata.append("can_add_customer", 1);
+        } else if (this.can_add_customer == false) {
+          formdata.append("can_add_customer", 0);
+        }
+        if (this.can_edit_customer == true) {
+          formdata.append("can_update_customer", 1);
+        } else if (this.can_edit_customer == false) {
+          formdata.append("can_update_customer", 0);
+        }
+        if (this.can_delete_customer == true) {
+          formdata.append("can_delete_customer", 1);
+        } else if (this.can_delete_customer == false) {
+          formdata.append("can_delete_customer", 0);
+        }
+
+        // vendor
+
+        if (this.can_view_vendor == true) {
+          formdata.append("can_view_vendor", 1);
+        } else if (this.can_view_vendor == false) {
+          formdata.append("can_view_vendor", 0);
+        }
+        if (this.can_add_vendor == true) {
+          formdata.append("can_add_vendor", 1);
+        } else if (this.can_add_vendor == false) {
+          formdata.append("can_add_vendor", 0);
+        }
+        if (this.can_edit_vendor == true) {
+          formdata.append("can_update_vendor", 1);
+        } else if (this.can_edit_vendor == false) {
+          formdata.append("can_update_vendor", 0);
+        }
+        if (this.can_delete_vendor == true) {
+          formdata.append("can_delete_vendor", 1);
+        } else if (this.can_delete_vendor == false) {
+          formdata.append("can_delete_vendor", 0);
+        }
+
+        // employee
+
+        if (this.can_view_employee == true) {
+          formdata.append("can_view_employee", 1);
+        } else if (this.can_view_employee == false) {
+          formdata.append("can_view_employee", 0);
+        }
+        if (this.can_add_employee == true) {
+          formdata.append("can_add_employee", 1);
+        } else if (this.can_add_employee == false) {
+          formdata.append("can_add_employee", 0);
+        }
+        if (this.can_edit_employee == true) {
+          formdata.append("can_update_employee", 1);
+        } else if (this.can_edit_employee == false) {
+          formdata.append("can_update_employee", 0);
+        }
+        if (this.can_delete_employee == true) {
+          formdata.append("can_delete_employee", 1);
+        } else if (this.can_delete_employee == false) {
+          formdata.append("can_delete_employee", 0);
+        }
+
+        // parts
+        if (this.can_view_parts == true) {
+          formdata.append("can_view_parts", 1);
+        } else if (this.can_view_parts == false) {
+          formdata.append("can_view_parts", 0);
+        }
+        if (this.can_add_parts == true) {
+          formdata.append("can_add_parts", 1);
+        } else if (this.can_add_parts == false) {
+          formdata.append("can_add_parts", 0);
+        }
+        if (this.can_edit_parts == true) {
+          formdata.append("can_update_parts", 1);
+        } else if (this.can_edit_parts == false) {
+          formdata.append("can_update_parts", 0);
+        }
+        if (this.can_delete_parts == true) {
+          formdata.append("can_delete_parts", 1);
+        } else if (this.can_delete_parts == false) {
+          formdata.append("can_delete_parts", 0);
+        }
+
+        // location
+        if (this.can_view_location == true) {
+          formdata.append("can_view_location", 1);
+        } else if (this.can_view_location == false) {
+          formdata.append("can_view_location", 0);
+        }
+        if (this.can_add_location == true) {
+          formdata.append("can_add_location", 1);
+        } else if (this.can_add_location == false) {
+          formdata.append("can_add_location", 0);
+        }
+        if (this.can_edit_location == true) {
+          formdata.append("can_update_location", 1);
+        } else if (this.can_edit_location == false) {
+          formdata.append("can_update_location", 0);
+        }
+        if (this.can_delete_location == true) {
+          formdata.append("can_delete_location", 1);
+        } else if (this.can_delete_location == false) {
+          formdata.append("can_delete_location", 0);
+        }
 
         for (let i = 0; i < this.permission.length; i++) {
           formdata.append(this.permission[i], 1);
@@ -4016,9 +4072,8 @@ export default {
       }
     },
     // select all
-    SelectAll(checkbox, id) {
-      if (checkbox.target.checked == true) {
-        // customer
+    SelectAll() {
+      if (this.selectAllPages == true) {
         const Customer = document.getElementById("customer");
         Customer.checked = true;
         // vendor
@@ -4032,15 +4087,16 @@ export default {
         Parts.checked = true;
 
         // condition
-        const Condition = document.getElementById("condition");
-        Condition.checked = true;
-
-        // locations
 
         const Locations = document.getElementById("location");
         Locations.checked = true;
-      }
-      if (checkbox.target.checked == false) {
+
+        this.customerPage = true;
+        this.vendorPage = true;
+        this.employeePage = true;
+        this.partsPage = true;
+        this.locationPage = true;
+      } else if (this.selectAllPages == false) {
         const Customer = document.getElementById("customer");
         Customer.checked = false;
         // vendor
@@ -4053,20 +4109,21 @@ export default {
         const Parts = document.getElementById("parts");
         Parts.checked = false;
 
-        // condition
-        const Condition = document.getElementById("condition");
-        Condition.checked = false;
-
         // locations
 
         const Locations = document.getElementById("location");
         Locations.checked = false;
+        this.customerPage = false;
+        this.vendorPage = false;
+        this.employeePage = false;
+        this.partsPage = false;
+        this.locationPage = false;
       }
     },
     // select all
     // view All
-    ViewAll(check) {
-      if (check.target.checked == true) {
+    ViewAll(status) {
+      if (status.target.checked == true) {
         // view customer
         const ViewCustomer = document.getElementById("ViewCustomer");
         ViewCustomer.checked = true;
@@ -4085,41 +4142,12 @@ export default {
         const viewLocation = document.getElementById("viewlocation");
         viewLocation.checked = true;
 
-        this.canViewAll = true;
-
-        this.permission.push(
-          "can_view_customer",
-          "can_view_vendor",
-          "can_view_employee",
-          "can_view_parts",
-          "can_view_location"
-        );
-
-        console.log(this.permission, "permission ");
-        this.unPermissioned.push(
-          "can_add_customer",
-          "can_add_vendor",
-          "can_add_employee",
-          "can_add_parts",
-          "can_add_condition",
-          "can_add_location",
-          "can_edit_customer",
-          "can_edit_vendor",
-          "can_edit_employee",
-          "can_edit_parts",
-          "can_edit_condition",
-          "can_edit_location",
-          "can_delete_customer",
-          "can_delete_vendor",
-          "can_delete_employee",
-          "can_delete_parts",
-          "can_delete_location"
-        );
-
-        // checked depend o
-      }
-
-      if (check.target.checked == false) {
+        this.can_view_customer = true;
+        this.can_view_vendor = true;
+        this.can_view_employee = true;
+        this.can_view_parts = true;
+        this.can_view_location = true;
+      } else if (status.target.checked == false) {
         const ViewCustomer = document.getElementById("ViewCustomer");
         ViewCustomer.checked = false;
         // view Vendor
@@ -4138,42 +4166,18 @@ export default {
         const viewLocation = document.getElementById("viewlocation");
         viewLocation.checked = false;
 
-        this.canViewAll = false;
-        this.permission = [];
-        console.log(this.permission);
-
-        this.unPermissioned.push(
-          "can_view_customer",
-          "can_view_vendor",
-          "can_view_employee",
-          "can_view_parts",
-          "can_view_condition",
-          "can_view_location",
-          "can_add_customer",
-          "can_add_vendor",
-          "can_add_employee",
-          "can_add_parts",
-          "can_add_condition",
-          "can_add_location",
-          "can_edit_customer",
-          "can_edit_vendor",
-          "can_edit_employee",
-          "can_edit_parts",
-          "can_edit_condition",
-          "can_edit_location",
-          "can_delete_customer",
-          "can_delete_vendor",
-          "can_delete_employee",
-          "can_delete_parts",
-          "can_delete_location"
-        );
+        this.can_view_customer = false;
+        this.can_view_vendor = true;
+        this.can_view_employee = true;
+        this.can_view_parts = true;
+        this.can_view_location = true;
+        console.log(this.can_view_customer, "status");
       }
     },
     // viewAllEdit
     // view All
-    addAll(check) {
-      if (check.target.checked == true) {
-        // view customer
+    addAll(status) {
+      if (status.target.checked == true) {
         const addcustomer = document.getElementById("addcustomer");
         addcustomer.checked = true;
         // view Vendor
@@ -4189,101 +4193,15 @@ export default {
         addParts.checked = true;
         // condition
 
-        const addcondition = document.getElementById("addcondition");
-        addcondition.checked = true;
-
         const addlocation = document.getElementById("addlocation");
         addlocation.checked = true;
-        this.canAddAll = true;
 
-        this.permission.push(
-          "can_add_customer",
-          "can_add_vendor",
-          "can_add_employee",
-          "can_add_parts",
-          "can_add_condition",
-          "can_add_location"
-        );
-
-        if (this.canViewAll == true) {
-          this.unPermissioned.push(
-            "can_edit_customer",
-            "can_edit_vendor",
-            "can_edit_employee",
-            "can_edit_parts",
-            "can_edit_condition",
-            "can_edit_location",
-            "can_delete_customer",
-            "can_delete_vendor",
-            "can_delete_employee",
-            "can_delete_parts",
-            "can_delete_condition",
-            "can_delete_location"
-          );
-        }
-        if (
-          this.canViewAll == true &&
-          this.canEditAll == false &&
-          this.canDeleteAll == false
-        ) {
-          this.unPermissioned.push(
-            "can_edit_customer",
-            "can_edit_vendor",
-            "can_edit_employee",
-            "can_edit_parts",
-            "can_edit_condition",
-            "can_edit_location",
-            "can_delete_customer",
-            "can_delete_vendor",
-            "can_delete_employee",
-            "can_delete_parts",
-            "can_delete_condition",
-            "can_delete_location"
-          );
-        }
-        if (
-          this.canViewAll == false &&
-          this.canEditAll == true &&
-          this.canDeleteAll == false
-        ) {
-          this.unPermissioned.push(
-            "can_view_customer",
-            "can_view_vendor",
-            "can_view_employee",
-            "can_view_parts",
-            "can_view_condition",
-            "can_view_location",
-            "can_delete_customer",
-            "can_delete_vendor",
-            "can_delete_employee",
-            "can_delete_parts",
-            "can_delete_condition",
-            "can_delete_location"
-          );
-        }
-        if (
-          this.canViewAll == false &&
-          this.canAddAll == false &&
-          this.canDeleteAll == true
-        ) {
-          this.unPermissioned.push(
-            "can_view_customer",
-            "can_view_vendor",
-            "can_view_employee",
-            "can_view_parts",
-            "can_view_condition",
-            "can_view_location",
-            "can_edit_customer",
-            "can_edit_vendor",
-            "can_edit_employee",
-            "can_edit_parts",
-            "can_edit_condition",
-            "can_edit_location"
-          );
-        }
-      }
-
-      if (check.target.checked == false) {
+        this.can_add_customer = true;
+        this.can_add_vendor = true;
+        this.can_add_employee = true;
+        this.can_add_parts = true;
+        this.can_add_location = true;
+      } else if (status.target.checked == false) {
         const addcustomer = document.getElementById("addcustomer");
         addcustomer.checked = false;
         // view Vendor
@@ -4299,99 +4217,20 @@ export default {
         addParts.checked = false;
         // condition
 
-        const addcondition = document.getElementById("addcondition");
-        addcondition.checked = false;
-
         const addlocation = document.getElementById("addlocation");
         addlocation.checked = false;
 
-        this.canAddAll = false;
-
-        this.permission = [];
-        if (
-          this.canViewAll == true &&
-          this.canEditAll == false &&
-          this.canDeleteAll == false
-        ) {
-          this.unPermissioned.push(
-            "can_edit_customer",
-            "can_edit_vendor",
-            "can_edit_employee",
-            "can_edit_parts",
-            "can_edit_condition",
-            "can_edit_location",
-            "can_delete_customer",
-            "can_delete_vendor",
-            "can_delete_employee",
-            "can_delete_parts",
-            "can_delete_condition",
-            "can_delete_location",
-            "can_add_customer",
-            "can_add_vendor",
-            "can_add_employee",
-            "can_add_parts",
-            "can_add_condition",
-            "can_add_location"
-          );
-        }
-        if (
-          this.canViewAll == false &&
-          this.canEditAll == true &&
-          this.canDeleteAll == false
-        ) {
-          this.unPermissioned.push(
-            "can_view_customer",
-            "can_view_vendor",
-            "can_view_employee",
-            "can_view_parts",
-            "can_view_condition",
-            "can_view_location",
-            "can_delete_customer",
-            "can_delete_vendor",
-            "can_delete_employee",
-            "can_delete_parts",
-            "can_delete_condition",
-            "can_delete_location",
-            "can_add_customer",
-            "can_add_vendor",
-            "can_add_employee",
-            "can_add_parts",
-            "can_add_condition",
-            "can_add_location"
-          );
-        }
-        if (
-          this.canViewAll == false &&
-          this.canAddAll == false &&
-          this.canDeleteAll == true
-        ) {
-          this.unPermissioned.push(
-            "can_view_customer",
-            "can_view_vendor",
-            "can_view_employee",
-            "can_view_parts",
-            "can_view_condition",
-            "can_view_location",
-            "can_edit_customer",
-            "can_edit_vendor",
-            "can_edit_employee",
-            "can_edit_parts",
-            "can_edit_condition",
-            "can_edit_location",
-            "can_add_customer",
-            "can_add_vendor",
-            "can_add_employee",
-            "can_add_parts",
-            "can_add_condition",
-            "can_add_location"
-          );
-        }
+        this.can_add_customer = false;
+        this.can_add_vendor = false;
+        this.can_add_employee = false;
+        this.can_add_parts = false;
+        this.can_add_location = false;
       }
     },
     // edit all
-    editAll(check) {
-      if (check.target.checked == true) {
-        // view customer
+    editAll(status) {
+      // view customer
+      if (status.target.checked == true) {
         const editcustomer = document.getElementById("editcustomer");
         editcustomer.checked = true;
         // view Vendor
@@ -4405,38 +4244,17 @@ export default {
         // view Parts
         const editParts = document.getElementById("editParts");
         editParts.checked = true;
-        // condition
-
-        const editcondition = document.getElementById("editcondition");
-        editcondition.checked = true;
 
         const editlocation = document.getElementById("editlocation");
         editlocation.checked = true;
 
-        this.canEditAll = true;
-
-        if (this.canViewAll == true && this.canAddAll == true) {
-          this.unPermissioned.push(
-            "can_delete_customer",
-            "can_delete_vendor",
-            "can_delete_employee",
-            "can_delete_parts",
-            "can_delete_condition",
-            "can_delete_location"
-          );
-        }
-
-        this.permission.push(
-          "can_edit_customer",
-          "can_edit_vendor",
-          "can_edit_employee",
-          "can_edit_parts",
-          "can_edit_condition",
-          "can_edit_location"
-        );
+        this.can_edit_customer = true;
+        this.can_edit_vendor = true;
+        this.can_edit_employee = true;
+        this.can_edit_parts = true;
+        this.can_edit_location = true;
       }
-      if (check.target.checked == false) {
-        // view customer
+      if (status.target.checked == false) {
         const editcustomer = document.getElementById("editcustomer");
         editcustomer.checked = false;
         // view Vendor
@@ -4452,38 +4270,20 @@ export default {
         editParts.checked = false;
         // condition
 
-        const editcondition = document.getElementById("editcondition");
-        editcondition.checked = false;
-
         const editlocation = document.getElementById("editlocation");
         editlocation.checked = false;
 
-        this.canEditAll = false;
-
-        this.permission = [];
-        if (this.canViewAll == true && this.canAddAll == true) {
-          this.unPermissioned.push(
-            "can_edit_customer",
-            "can_edit_vendor",
-            "can_edit_employee",
-            "can_edit_parts",
-            "can_edit_condition",
-            "can_edit_location",
-            "can_delete_customer",
-            "can_delete_vendor",
-            "can_delete_employee",
-            "can_delete_parts",
-            "can_delete_condition",
-            "can_delete_location"
-          );
-        }
+        this.can_edit_customer = true;
+        this.can_edit_vendor = true;
+        this.can_edit_employee = true;
+        this.can_edit_parts = true;
+        this.can_edit_location = true;
       }
     },
     // edit all
     // delete all
-    deleteAll(check) {
-      if (check.target.checked == true) {
-        // view customer
+    deleteAll(status) {
+      if (status.target.checked == true) {
         const deletecustomer = document.getElementById("deletecustomer");
         deletecustomer.checked = true;
         // view Vendor
@@ -4499,227 +4299,14 @@ export default {
         deleteParts.checked = true;
         // condition
 
-        const deletecondition = document.getElementById("deletecondition");
-        deletecondition.checked = true;
-
         const deletelocation = document.getElementById("deletelocation");
         deletelocation.checked = true;
 
-        this.canDeleteAll = true;
-
-        this.permission.push(
-          "can_delete_customer",
-          "can_delete_vendor",
-          "can_delete_employee",
-          "can_delete_parts",
-          "can_delete_condition",
-          "can_delete_location"
-        );
-
-        if (
-          this.canViewAll == true &&
-          this.canAddAll == true &&
-          this.canEditAll == true
-        ) {
-          this.unPermissioned = [];
-        }
-        if (
-          this.canViewAll == true &&
-          this.canAddAll == false &&
-          this.canEditAll == false
-        ) {
-          this.unPermissioned.push(
-            "can_add_customer",
-            "can_add_vendor",
-            "can_add_employee",
-            "can_add_parts",
-            "can_add_condition",
-            "can_add_location",
-            "can_edit_customer",
-            "can_edit_vendor",
-            "can_edit_employee",
-            "can_edit_parts",
-            "can_edit_condition",
-            "can_edit_location"
-          );
-        }
-        if (
-          this.canViewAll == false &&
-          this.canAddAll == true &&
-          this.canEditAll == false
-        ) {
-          this.unPermissioned.push(
-            "can_view_customer",
-            "can_view_vendor",
-            "can_view_employee",
-            "can_view_parts",
-            "can_view_condition",
-            "can_view_location",
-            "can_edit_customer",
-            "can_edit_vendor",
-            "can_edit_employee",
-            "can_edit_parts",
-            "can_edit_condition",
-            "can_edit_location"
-          );
-        }
-        if (
-          this.canViewAll == false &&
-          this.canAddAll == false &&
-          this.canEditAll == true
-        ) {
-          this.unPermissioned.push(
-            "can_view_customer",
-            "can_view_vendor",
-            "can_view_employee",
-            "can_view_parts",
-            "can_view_condition",
-            "can_view_location",
-            "can_add_customer",
-            "can_add_vendor",
-            "can_add_employee",
-            "can_add_parts",
-            "can_add_condition",
-            "can_add_location"
-          );
-        }
-      }
-      if (check.target.checked == false) {
-        // view customer
-        const deletecustomer = document.getElementById("deletecustomer");
-        deletecustomer.checked = false;
-        // view Vendor
-        const deletevendor = document.getElementById("deletevendor");
-        deletevendor.checked = false;
-        // view Employee
-
-        const deleteEmployeee = document.getElementById("deleteEmployeee");
-        deleteEmployeee.checked = false;
-
-        // view Parts
-        const deleteParts = document.getElementById("deleteParts");
-        deleteParts.checked = false;
-        // condition
-
-        const deletecondition = document.getElementById("deletecondition");
-        deletecondition.checked = false;
-
-        const deletelocation = document.getElementById("deletelocation");
-        deletelocation.checked = false;
-
-        this.canDeleteAll = false;
-        this.permission = [];
-        if (
-          this.canViewAll == true &&
-          this.canAddAll == true &&
-          this.canEditAll == true
-        ) {
-          this.unPermissioned.push(
-            "can_delete_customer",
-            "can_delete_vendor",
-            "can_delete_employee",
-            "can_delete_parts",
-            "can_delete_condition",
-            "can_delete_location"
-          );
-        }
-        if (
-          this.canViewAll == true &&
-          this.canAddAll == false &&
-          this.canEditAll == false
-        ) {
-          this.unPermissioned.push(
-            "can_add_customer",
-            "can_add_vendor",
-            "can_add_employee",
-            "can_add_parts",
-            "can_add_condition",
-            "can_add_location",
-            "can_edit_customer",
-            "can_edit_vendor",
-            "can_edit_employee",
-            "can_edit_parts",
-            "can_edit_condition",
-            "can_edit_location",
-            "can_delete_customer",
-            "can_delete_vendor",
-            "can_delete_employee",
-            "can_delete_parts",
-            "can_delete_condition",
-            "can_delete_location"
-          );
-        }
-        if (
-          this.canViewAll == false &&
-          this.canAddAll == true &&
-          this.canEditAll == false
-        ) {
-          this.unPermissioned.push(
-            "can_view_customer",
-            "can_view_vendor",
-            "can_view_employee",
-            "can_view_parts",
-            "can_view_condition",
-            "can_view_location",
-            "can_edit_customer",
-            "can_edit_vendor",
-            "can_edit_employee",
-            "can_edit_parts",
-            "can_edit_condition",
-            "can_edit_location",
-            "can_delete_customer",
-            "can_delete_vendor",
-            "can_delete_employee",
-            "can_delete_parts",
-            "can_delete_condition",
-            "can_delete_location"
-          );
-        }
-        if (
-          this.canViewAll == false &&
-          this.canAddAll == false &&
-          this.canEditAll == true
-        ) {
-          this.unPermissioned.push(
-            "can_view_customer",
-            "can_view_vendor",
-            "can_view_employee",
-            "can_view_parts",
-            "can_view_condition",
-            "can_view_location",
-            "can_add_customer",
-            "can_add_vendor",
-            "can_add_employee",
-            "can_add_parts",
-            "can_add_condition",
-            "can_add_location",
-            "can_delete_customer",
-            "can_delete_vendor",
-            "can_delete_employee",
-            "can_delete_parts",
-            "can_delete_condition",
-            "can_delete_location"
-          );
-        }
-      }
-    },
-    // delete all
-    // status
-    checkStatus(status, id) {
-      console.log(document.getElementById(id).checked);
-      if (
-        document.getElementById(id).checked == true &&
-        !this.permission.includes(status)
-      ) {
-        this.permission.push(status);
-        console.log(this.permission);
-      }
-      if (document.getElementById(id).checked == false) {
-        const index = this.permission.indexOf(status);
-        if (index !== -1) {
-          this.permission.splice(index, 1);
-          console.log(this.permission);
-        }
+        this.can_delete_customer = true;
+        this.can_delete_vendor = true;
+        this.can_delete_employee = true;
+        this.can_delete_parts = true;
+        this.can_delete_location = true;
       }
     },
   },
