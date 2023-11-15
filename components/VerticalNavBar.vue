@@ -262,7 +262,7 @@
                     </p>
                   </div>
                   <!-- Conditions   -->
-                  <div
+                  <!-- <div
                     v-if="permission.can_view_condition == 1"
                     @click="goToConditions()"
                     class="flex bottom items-center pt-[30px] cursor-pointer"
@@ -284,7 +284,7 @@
                     >
                       {{ $t("Conditions") }}
                     </p>
-                  </div>
+                  </div> -->
                   <!-- Locations -->
                   <div
                     v-if="permission.can_view_location == 1"

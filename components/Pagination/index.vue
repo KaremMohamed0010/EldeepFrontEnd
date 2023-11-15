@@ -137,7 +137,7 @@ export default {
       }
     },
     onClickNextPage() {
-      if (this.currentPage > 1) {
+      if (this.currentPage >= 1) {
         this.$emit("pagechanged", this.currentPage + 1);
       }
     },

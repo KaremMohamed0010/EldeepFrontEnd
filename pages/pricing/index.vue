@@ -694,7 +694,7 @@ export default {
     });
     // get all locations
 
-    this.$axios.$get("/Pricing/GetPricingRequest").then((res) => {
+    this.$axios.$post("/Pricing/GetPricingRequest").then((res) => {
       this.locations = res.Location.data;
       this.totalPages = res.Location.meta.last_page;
       this.perPage = res.Location.meta.per_page;

@@ -1,9 +1,20 @@
 <template>
   <div>
     <input
+      v-if="isEdit == false"
       id="1"
       type="text"
       v-model="phone"
+      placeholder="0226281"
+      @keypress="isNumber($event)"
+      @input="ValidatePhone($event)"
+      class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+    />
+    <input
+      v-if="isEdit == true"
+      id="1"
+      type="text"
+      v-model="phoneNumber"
       placeholder="0226281"
       @keypress="isNumber($event)"
       @input="ValidatePhone($event)"
@@ -18,6 +29,10 @@ export default {
     phoneNumber: {
       type: Number,
       default: null,
+    },
+    isEdit: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -45,8 +60,14 @@ export default {
       // Limit the input to 14 characters
       if (event.target.value.length > 11) {
         this.phone = event.target.value.slice(0, 11);
+        this.phoneNumber = event.target.value.slice(0, 11);
       }
-      this.$emit("update:phoneNumber", parseInt(this.phone));
+      if (this.isEdit == false) {
+        this.$emit("update:phoneNumber", parseInt(this.phone));
+      }
+      if(this.isEdit == true){
+        this.$emit("update:phoneNumber", parseInt(this.phoneNumber));
+      }
     },
   },
 };

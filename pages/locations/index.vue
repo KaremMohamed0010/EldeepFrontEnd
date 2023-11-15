@@ -161,7 +161,10 @@
                                       </option>
                                     </select>
 
-                                    <img :class="{ 'arrow-select-arabic': lang == 'ar' }"
+                                    <img
+                                      :class="{
+                                        'arrow-select-arabic': lang == 'ar',
+                                      }"
                                       class="arrow-select"
                                       src="../../assets/imgs/comman/Icon.png"
                                       alt=""
@@ -177,7 +180,10 @@
                                   </p>
                                 </div>
                                 <!-- register code -->
-                                <div :class="{ 'mr-[20px]': lang == 'ar' }" class="group ml-[20px] w-[50%]">
+                                <div
+                                  :class="{ 'mr-[20px]': lang == 'ar' }"
+                                  class="group ml-[20px] w-[50%]"
+                                >
                                   <label
                                     :class="{ 'text-right': lang == 'ar' }"
                                     for="1"
@@ -185,7 +191,10 @@
                                     >{{ $t("Choose city") }} :
                                     <p class="required">*</p></label
                                   >
-                                  <img :class="{ 'arrow-select-arabic-city': lang == 'ar' }"
+                                  <img
+                                    :class="{
+                                      'arrow-select-arabic-city': lang == 'ar',
+                                    }"
                                     style="left: 677px"
                                     class="arrow-select"
                                     src="../../assets/imgs/comman/Icon.png"
@@ -237,7 +246,10 @@
                                   />
                                 </div>
                                 <!-- street name -->
-                                <div :class="{ 'mr-[20px]': lang == 'ar' }" class="group ml-[20px] w-[50%]">
+                                <div
+                                  :class="{ 'mr-[20px]': lang == 'ar' }"
+                                  class="group ml-[20px] w-[50%]"
+                                >
                                   <label
                                     :class="{ 'text-right': lang == 'ar' }"
                                     for="1"
@@ -275,7 +287,10 @@
                                   />
                                 </div>
                                 <!-- register code -->
-                                <div :class="{ 'mr-[20px]': lang == 'ar' }" class="group ml-[20px] w-[50%]">
+                                <div
+                                  :class="{ 'mr-[20px]': lang == 'ar' }"
+                                  class="group ml-[20px] w-[50%]"
+                                >
                                   <label
                                     :class="{ 'text-right': lang == 'ar' }"
                                     for="1"
@@ -317,12 +332,23 @@
                                   </option>
                                 </select>
 
-                                <img :class="{ 'right-[706px]': lang == 'ar' }"
+                                <img
+                                  :class="{ 'right-[706px]': lang == 'ar' }"
                                   class="absolute right-[70px] w-[20px] mt-[19px]"
                                   src="../../assets/imgs/comman/Icon.png"
                                   alt=""
                                 />
                               </div>
+                              <p
+                                v-if="chooseType == true"
+                                :class="{
+                                  'text-right': lang == 'ar',
+                                }"
+                                class="error-message text-left"
+                              >
+                                {{ $t("Choose type") }}
+                                {{ $t("required") }}
+                              </p>
                             </div>
                             <!-- vendor select -->
                             <div
@@ -336,7 +362,8 @@
                                 >{{ $t("Choose vendor") }} :
                                 <p class="required">*</p></label
                               >
-                              <img :class="{ 'right-[706px]': lang == 'ar' }"
+                              <img
+                                :class="{ 'right-[706px]': lang == 'ar' }"
                                 class="absolute right-[70px] w-[20px] mt-[19px]"
                                 src="../../assets/imgs/comman/Icon.png"
                                 alt=""
@@ -349,7 +376,7 @@
                               >
                                 <option
                                   v-for="(vendor, i) in vendors"
-                                  :value="vendor.Id"
+                                  :value="vendor.vendorId"
                                   :key="i"
                                 >
                                   {{ vendor.vendor_name }}
@@ -376,7 +403,8 @@
                                 >{{ $t("Choose Customer") }} :
                                 <p class="required">*</p></label
                               >
-                              <img  :class="{ 'right-[706px]': lang == 'ar' }"
+                              <img
+                                :class="{ 'right-[706px]': lang == 'ar' }"
                                 style="left: 677px"
                                 class="arrow-select"
                                 src="../../assets/imgs/comman/Icon.png"
@@ -579,7 +607,7 @@
                       class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
                     >
                       <p class="text-gray-900 whitespace-no-wrap table-headers">
-                        {{ $t("Employee Name") }}
+                        {{ $t("Customer") }}
                       </p>
                     </td>
                     <td
@@ -608,7 +636,11 @@
                       <div class="flex">
                         <div class="ml-3">
                           <p class="text-gray-900 whitespace-no-wrap">
-                            {{ location.Vendor }}
+                            <span
+                              v-for="vendor in location.Vendor"
+                              class="bg-blue-100 text-center text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300"
+                              >{{ vendor.vendor_name }}</span
+                            >
                           </p>
                         </div>
                       </div>
@@ -617,7 +649,11 @@
                       class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
                     >
                       <p class="text-gray-900 whitespace-no-wrap">
-                        {{ location.Employee }}
+                        <span
+                          v-for="customer in location.Customer"
+                          class="bg-blue-100 text-center text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300"
+                          >{{ customer.customer_name }}</span
+                        >
                       </p>
                     </td>
                     <td
@@ -784,7 +820,10 @@
                                         </p>
                                       </div>
                                       <!-- register code -->
-                                      <div :class="{ 'mr-[20px]': lang == 'ar' }" class="group ml-[20px] w-[50%]">
+                                      <div
+                                        :class="{ 'mr-[20px]': lang == 'ar' }"
+                                        class="group ml-[20px] w-[50%]"
+                                      >
                                         <label
                                           :class="{
                                             'text-right': lang == 'ar',
@@ -852,7 +891,10 @@
                                         />
                                       </div>
                                       <!-- street name -->
-                                      <div :class="{ 'mr-[20px]': lang == 'ar' }" class="group ml-[20px] w-[50%]">
+                                      <div
+                                        :class="{ 'mr-[20px]': lang == 'ar' }"
+                                        class="group ml-[20px] w-[50%]"
+                                      >
                                         <label
                                           :class="{
                                             'text-right': lang == 'ar',
@@ -894,7 +936,10 @@
                                         />
                                       </div>
                                       <!-- register code -->
-                                      <div :class="{ 'mr-[20px]': lang == 'ar' }" class="group ml-[20px] w-[50%]">
+                                      <div
+                                        :class="{ 'mr-[20px]': lang == 'ar' }"
+                                        class="group ml-[20px] w-[50%]"
+                                      >
                                         <label
                                           :class="{
                                             'text-right': lang == 'ar',
@@ -927,7 +972,7 @@
                                         v-model="type"
                                         class="appearance-none border-select w-full py-1 px-2 bg-white"
                                         name="whatever"
-                                         @change="changeType"
+                                        @change="changeType"
                                         id="frm-whatever"
                                       >
                                         <option value="vendor">
@@ -938,12 +983,25 @@
                                         </option>
                                       </select>
 
-                                      <img :class="{ 'right-[706px]': lang == 'ar' }"
+                                      <img
+                                        :class="{
+                                          'right-[706px]': lang == 'ar',
+                                        }"
                                         class="absolute right-[70px] w-[20px] mt-[19px]"
                                         src="../../assets/imgs/comman/Icon.png"
                                         alt=""
                                       />
                                     </div>
+                                    <p
+                                      :class="{
+                                        'text-right': lang == 'ar',
+                                      }"
+                                      v-if="chooseType"
+                                      class="error-message text-left"
+                                    >
+                                      {{ $t("Choose type") }}
+                                      {{ $t("required") }}
+                                    </p>
                                   </div>
                                   <!-- vendor select -->
                                   <div
@@ -957,7 +1015,8 @@
                                       >{{ $t("Choose vendor") }} :
                                       <p class="required">*</p></label
                                     >
-                                    <img :class="{ 'right-[706px]': lang == 'ar' }"
+                                    <img
+                                      :class="{ 'right-[706px]': lang == 'ar' }"
                                       class="absolute right-[70px] w-[20px] mt-[19px]"
                                       src="../../assets/imgs/comman/Icon.png"
                                       alt=""
@@ -970,7 +1029,7 @@
                                     >
                                       <option
                                         v-for="(vendor, i) in vendors"
-                                        :value="vendor.Id"
+                                        :value="vendor.vendorId"
                                         :key="i"
                                       >
                                         {{ vendor.vendor_name }}
@@ -997,7 +1056,8 @@
                                       >{{ $t("Choose Customer") }} :
                                       <p class="required">*</p></label
                                     >
-                                    <img :class="{ 'right-[706px]': lang == 'ar' }"
+                                    <img
+                                      :class="{ 'right-[706px]': lang == 'ar' }"
                                       style="left: 677px"
                                       class="arrow-select"
                                       src="../../assets/imgs/comman/Icon.png"
@@ -1050,7 +1110,7 @@
                                 <button
                                   :disabled="loading"
                                   :class="{ 'cusror-disabled': loading }"
-                                  @click="editEmployee()"
+                                  @click="editLocation()"
                                   class="action-btn rounded-lg w-[100%] px-4 py-2 bg-blue-500 text-blue-100 hover:bg-blue-600 duration-300"
                                 >
                                   {{ $t("Edit") }}
@@ -1193,7 +1253,7 @@
                 />
               </div>
               <h1 class="text-center no-data">
-                {{ $t("There is No Employee") }}
+                {{ $t("There is No Location") }}
               </h1>
             </div>
           </div>
@@ -1211,7 +1271,7 @@ export default {
       showInformation: true,
       showPayemnt: false,
       showVichels: false,
-      type: "",
+      type: null,
       active_vendor: true,
       activeCreditLimit: false,
       disabled: true,
@@ -1236,9 +1296,9 @@ export default {
       vat_number: null,
       building_number: null,
       floor: null,
-      employee_id: 0,
-      vendor_id: 0,
-      customer_id : 0,
+      employee_id: null,
+      vendor_id: null,
+      customer_id: null,
 
       password: null,
       id: "",
@@ -1262,6 +1322,7 @@ export default {
       cities: [],
       vendors: [],
       customers: [],
+      chooseType: false,
     };
   },
   mounted() {
@@ -1307,16 +1368,16 @@ export default {
     this.open = localStorage.getItem("open");
   },
   methods: {
-     searchData() {
+    searchData() {
       this.$axios
         .$get(`/Location/GetAllLocation?search=${this.search}`)
         .then((res) => {
-         this.locations = res.Location.data;
-      this.totalPages = res.Location.meta.last_page;
-      this.perPage = res.Location.meta.per_page;
-      this.total = res.Location.meta.total;
-      this.permissions = res.permissions;
-      this.loading = false;
+          this.locations = res.Location.data;
+          this.totalPages = res.Location.meta.last_page;
+          this.perPage = res.Location.meta.per_page;
+          this.total = res.Location.meta.total;
+          this.permissions = res.permissions;
+          this.loading = false;
         });
     },
     // change and choose country
@@ -1332,13 +1393,13 @@ export default {
         });
     },
     // choose type
-    changeType(event){
-      console.log(event)
-      if(event.target.value == 'vendor'){
-        this.customer_id = 0;
+    changeType(event) {
+      console.log(event);
+      if (event.target.value == "vendor") {
+        this.customer_id = null;
       }
-      if(event.target.value == 'customer'){
-        this.vendor_id = 0;
+      if (event.target.value == "customer") {
+        this.vendor_id = null;
       }
     },
     loadFile(event) {
@@ -1360,8 +1421,8 @@ export default {
         (this.street = null),
         (this.password = null),
         (this.type = null),
-        (this.vendor_id = 0),
-        (this.employee_id = 0),
+        (this.vendor_id = null),
+        (this.customer_id = null),
         (this.floor = null),
         (this.building_number = null),
         (this.employee_email = null),
@@ -1371,7 +1432,6 @@ export default {
         (this.vin_number = null),
         (this.unit_of_target = null),
         (this.national_id = null),
-        this.customer_id =0,
         (this.id = "");
       this.target = null;
     },
@@ -1421,10 +1481,18 @@ export default {
           }
 
           this.employee_id = res.Location.Employee_Id;
-          this.street = res.Location.Street;
-          (this.building_number = res.Location.Building_Number),
-            (this.area = res.Location.Area),
-            (this.floor = res.Location.Floor);
+          if (res.Location.Street == "null") {
+            this.street = null;
+          }
+          if (res.Location.Building_Number == "null") {
+            this.building_number = null;
+          }
+          if (res.Location.Area == "null") {
+            this.area = null;
+          }
+          if (res.Location.Floor == "null") {
+            this.floor = null;
+          }
           let data = {
             country: res.Location.Country,
           };
@@ -1567,73 +1635,100 @@ export default {
     },
     // post and add employee
     postLocation(status) {
-      const requiredFields = [
-        "country_name",
-        "city_name",
-        "employee_id",
-        "vendor_id",
-      ];
+      const requiredFields = ["country_name", "city_name"];
 
       const emptyFields = requiredFields.filter(
         (field) => this[field] === "" || this[field] === null
       );
 
+      if (this.type == null) {
+        this.chooseType = true;
+      }
       this.emptyField = emptyFields;
       console.log(emptyFields);
       if (emptyFields.length != 0) {
         return emptyFields;
-      } else if (this.invalidEmail == true) {
-        return;
-      }
-      if (this.errorpasswordValidation == true) {
-        return;
       } else if (emptyFields.length == 0) {
         if (status == "add") {
-          this.loading = true;
-          let formdata = new FormData();
+          if (this.type == "customer") {
+            this.loading = true;
+            let formdata = new FormData();
 
-          formdata.append("vendor_id", this.vendor_id);
-          formdata.append("country", this.country_name);
-          formdata.append("city", this.city_name);
-          formdata.append("area", this.area);
-          formdata.append("street", this.street);
-          formdata.append("floor", this.floor);
-          formdata.append("bulding_number", this.building_number);
-          formdata.append("customer_id", this.customer_id);
+            formdata.append("customer_id", this.customer_id);
+            formdata.append("country", this.country_name);
+            formdata.append("city", this.city_name);
+            formdata.append("area", this.area);
+            formdata.append("street", this.street);
+            formdata.append("floor", this.floor);
+            formdata.append("bulding_number", this.building_number);
 
-          this.$axios.$post(`/Location/AddLocation`, formdata).then((res) => {
-            if (res.status == 200) {
-              this.loading = false;
-              this.$toast.success("Location Added Successfully");
-              // get data again
-              this.$axios.$get("/Location/GetAllLocation").then((res) => {
-                this.locations = res.Location.data;
-                this.totalPages = res.Location.meta.last_page;
-                this.perPage = res.Location.meta.per_page;
-                this.total = res.Location.meta.total;
-                this.permissions = res.permissions;
+            this.$axios.$post(`/Location/AddLocation`, formdata).then((res) => {
+              if (res.status == 200) {
                 this.loading = false;
-              });
+                this.$toast.success("Location Added Successfully");
+                // get data again
+                this.$axios.$get("/Location/GetAllLocation").then((res) => {
+                  this.locations = res.Location.data;
+                  this.totalPages = res.Location.meta.last_page;
+                  this.perPage = res.Location.meta.per_page;
+                  this.total = res.Location.meta.total;
+                  this.permissions = res.permissions;
+                  this.loading = false;
+                });
 
-              document.getElementById(`addLocation`).classList.toggle("hidden");
-              this.addNewLocation();
-            } else {
-              this.$toast.error(res.message);
-              this.loading = false;
-            }
-          });
+                document
+                  .getElementById(`addLocation`)
+                  .classList.toggle("hidden");
+                this.addNewLocation();
+              } else {
+                this.$toast.error(res.message);
+                this.loading = false;
+              }
+            });
+          }
+          if (this.type == "vendor") {
+            this.loading = true;
+            let formdata = new FormData();
+
+            formdata.append("vendor_id", this.vendor_id);
+            formdata.append("country", this.country_name);
+            formdata.append("city", this.city_name);
+            formdata.append("area", this.area);
+            formdata.append("street", this.street);
+            formdata.append("floor", this.floor);
+            formdata.append("bulding_number", this.building_number);
+
+            this.$axios.$post(`/Location/AddLocation`, formdata).then((res) => {
+              if (res.status == 200) {
+                this.loading = false;
+                this.$toast.success("Location Added Successfully");
+                // get data again
+                this.$axios.$get("/Location/GetAllLocation").then((res) => {
+                  this.locations = res.Location.data;
+                  this.totalPages = res.Location.meta.last_page;
+                  this.perPage = res.Location.meta.per_page;
+                  this.total = res.Location.meta.total;
+                  this.permissions = res.permissions;
+                  this.loading = false;
+                });
+
+                document
+                  .getElementById(`addLocation`)
+                  .classList.toggle("hidden");
+                this.addNewLocation();
+              } else {
+                this.$toast.error(res.message);
+                this.loading = false;
+              }
+            });
+          }
         }
       }
     },
     // edit employee
-    editEmployee() {
+    editLocation() {
       // validation messages
-      const requiredFields = [
-        "country_name",
-        "city_name",
-        "employee_id",
-        "vendor_id",
-      ];
+      const requiredFields = ["country_name", "city_name"];
 
       const emptyFields = requiredFields.filter(
         (field) => this[field] === "" || this[field] == null
@@ -1646,47 +1741,92 @@ export default {
       } else if (this.invalidEmail == true) {
         return;
       } else {
-        this.loading = true;
-        let formdata = new FormData();
+        if (this.type == "customer") {
+          this.loading = true;
+          let formdata = new FormData();
 
-        formdata.append("vendor_id", 0);
-        formdata.append("user_id", this.employee_id);
-        formdata.append("country", this.country_name);
-        formdata.append("city", this.city_name);
-        formdata.append("area", this.area);
-        formdata.append("street", this.street);
-        formdata.append("floor", this.floor);
-        formdata.append("bulding_number", this.building_number);
-        formdata.append("customer_id", this.customer_id);
+          formdata.append("country", this.country_name);
+          formdata.append("city", this.city_name);
+          formdata.append("area", this.area);
+          formdata.append("street", this.street);
+          formdata.append("floor", this.floor);
+          formdata.append("bulding_number", this.building_number);
+          formdata.append("customer_id", this.customer_id);
 
-        this.$axios
-          .$post(`/Location/EditLocation/${this.id}`, formdata)
-          .then((res) => {
-            if (res.status == 200) {
-              this.loading = false;
-              this.$toast.success("Location Edit Successfully");
-              // get data again
-              this.$axios
-                .$get(
-                  `/Location/GetAllLocation?page=${this.$route.query.page || 1}`
-                )
-                .then((res) => {
-                  this.locations = res.Location.data;
-                  this.totalPages = res.Location.meta.last_page;
-                  this.perPage = res.Location.meta.per_page;
-                  this.total = res.Location.meta.total;
-                  this.permissions = res.permissions;
-                  this.loading = false;
-                });
-              document
-                .getElementById(`modal${this.id}`)
-                .classList.toggle("hidden");
-              this.addNewLocation();
-            } else {
-              this.$toast.error("Sorry , There is an Error");
-              this.loading = false;
-            }
-          });
+          this.$axios
+            .$post(`/Location/EditLocation/${this.id}`, formdata)
+            .then((res) => {
+              if (res.status == 200) {
+                this.loading = false;
+                this.$toast.success("Location Edit Successfully");
+                // get data again
+                this.$axios
+                  .$get(
+                    `/Location/GetAllLocation?page=${
+                      this.$route.query.page || 1
+                    }`
+                  )
+                  .then((res) => {
+                    this.locations = res.Location.data;
+                    this.totalPages = res.Location.meta.last_page;
+                    this.perPage = res.Location.meta.per_page;
+                    this.total = res.Location.meta.total;
+                    this.permissions = res.permissions;
+                    this.loading = false;
+                  });
+                document
+                  .getElementById(`modal${this.id}`)
+                  .classList.toggle("hidden");
+                this.addNewLocation();
+              } else {
+                this.$toast.error("Sorry , There is an Error");
+                this.loading = false;
+              }
+            });
+        }
+        if (this.type == "vendor") {
+          this.loading = true;
+          let formdata = new FormData();
+
+          formdata.append("country", this.country_name);
+          formdata.append("city", this.city_name);
+          formdata.append("area", this.area);
+          formdata.append("street", this.street);
+          formdata.append("floor", this.floor);
+          formdata.append("bulding_number", this.building_number);
+          formdata.append("customer_id", this.vendor_id);
+
+          this.$axios
+            .$post(`/Location/EditLocation/${this.id}`, formdata)
+            .then((res) => {
+              if (res.status == 200) {
+                this.loading = false;
+                this.$toast.success("Location Edit Successfully");
+                // get data again
+                this.$axios
+                  .$get(
+                    `/Location/GetAllLocation?page=${
+                      this.$route.query.page || 1
+                    }`
+                  )
+                  .then((res) => {
+                    this.locations = res.Location.data;
+                    this.totalPages = res.Location.meta.last_page;
+                    this.perPage = res.Location.meta.per_page;
+                    this.total = res.Location.meta.total;
+                    this.permissions = res.permissions;
+                    this.loading = false;
+                  });
+                document
+                  .getElementById(`modal${this.id}`)
+                  .classList.toggle("hidden");
+                this.addNewLocation();
+              } else {
+                this.$toast.error("Sorry , There is an Error");
+                this.loading = false;
+              }
+            });
+        }
       }
     },
     // delete employee
@@ -2038,17 +2178,17 @@ input[type="file"] {
   margin-top: 19px;
   width: 20px;
 }
-.arrow-select-arabic { 
+.arrow-select-arabic {
   position: absolute;
   right: 331px;
-  left:0px !important;
+  left: 0px !important;
   margin-top: 19px;
   width: 20px;
 }
-.arrow-select-arabic-city{
+.arrow-select-arabic-city {
   position: absolute;
   right: 655px;
-  left:0px !important;
+  left: 0px !important;
   margin-top: 19px;
   width: 20px;
 }
@@ -2127,8 +2267,8 @@ input[type="file"] {
   padding: 0.2em;
   height: 2em;
 }
-@media (max-width : 1550px){
-  .media{
+@media (max-width: 1550px) {
+  .media {
     height: 650px;
     overflow-y: auto;
   }

@@ -184,5 +184,6 @@
   "Select All":"تحديد الكل",
   "Financial":"مالي",
   "total_request":"الطلب الإجمالي",
-  "Pricing":"التسعير"
+  "Pricing":"التسعير",
+  "There is No Location":"لا يوجد عناوين"
 }

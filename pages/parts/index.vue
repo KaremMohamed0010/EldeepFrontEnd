@@ -62,7 +62,7 @@
                       class="hidden sm:inline-block sm:align-middle sm:h-screen"
                       >&#8203;</span
                     >
-                    <div
+                    <div  style="height: 626px; overflow-y: auto"
                       class="p-[30px] media inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[776px] sm:w-full"
                       role="dialog"
                       aria-modal="true"
@@ -958,7 +958,7 @@
                             class="hidden sm:inline-block sm:align-middle sm:h-screen"
                             >&#8203;</span
                           >
-                          <div
+                          <div style="height: 626px; overflow-y: auto"
                             class="p-[30px] media inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[776px] sm:w-full"
                             role="dialog"
                             aria-modal="true"

@@ -62,6 +62,7 @@
                     >
 
                     <div
+                      style="height: 766px; overflow-y: auto"
                       class="p-[30px] media inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[776px] sm:w-full"
                       role="dialog"
                       aria-modal="true"
@@ -99,14 +100,22 @@
                       >
                         <div
                           data-tabopen="Informations"
+                          :class="{
+                            'tab-style': showInformation == true,
+                            'tab-un-active': showInformation == false,
+                          }"
                           @click="show('Informations')"
-                          class="tabbtn tab-style cursor-pointer px-2 py-1 font-medium"
+                          class="tabbtn cursor-pointer px-2 py-1 font-medium"
                         >
                           {{ $t("Informations") }}
                         </div>
                         <div
                           data-tabopen="Payment"
                           @click="show('Payment')"
+                          :class="{
+                            'tab-style': showPayemnt == true,
+                            'tab-un-active': showPayemnt == false,
+                          }"
                           class="tabbtn tab-un-active cursor-pointer px-2 py-1 ml-[26px]"
                         >
                           {{ $t("Payment") }}
@@ -114,7 +123,11 @@
                         <div
                           data-tabopen="Vehicles"
                           @click="show('Vehicles')"
-                          class="tabbtn tab-un-active cursor-pointer px-2 py-1 ml-[26px]"
+                          :class="{
+                            'tab-style': showVichels == true,
+                            'tab-un-active': showVichels == false,
+                          }"
+                          class="tabbtn cursor-pointer px-2 py-1 ml-[26px]"
                         >
                           {{ $t("Vehicles") }}
                         </div>
@@ -143,59 +156,19 @@
                                   for="1"
                                   class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
                                   >{{ $t("customer_code") }}
-                                  <p class="required">*</p>
+
                                   :</label
                                 >
 
                                 <input
                                   id="1"
                                   type="text"
-                                  v-model="customer_code"
-                                  :class="{
-                                    'outline-error':
-                                      emptyField.includes('customer_code'),
-                                  }"
+                                  v-model="customer_codee"
                                   placeholder="U-001"
                                   class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
                                 />
-                                <p
-                                  v-if="emptyField.includes('customer_code')"
-                                  class="error-message"
-                                >
-                                  {{ $t("customer_code") }}
-                                  {{ $t("required") }}
-                                </p>
                               </div>
-                              <!--  registration code -->
-                              <div class="group mt-[20px]">
-                                <label
-                                  for="1"
-                                  class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                                  >{{ $t("Registration code") }}
 
-                                  :</label
-                                >
-                                <input
-                                  id="1"
-                                  type="text"
-                                  v-model="registration_code"
-                                  :class="{
-                                    'outline-error':
-                                      emptyField.includes('registration_code'),
-                                  }"
-                                  placeholder="000012"
-                                  class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
-                                />
-                                <p
-                                  v-if="
-                                    emptyField.includes('registration_code')
-                                  "
-                                  class="error-message"
-                                >
-                                  {{ $t("Registration code") }}
-                                  {{ $t("required") }}
-                                </p>
-                              </div>
                               <!-- customer name -->
                               <div class="group mt-[20px]">
                                 <label
@@ -249,6 +222,19 @@
                                 >
                                 </multiselect>
                               </div>
+
+                              <div class="group mt-[20px]">
+                                <label
+                                  for="1"
+                                  class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                  >{{ $t("National ID") }} :</label
+                                >
+                                <NationalId
+                                  @update:nationalId="updateNationalId"
+                                  :nationalId="national_id"
+                                  :isEdit="false"
+                                />
+                              </div>
                             </div>
                           </div>
                           <!-- contact -->
@@ -269,6 +255,7 @@
                                   <PhoneNumber
                                     :phoneNumber="phone"
                                     @update:phoneNumber="UpdatePhoneNumberValue"
+                                    :isEdit="false"
                                   />
                                 </div>
 
@@ -280,8 +267,9 @@
                                     >{{ $t("mobile_number") }} :</label
                                   >
                                   <MobileNumber
-                                    :phoneNumber="mobile_number"
+                                    :mobileNumber="mobile_number"
                                     @update:mobileNumber="updateMobileNumber"
+                                    :isEdit="false"
                                   />
                                 </div>
 
@@ -536,6 +524,7 @@
                             <VatNumber
                               :VatNumber="vat_number"
                               @update:VatNumber="UpdateVatNumer"
+                              :isEdit="false"
                             />
                           </div>
                           <!-- register number  -->
@@ -565,22 +554,6 @@
                             </p>
                           </div>
                           <!-- ssn number individual -->
-                          <div
-                            v-if="isCooperate == false"
-                            class="group mt-[20px]"
-                          >
-                            <div class="group mt-[20px]">
-                              <label
-                                for="1"
-                                class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                                >{{ $t("National ID") }} :</label
-                              >
-                              <NationalId
-                                @update:nationalId="updateNationalId"
-                                :nationalId="national_id"
-                              />
-                            </div>
-                          </div>
                         </div>
                       </div>
                       <!-- tabs end -->
@@ -755,13 +728,7 @@
                         {{ $t("customer_name") }}
                       </p>
                     </td>
-                    <td
-                      class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
-                    >
-                      <p class="text-gray-900 whitespace-no-wrap table-headers">
-                        {{ $t("Registration code") }}
-                      </p>
-                    </td>
+
                     <td
                       class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
                     >
@@ -816,13 +783,7 @@
                         {{ customer.customer_name }}
                       </p>
                     </td>
-                    <td
-                      class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
-                    >
-                      <p class="text-gray-900 whitespace-no-wrap">
-                        {{ customer.registration_code }}
-                      </p>
-                    </td>
+
                     <td
                       class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
                     >
@@ -937,14 +898,22 @@
                             >
                               <div
                                 data-tabopen="Informations"
+                                :class="{
+                                  'tab-style': showInformation == true,
+                                  'tab-un-active': showInformation == false,
+                                }"
                                 @click="show('Informations')"
-                                class="tabbtn tab-style cursor-pointer px-2 py-1 font-medium"
+                                class="tabbtn cursor-pointer px-2 py-1 font-medium"
                               >
                                 {{ $t("Informations") }}
                               </div>
                               <div
                                 data-tabopen="Payment"
                                 @click="show('Payment')"
+                                :class="{
+                                  'tab-style': showPayemnt == true,
+                                  'tab-un-active': showPayemnt == false,
+                                }"
                                 class="tabbtn tab-un-active cursor-pointer px-2 py-1"
                               >
                                 {{ $t("Payment") }}
@@ -952,6 +921,10 @@
                               <div
                                 data-tabopen="Vehicles"
                                 @click="show('Vehicles')"
+                                :class="{
+                                  'tab-style': showVichels == true,
+                                  'tab-un-active': showVichels == false,
+                                }"
                                 class="tabbtn tab-un-active cursor-pointer px-2 py-1"
                               >
                                 {{ $t("Vehicles") }}
@@ -981,74 +954,38 @@
                                   </h1>
                                   <div class="form-style mt-[20px] p-[30px]">
                                     <!-- customer code and registration code -->
-                                    <div class="flex">
-                                      <!-- customer code -->
-                                      <div class="group">
-                                        <label
-                                          for="1"
-                                          class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                                          >{{ $t("customer_code") }}
-                                          <p class="required">*</p>
-                                          :</label
-                                        >
-                                        <input
-                                          id="1"
-                                          type="text"
-                                          v-model="customer_code"
-                                          :class="{
-                                            'outline-error':
-                                              emptyField.includes(
-                                                'customer_code'
-                                              ),
-                                          }"
-                                          placeholder="U-001"
-                                          class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
-                                        />
-                                        <p
-                                          v-if="
-                                            emptyField.includes('customer_code')
-                                          "
-                                          class="error-message"
-                                        >
-                                          {{ $t("customer_code") }}
-                                          {{ $t("required") }}
-                                        </p>
-                                      </div>
-                                      <!-- register code -->
-                                      <div class="group ml-[20px]">
-                                        <label
-                                          for="1"
-                                          class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                                          >{{ $t("Registration code") }}
+                                    <div class="group">
+                                      <label
+                                        for="1"
+                                        class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                        >{{ $t("customer_code") }}
 
-                                          :</label
-                                        >
-                                        <input
-                                          id="1"
-                                          type="text"
-                                          v-model="registration_code"
-                                          :class="{
-                                            'outline-error':
-                                              emptyField.includes(
-                                                'registration_code'
-                                              ),
-                                          }"
-                                          placeholder="000012"
-                                          class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
-                                        />
-                                        <p
-                                          v-if="
+                                        :</label
+                                      >
+                                      <input
+                                        id="1"
+                                        type="text"
+                                        v-model="customer_code"
+                                        :class="{
+                                          'outline-error':
                                             emptyField.includes(
-                                              'registration_code'
-                                            )
-                                          "
-                                          class="error-message"
-                                        >
-                                          {{ $t("Registration code") }}
-                                          {{ $t("required") }}
-                                        </p>
-                                      </div>
+                                              'customer_code'
+                                            ),
+                                        }"
+                                        placeholder="U-001"
+                                        class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                                      />
+                                      <p
+                                        v-if="
+                                          emptyField.includes('customer_code')
+                                        "
+                                        class="error-message"
+                                      >
+                                        {{ $t("customer_code") }}
+                                        {{ $t("required") }}
+                                      </p>
                                     </div>
+
                                     <!-- customer name -->
                                     <div class="group mt-[20px]">
                                       <label
@@ -1105,6 +1042,22 @@
                                       >
                                       </multiselect>
                                     </div>
+                                    <!-- National Id -->
+
+                                    <div class="group mt-[20px]">
+                                      <div class="group mt-[20px]">
+                                        <label
+                                          for="1"
+                                          class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                          >{{ $t("National ID") }} :</label
+                                        >
+                                        <NationalId
+                                          @update:nationalId="updateNationalId"
+                                          :nationalId="national_id"
+                                          :isEdit="true"
+                                        />
+                                      </div>
+                                    </div>
                                   </div>
                                 </div>
                                 <!-- contact -->
@@ -1129,6 +1082,7 @@
                                           @update:phoneNumber="
                                             UpdatePhoneNumberValue
                                           "
+                                          :isEdit="true"
                                         />
                                       </div>
                                       <!-- Vat Number -->
@@ -1139,10 +1093,11 @@
                                           >{{ $t("mobile_number") }} :</label
                                         >
                                         <MobileNumber
-                                          :phoneNumber="mobile_number"
+                                          :mobileNumber="mobile_number"
                                           @update:mobileNumber="
                                             updateMobileNumber
                                           "
+                                          :isEdit="true"
                                         />
                                       </div>
                                       <!-- National ID -->
@@ -1394,8 +1349,15 @@
                                 <div
                                   class="flex justify-space-between mt-[30px] form-style p-[20px]"
                                 >
-                                  <h1 class="active-user">
+                                  <h1 v-if="isCooperate" class="active-user">
                                     {{ $t("Cooperate") }}
+                                  </h1>
+
+                                  <h1
+                                    v-if="isCooperate == false"
+                                    class="active-user"
+                                  >
+                                    {{ $t("Individual") }}
                                   </h1>
                                   <button
                                     class="flex ltr items-center transition ease-in-out duration-300 w-10 h-4 rounded-full focus:outline-none"
@@ -1421,6 +1383,7 @@
                                   <VatNumber
                                     :VatNumber="vat_number"
                                     @update:VatNumber="UpdateVatNumer"
+                                    :isEdit="true"
                                   />
                                 </div>
                                 <!-- register number  -->
@@ -1452,22 +1415,6 @@
                                   </p>
                                 </div>
                                 <!-- ssn number individual -->
-                                <div
-                                  v-if="isCooperate == false"
-                                  class="group mt-[20px]"
-                                >
-                                  <div class="group mt-[20px]">
-                                    <label
-                                      for="1"
-                                      class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                                      >{{ $t("National ID") }} :</label
-                                    >
-                                    <NationalId
-                                      @update:nationalId="updateNationalId"
-                                      :nationalId="national_id"
-                                    />
-                                  </div>
-                                </div>
                               </div>
                             </div>
                             <!-- tabs end -->
@@ -1651,6 +1598,7 @@
                   >&#8203;</span
                 >
                 <div
+                  style="height: 766px; overflow-y: auto"
                   class="p-[30px] media inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[776px] sm:w-full"
                   role="dialog"
                   aria-modal="true"
@@ -1661,7 +1609,6 @@
                     <button
                       type="button"
                       class="py-2 px-4 bg-white text-black rounded mr-2 flex"
-                      @click="addNewLocation('close')"
                     >
                       <img
                         class="w-[24px]"
@@ -1914,7 +1861,6 @@
                   <div class="flex mb-[30px]">
                     <div class="w-[50%]">
                       <button
-                        @click="addNewLocation('close')"
                         class="close-btn rounded-lg w-[100%] px-4 py-2 bg-gray-200 hover:bg-gray-300 duration-300"
                       >
                         {{ $t("close") }}
@@ -2033,12 +1979,14 @@ export default {
 
       // search
       search: "",
+      customer_codee: null,
     };
   },
   mounted() {
     // get all customers
+    this.customer_codee = localStorage.getItem("customer_code");
     // countries
-    this.$axios.$get("/Location/GetAllLocation?page=false").then((res) => {
+    this.$axios.$get(`/Location/GetAllLocationDropDownList`).then((res) => {
       this.locations = res.Location;
     });
     this.$axios
@@ -2048,6 +1996,7 @@ export default {
       });
     // bring All Data
     this.$axios.$get("/Customer/GetAllCustomer").then((res) => {
+      localStorage.setItem("customer_code", res.NextItem);
       this.customerTable = res.Customer.data;
       this.customer_code = res.NextItem;
       this.totalPages = res.Customer.meta.last_page;
@@ -2075,6 +2024,11 @@ export default {
         this.addLocation();
       }
     },
+    handleMultiselectChange(selectedValues) {
+      // Handle the selected values from the child component
+
+      console.log("Selected values from child component:", selectedValues);
+    },
     // show add location poopup
 
     addLocation() {
@@ -2082,11 +2036,7 @@ export default {
       document.getElementById(`addLocation`).classList.remove("hidden");
     },
     // multiSelected Locations
-    handleMultiselectChange(selectedValues) {
-      // Handle the selected values from the child component
 
-      console.log("Selected values from child component:", selectedValues);
-    },
     // update mobile number
     updateMobileNumber(updateValue) {
       this.mobile_number = updateValue;
@@ -2204,15 +2154,12 @@ export default {
 
       let formdata = new FormData();
 
-      formdata.append("vendor_id", this.vendor_id);
-      formdata.append("user_id", this.employee_id);
       formdata.append("country", this.country_name);
       formdata.append("city", this.city_name);
       formdata.append("area", this.area);
       formdata.append("street", this.street);
       formdata.append("floor", this.floor);
       formdata.append("bulding_number", this.building_number);
-      formdata.append("customer_id", null);
 
       this.$axios.$post(`/Location/AddLocation`, formdata).then((res) => {
         if (res.status == 200) {
@@ -2221,16 +2168,17 @@ export default {
           this.$toast.success("Location Added Successfully");
           // // get data again
           this.$axios
-            .$get("/Location/GetAllLocation?page=false")
+            .$get("/Location/GetAllLocationDropDownList")
             .then((res) => {
               this.locations = res.Location;
-              var lastId = this.locations.length + 6;
+              var lastId = this.locations.length + 2;
 
               console.log(lastId, "last id");
 
               var lastItem = this.locations.find(
-                (location) => location.Id == lastId
+                (location) => location.Id === lastId
               );
+              console.log(lastItem, this.locations, "last item");
               this.selectedLocations.push(lastItem);
             });
 
@@ -2259,7 +2207,6 @@ export default {
     },
     // clear data
     clearData() {
-      this.customer_code = null;
       this.customer_name = null;
       (this.registration_code = null),
         (this.mobile_number = null),
@@ -2273,6 +2220,7 @@ export default {
         (this.plate_number = null),
         (this.national_id = null),
         (this.id = "");
+      this.selectedLocations = [];
     },
     // is validate email
     validateEmail(email) {
@@ -2296,16 +2244,49 @@ export default {
           this.data = res.Customer;
           this.customer_code = res.Customer.customer_code;
           this.customer_name = res.Customer.customer_name;
-          this.mobile_number = res.Customer.other_mobile_number;
-          this.registration_code = res.Customer.registration_code;
-          this.vat_number = res.Customer.vat_number;
-          this.phone = res.Customer.mobile_number;
-          this.email = res.Customer.email;
-          this.address = res.Customer.address;
-          this.national_id = res.Customer.snn;
-          this.location = res.Cudtomer.location;
-          this.ssn_number = res.Customer.snn;
-          this.selectedLocations = res.Cudtomer.Location
+          if (res.Customer.vat_number == "null") {
+            this.vat_number = null;
+          }
+          if (res.Customer.vat_number != "null") {
+            this.vat_number = res.Customer.vat_number;
+          }
+          if (res.Customer.other_mobile_number == "null") {
+            this.phone = null;
+          }
+          if (res.Customer.other_mobile_number != "null") {
+            this.phone = res.Customer.other_mobile_number;
+          }
+          if (res.Customer.mobile_number == "null") {
+            this.mobile_number = null;
+          }
+          if (res.Customer.mobile_number != "null") {
+            this.mobile_number = res.Customer.mobile_number;
+          }
+          if (res.Customer.email == "null") {
+            this.email = null;
+          }
+          if (res.Customer.email != "null") {
+            this.email = res.Customer.email;
+          }
+          if (res.Customer.address == "null") {
+            this.address = null;
+          }
+          if (res.Customer.address != "null") {
+            this.address = res.Customer.address;
+          }
+          if (res.Customer.snn == "null") {
+            this.national_id = null;
+          }
+          if (res.Customer.snn != "null") {
+            this.national_id = res.Customer.snn;
+          }
+          if (res.Customer.vat_number == "null") {
+            this.vat_number = null;
+          }
+          if (res.Customer.vat_number != "null") {
+            this.vat_number = res.Customer.vat_number;
+          }
+          this.selectedLocations = res.Customer.Address;
           if (res.Customer.credit_limit) {
             this.disable = false;
             this.activeCreditLimit = true;
@@ -2317,9 +2298,21 @@ export default {
             this.activePayment = true;
             this.payment_term = res.Customer.payment_term;
           }
-          this.vat_number = res.Customer.vin_number;
           this.plate_number = res.Customer.plate_number;
-          this.isCooperate = res.Customer.corporate;
+          // if (res.Customer.vat_number || res.Customer.registry_number) {
+          //   this.isCooperate = true;
+          // } else {
+          //   this.isCooperate = false;
+          // }
+          if (res.Customer.corporate == "true") {
+            this.isCooperate = true;
+          }
+          else if (res.Customer.corporate == "false") {
+            this.isCooperate = false;
+          }
+          else{
+            this.isCooperate = res.Customer.corporate
+          }
         });
       }
       // Select tabs and tab buttons
@@ -2469,7 +2462,7 @@ export default {
     },
     // post and add customer
     postCustomer(status) {
-      const requiredFields = ["customer_name", "customer_code"];
+      const requiredFields = ["customer_name"];
 
       const emptyFields = requiredFields.filter(
         (field) => this[field] === "" || this[field] === null
@@ -2490,7 +2483,7 @@ export default {
           formdata.append("customer_name", this.customer_name);
           formdata.append("customer_code", this.customer_code);
           formdata.append("mobile_number", this.mobile_number);
-          formdata.append("registration_code", this.registration_code);
+          formdata.append("other_mobile_number", this.phone);
           formdata.append("credit_limit", this.credit_limit);
           formdata.append("payment_term", this.payment_term);
           if (this.active_user == true) {
@@ -2498,11 +2491,17 @@ export default {
           } else if (this.active_user == false) {
             formdata.append("is_active", 0);
           }
-          formdata.append("corporate", this.isCooperate);
+          if(this.isCooperate == true){
+          formdata.append("corporate", 1);
+          }
+          if(this.isCooperate == false){
+            formdata.append("corporate", 0);
+          }
           formdata.append("address", this.address);
           formdata.append("snn", this.national_id);
           formdata.append("vat_number", this.vat_number);
           formdata.append("registry_number", this.register_number);
+          formdata.append("email", this.email);
 
           this.selectedLocations.forEach((value, index) => {
             formdata.append(`location_id[${index}]`, value.Id);
@@ -2538,7 +2537,7 @@ export default {
     // edit customer
     editCustomer() {
       // validation messages
-      const requiredFields = ["customer_name", "customer_code"];
+      const requiredFields = ["customer_name"];
 
       const emptyFields = requiredFields.filter(
         (field) => this[field] === "" || this[field] == null
@@ -2558,16 +2557,26 @@ export default {
         formdata.append("customer_name", this.customer_name);
         formdata.append("customer_code", this.customer_code);
         formdata.append("mobile_number", this.mobile_number);
+        formdata.append("other_mobile_number", this.phone);
         formdata.append("registration_code", this.registration_code);
         formdata.append("credit_limit", this.credit_limit);
         formdata.append("payment_term", this.payment_term);
-        formdata.append("is_active", this.active_user);
-        formdata.append("corporate", this.isCooperate);
+        if (this.active_user == true) {
+          formdata.append("is_active", 1);
+        } else if (this.active_user == false) {
+          formdata.append("is_active", 0);
+        }
+            if(this.isCooperate == true){
+          formdata.append("corporate", 1);
+          }
+          if(this.isCooperate == false){
+            formdata.append("corporate", 0);
+          }
         formdata.append("address", this.address);
         formdata.append("snn", this.national_id);
         formdata.append("vat_number", this.vat_number);
         formdata.append("registry_number", this.register_number);
-
+        formdata.append("email", this.email);
         this.selectedLocations.forEach((value, index) => {
           formdata.append(`location_id[${index}]`, value.Id);
         });
@@ -2621,9 +2630,10 @@ export default {
               )
               .then((res) => {
                 this.customerTable = res.Customer.data;
-                this.totalPages = res.Customer.last_page;
-                this.perPage = res.Customer.per_page;
-                this.total = res.Customer.total;
+                this.customer_code = res.NextItem;
+                this.totalPages = res.Customer.meta.last_page;
+                this.perPage = res.Customer.meta.per_page;
+                this.total = res.Customer.meta.total;
                 this.permissions = res.permissions;
                 this.loading = false;
               });
