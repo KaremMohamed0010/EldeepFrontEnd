@@ -1771,7 +1771,7 @@
                                           for="1"
                                           class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
                                           >{{ $t("Employee Password") }}
-                                          <p class="required">*</p>
+                                        
                                           :</label
                                         >
                                         <div
@@ -3850,7 +3850,6 @@ export default {
       const requiredFields = [
         "employee_name",
         "employee_email",
-        "password",
         "employee_group",
       ];
 

@@ -206,7 +206,7 @@ export default {
   methods: {
     // // check of validation email
     validateEmail(email) {
-      if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+      if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)+$/.test(email)) {
         this.invalidEmail = false;
         this.login = false;
         return;
