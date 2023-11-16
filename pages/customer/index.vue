@@ -2286,6 +2286,10 @@ export default {
           if (res.Customer.vat_number != "null") {
             this.vat_number = res.Customer.vat_number;
           }
+          if(res.Customer.credit_limit == 'null'){
+            this.credit_limit = null;
+          }
+         
           this.selectedLocations = res.Customer.Address;
           if (res.Customer.credit_limit) {
             this.disable = false;
@@ -2299,11 +2303,7 @@ export default {
             this.payment_term = res.Customer.payment_term;
           }
           this.plate_number = res.Customer.plate_number;
-          // if (res.Customer.vat_number || res.Customer.registry_number) {
-          //   this.isCooperate = true;
-          // } else {
-          //   this.isCooperate = false;
-          // }
+          
           if (res.Customer.corporate == "true") {
             this.isCooperate = true;
           }
