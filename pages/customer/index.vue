@@ -233,12 +233,11 @@
                                   class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
                                   >{{ $t("Registration code") }} :</label
                                 >
-                                <input
-                                  id="1"
-                                  type="text"
-                                  v-model="registration_code"
-                                  placeholder="0000000000"
-                                  class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                               
+                                <NationalId
+                                  :nationalId="registration_code"
+                                  @update:nationalId="updateNationalId"
+                                  :isEdit="false"
                                 />
                               </div>
                             </div>
@@ -488,7 +487,6 @@
                             <input
                               id="1"
                               type="text"
-                              @keypress="isNumber($event)"
                               v-model="plate_number"
                               placeholder="ج ح ا ١٨٩"
                               class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
@@ -1074,13 +1072,11 @@
                                           }}
                                           :</label
                                         >
-                                        <input
-                                          id="1"
-                                          type="text"
-                                          v-model="registration_code"
-                                          placeholder="0000000000"
-                                          class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
-                                        />
+                                         <NationalId
+                                  :nationalId="registration_code"
+                                  @update:nationalId="updateNationalId"
+                                  :isEdit="true"
+                                />
                                       </div>
                                     </div>
                                   </div>
@@ -1345,7 +1341,6 @@
                                   <input
                                     id="1"
                                     type="text"
-                                    @keypress="isNumber($event)"
                                     v-model="plate_number"
                                     placeholder="ج ح ا ١٨٩"
                                     class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
@@ -2056,7 +2051,7 @@ export default {
     },
     // update National Id
     updateNationalId(updateValue) {
-      this.national_id = updateValue;
+      this.registration_code = updateValue;
     },
     UpdatePhoneNumberValue(updateValue) {
       this.phone = updateValue;
@@ -2067,12 +2062,12 @@ export default {
         .$get(`/Customer/GetAllCustomer?search=${this.search}`)
         .then((res) => {
           this.customerTable = res.Customer.data;
-      this.customer_code = res.NextItem;
-      this.totalPages = res.Customer.meta.last_page;
-      this.perPage = res.Customer.meta.per_page;
-      this.total = res.Customer.meta.total;
-      this.permissions = res.permissions;
-      this.loading = false;
+          this.customer_code = res.NextItem;
+          this.totalPages = res.Customer.meta.last_page;
+          this.perPage = res.Customer.meta.per_page;
+          this.total = res.Customer.meta.total;
+          this.permissions = res.permissions;
+          this.loading = false;
         });
     },
 
@@ -2180,7 +2175,7 @@ export default {
           this.$axios
             .$get("/Location/GetAllLocationDropDownList")
             .then((res) => {
-             this.locations = res.Location;
+              this.locations = res.Location;
               var lastItem = res.Location[res.Location.length - 1];
 
               this.selectedLocations.push(lastItem);
@@ -2242,6 +2237,8 @@ export default {
     // toggle modal open and close the modal
     toggleModal(id, status) {
       this.showInformation = true;
+      this.showPayemnt = false;
+      this.showVichels = false;
 
       this.emptyField = "";
       // show modal
@@ -2558,12 +2555,12 @@ export default {
                 )
                 .then((res) => {
                   this.customerTable = res.Customer.data;
-      this.customer_code = res.NextItem;
-      this.totalPages = res.Customer.meta.last_page;
-      this.perPage = res.Customer.meta.per_page;
-      this.total = res.Customer.meta.total;
-      this.permissions = res.permissions;
-      this.loading = false;
+                  this.customer_code = res.NextItem;
+                  this.totalPages = res.Customer.meta.last_page;
+                  this.perPage = res.Customer.meta.per_page;
+                  this.total = res.Customer.meta.total;
+                  this.permissions = res.permissions;
+                  this.loading = false;
                 });
               document.getElementById(`addCustomer`).classList.toggle("hidden");
 
@@ -2637,12 +2634,12 @@ export default {
                 )
                 .then((res) => {
                   this.customerTable = res.Customer.data;
-      this.customer_code = res.NextItem;
-      this.totalPages = res.Customer.meta.last_page;
-      this.perPage = res.Customer.meta.per_page;
-      this.total = res.Customer.meta.total;
-      this.permissions = res.permissions;
-      this.loading = false;
+                  this.customer_code = res.NextItem;
+                  this.totalPages = res.Customer.meta.last_page;
+                  this.perPage = res.Customer.meta.per_page;
+                  this.total = res.Customer.meta.total;
+                  this.permissions = res.permissions;
+                  this.loading = false;
                 });
               // document
               //   .getElementById(`modal${this.id}`)
@@ -2740,12 +2737,12 @@ export default {
       console.log(value);
       this.$axios.$get(`/Customer/GetAllCustomer?page=${value}`).then((res) => {
         this.customerTable = res.Customer.data;
-      this.customer_code = res.NextItem;
-      this.totalPages = res.Customer.meta.last_page;
-      this.perPage = res.Customer.meta.per_page;
-      this.total = res.Customer.meta.total;
-      this.permissions = res.permissions;
-      this.loading = false;
+        this.customer_code = res.NextItem;
+        this.totalPages = res.Customer.meta.last_page;
+        this.perPage = res.Customer.meta.per_page;
+        this.total = res.Customer.meta.total;
+        this.permissions = res.permissions;
+        this.loading = false;
       });
       this.$router.push({ path: "/customer", query: { page: value } });
     },

@@ -191,5 +191,6 @@
   "Select locations": "اختر عناوين",
   "select customers": "اختر عميل",
   "select vendors": "اختر مورد ",
-  "select employee": "اختر موظف "
+  "select employee": "اختر موظف ",
+  "There is No Pricing":"لا يوجد تسعير"
 }

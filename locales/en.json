@@ -177,5 +177,6 @@
   "Select locations":"Select locations",
   "select customers":"select customers",
   "select vendors":"select vendors",
-  "select employee": "select employee"
+  "select employee": "select employee",
+  "There is No Pricing":"There is No Pricing"
 }

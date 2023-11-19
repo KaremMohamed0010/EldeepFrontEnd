@@ -3394,7 +3394,7 @@ export default {
           this.employee_group = res.user.group;
           this.employee_name = res.user.name;
           this.employee_email = res.user.email;
-          this.employee_position = res.user.position;
+          // this.employee_position = res.user.position;
           if (res.user.target == "null") {
             this.target = null;
           }
@@ -3406,11 +3406,23 @@ export default {
             this.unit_of_target = null;
           }
           if (res.user.unit_of_target != "null") {
-            this.target = res.user.unit_of_target;
+            this.unit_of_target = res.user.unit_of_target;
+          }
+          if (res.user.code == "null") {
+            this.employee_code = null;
+          }
+          if (res.user.code != "null") {
+            this.employee_code = res.user.code;
           }
 
-          this.employee_code = res.user.code;
-          this.branch_id = res.user.branch_id;
+          if (res.user.branch_id != "null") {
+            this.branch_id = res.user.branch_id;
+          }
+
+          if (res.user.branch_id == "null") {
+            this.branch_id = null;
+          }
+
           if (res.user.start_date == "null") {
             this.start_date = null;
           } else if (res.user.start_date != "null") {
@@ -3754,12 +3766,14 @@ export default {
           formdata.append("name", this.employee_name);
           formdata.append("email", this.employee_email);
           formdata.append("password", this.password);
-          formdata.append("position", this.employee_position);
+          // formdata.append("position", this.employee_position);
           formdata.append("target", this.target);
           formdata.append("unit_of_target", this.unit_of_target);
 
           formdata.append("code", this.employee_code);
-          formdata.append("branch_id", this.branch_id);
+          if (this.branch_id != null) {
+            formdata.append("branch_id", this.branch_id);
+          }
           formdata.append("area", this.area);
           formdata.append("start_date", this.start_date);
           formdata.append("end_date", this.end_date);
@@ -3931,12 +3945,14 @@ export default {
         formdata.append("name", this.employee_name);
         formdata.append("email", this.employee_email);
         formdata.append("password", this.password);
-        formdata.append("position", this.employee_position);
+        // formdata.append("position", this.employee_position);
         formdata.append("target", this.target);
         formdata.append("unit_of_target", this.unit_of_target);
 
         formdata.append("code", this.employee_code);
-        formdata.append("branch_id", this.branch_id);
+        if (this.branch_id != null) {
+          formdata.append("branch_id", this.branch_id);
+        }
         formdata.append("area", this.area);
 
         if (this.start_date != null) {
@@ -4112,16 +4128,13 @@ export default {
 
             // get data again
             this.$axios
-              .$get(
-                `/Customer/GetAllCustomer?page=${this.$route.query.page || 1}`
-              )
+              .$get(`/Member/GetAllMember?page=${this.$route.query.page || 1}`)
               .then((res) => {
-                this.customerTable = res.Customer.data;
-                this.customer_code = res.NextItem;
-                this.totalPages = res.Customer.meta.last_page;
-                this.perPage = res.Customer.meta.per_page;
-                this.total = res.Customer.meta.total;
-                this.permissions = res.permissions;
+                this.employeeTable = res.Employee.data;
+                this.totalPages = res.Employee.meta.last_page;
+                this.perPage = res.Employee.meta.per_page;
+                this.total = res.Employee.meta.total;
+                this.permissions = res.permission;
                 this.loading = false;
               });
 

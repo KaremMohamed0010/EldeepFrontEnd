@@ -53,6 +53,16 @@ export default {
     };
   },
   mounted() {
+    if (this.$cookies.get("token")) {
+      if (localStorage.getItem("role") == "5") {
+        this.$router.push("/pricing");
+      }
+      if (localStorage.getItem("role") == "1" && this.$route.path == '/') {
+        this.$router.push("/dashboard");
+      }
+    } else if (!this.$cookies.get("token")) {
+      this.$router.push("/");
+    }
     setTimeout(() => {
       console.log("loading:", this.loading);
       this.loading = false;
@@ -63,52 +73,49 @@ export default {
     } else if (this.lang == "ar") {
       this.$i18n.locale = "ar";
     }
-    
-    const permission = localStorage.getItem("permissions");
-    if(permission){
-    this.permission = JSON.parse(permission);
 
+    const permission = localStorage.getItem("permissions");
+    if (permission) {
+      this.permission = JSON.parse(permission);
     }
     console.log(this.permission, "permissiion");
-    if (
-      this.permission.can_view_customer == 0 ||
-      this.$router.path == "/customer"
-    ) {
-      this.$router.push("/dashboard");
-    }
-    if (
-      this.permission.can_view_vendor == 0 ||
-      this.$router.path == "/vendors"
-    ) {
-      this.router.push("/dashboard");
-    }
-    if (
-      this.permission.can_view_employee == 0 ||
-      this.$router.path == "/employee"
-    ) {
-      this.router.push("/dashboard");
-    }
-    if (
-      this.permission.can_view_condition == 0 ||
-      this.$router.path == "/conditions"
-    ) {
-      this.$router.push("/dashboard");
-    }
-    if (
-      this.permission.can_view_location == 0 ||
-      this.$router.path == "/locations"
-    ) {
-      this.$router.push("/dashboard");
-    }
-    if (this.permission.can_view_parts == 0 || this.$router.path == "/parts") {
-      this.$router.push("/dashboard");
-    }
-  },
-  created() {
-    if (this.$cookies.get("token")) {
-      return;
-    } else if (!this.$cookies.get("token")) {
-      this.$router.push("/");
+    if (localStorage.getItem("role") == "1") {
+      if (
+        this.permission.can_view_customer == 0 ||
+        this.$router.path == "/customer"
+      ) {
+        this.$router.push("/dashboard");
+      }
+      if (
+        this.permission.can_view_vendor == 0 ||
+        this.$router.path == "/vendors"
+      ) {
+        this.router.push("/dashboard");
+      }
+      if (
+        this.permission.can_view_employee == 0 ||
+        this.$router.path == "/employee"
+      ) {
+        this.router.push("/dashboard");
+      }
+      if (
+        this.permission.can_view_condition == 0 ||
+        this.$router.path == "/conditions"
+      ) {
+        this.$router.push("/dashboard");
+      }
+      if (
+        this.permission.can_view_location == 0 ||
+        this.$router.path == "/locations"
+      ) {
+        this.$router.push("/dashboard");
+      }
+      if (
+        this.permission.can_view_parts == 0 ||
+        this.$router.path == "/parts"
+      ) {
+        this.$router.push("/dashboard");
+      }
     }
   },
 };
