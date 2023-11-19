@@ -62,7 +62,11 @@
                     >
 
                     <div
-                      style="height: 766px; overflow-y: auto"
+                      :style="{
+                        height: showInformation == true ? '766px' : 'auto',
+                        'overflow-y':
+                          showInformation == true ? 'auto' : 'visible',
+                      }"
                       class="p-[30px] media inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[776px] sm:w-full"
                       role="dialog"
                       aria-modal="true"
@@ -216,7 +220,7 @@
                                   label="Address"
                                   multiple
                                   style="border-radius: 25px"
-                                  placeholder="Select Locations"
+                                  :placeholder="$t('Select locations')"
                                   @select="handleLocationSelect"
                                   @input="handleMultiselectChange"
                                 >
@@ -227,12 +231,14 @@
                                 <label
                                   for="1"
                                   class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                                  >{{ $t("National ID") }} :</label
+                                  >{{ $t("Registration code") }} :</label
                                 >
-                                <NationalId
-                                  @update:nationalId="updateNationalId"
-                                  :nationalId="national_id"
-                                  :isEdit="false"
+                                <input
+                                  id="1"
+                                  type="text"
+                                  v-model="registration_code"
+                                  placeholder="0000000000"
+                                  class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
                                 />
                               </div>
                             </div>
@@ -787,16 +793,24 @@
                     <td
                       class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
                     >
-                      <p class="text-gray-900 whitespace-no-wrap">
+                      <p
+                        v-if="customer.credit_limit != 'null'"
+                        class="text-gray-900 whitespace-no-wrap"
+                      >
                         {{ customer.credit_limit }}
                       </p>
+                      <p v-else class="text-gray-900 whitespace-no-wrap">--</p>
                     </td>
                     <td
                       class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
                     >
-                      <p class="text-gray-900 whitespace-no-wrap">
+                      <p
+                        v-if="customer.payment_term != 'null'"
+                        class="text-gray-900 whitespace-no-wrap"
+                      >
                         {{ customer.payment_term }}
                       </p>
+                      <p v-else class="text-gray-900 whitespace-no-wrap">--</p>
                     </td>
                     <td
                       class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
@@ -860,6 +874,12 @@
                           >
 
                           <div
+                            :style="{
+                              height:
+                                showInformation == true ? '766px' : 'auto',
+                              'overflow-y':
+                                showInformation == true ? 'auto' : 'visible',
+                            }"
                             class="p-[30px] inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[776px] sm:w-full"
                             role="dialog"
                             aria-modal="true"
@@ -1036,7 +1056,7 @@
                                         label="Address"
                                         multiple
                                         style="border-radius: 25px"
-                                        placeholder="Select Locations"
+                                        :placeholder="$t('Select locations')"
                                         @select="handleLocationSelect"
                                         @input="handleMultiselectChange"
                                       >
@@ -1049,12 +1069,17 @@
                                         <label
                                           for="1"
                                           class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                                          >{{ $t("National ID") }} :</label
+                                          >{{
+                                            $t("Registration code")
+                                          }}
+                                          :</label
                                         >
-                                        <NationalId
-                                          @update:nationalId="updateNationalId"
-                                          :nationalId="national_id"
-                                          :isEdit="true"
+                                        <input
+                                          id="1"
+                                          type="text"
+                                          v-model="registration_code"
+                                          placeholder="0000000000"
+                                          class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
                                         />
                                       </div>
                                     </div>
@@ -1310,23 +1335,6 @@
                                 {{ $t("Vehicles") }} :
                               </h2>
                               <div class="form-style p-[20px] mt-[20px]">
-                                <!-- Vin Number -->
-                                <div class="group mt-[20px]">
-                                  <label
-                                    for="1"
-                                    class="block label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                                    >{{ $t("VIN number") }} :</label
-                                  >
-                                  <input
-                                    id="1"
-                                    type="text"
-                                    @keypress="isNumber($event)"
-                                    v-model="vin_number"
-                                    placeholder="5YJSA1DG9DFP14705"
-                                    class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
-                                  />
-                                </div>
-
                                 <!-- plate Number -->
                                 <div class="group mt-[20px]">
                                   <label
@@ -1598,7 +1606,6 @@
                   >&#8203;</span
                 >
                 <div
-                  style="height: 766px; overflow-y: auto"
                   class="p-[30px] media inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[776px] sm:w-full"
                   role="dialog"
                   aria-modal="true"
@@ -1607,6 +1614,7 @@
                   <!-- close btn -->
                   <div class="px-4 py-3 text-left">
                     <button
+                      @click="addNewLocation('close')"
                       type="button"
                       class="py-2 px-4 bg-white text-black rounded mr-2 flex"
                     >
@@ -1861,6 +1869,7 @@
                   <div class="flex mb-[30px]">
                     <div class="w-[50%]">
                       <button
+                        @click="addNewLocation('close')"
                         class="close-btn rounded-lg w-[100%] px-4 py-2 bg-gray-200 hover:bg-gray-300 duration-300"
                       >
                         {{ $t("close") }}
@@ -2058,11 +2067,12 @@ export default {
         .$get(`/Customer/GetAllCustomer?search=${this.search}`)
         .then((res) => {
           this.customerTable = res.Customer.data;
-          this.totalPages = res.Customer.meta.last_page;
-          this.perPage = res.Customer.meta.per_page;
-          this.total = res.Customer.meta.total;
-          this.permissions = res.permissions;
-          this.loading = false;
+      this.customer_code = res.NextItem;
+      this.totalPages = res.Customer.meta.last_page;
+      this.perPage = res.Customer.meta.per_page;
+      this.total = res.Customer.meta.total;
+      this.permissions = res.permissions;
+      this.loading = false;
         });
     },
 
@@ -2170,15 +2180,9 @@ export default {
           this.$axios
             .$get("/Location/GetAllLocationDropDownList")
             .then((res) => {
-              this.locations = res.Location;
-              var lastId = this.locations.length + 2;
+             this.locations = res.Location;
+              var lastItem = res.Location[res.Location.length - 1];
 
-              console.log(lastId, "last id");
-
-              var lastItem = this.locations.find(
-                (location) => location.Id === lastId
-              );
-              console.log(lastItem, this.locations, "last item");
               this.selectedLocations.push(lastItem);
             });
 
@@ -2224,10 +2228,12 @@ export default {
     },
     // is validate email
     validateEmail(email) {
-      if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+      if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)+$/.test(email)) {
         this.invalidEmail = false;
         return;
       } else if (this.email == "") {
+        this.invalidEmail = false;
+      } else if (this.email == null) {
         this.invalidEmail = false;
       } else {
         this.invalidEmail = true;
@@ -2235,6 +2241,8 @@ export default {
     },
     // toggle modal open and close the modal
     toggleModal(id, status) {
+      this.showInformation = true;
+
       this.emptyField = "";
       // show modal
       document.getElementById(`modal${id}`).classList.toggle("hidden");
@@ -2286,32 +2294,61 @@ export default {
           if (res.Customer.vat_number != "null") {
             this.vat_number = res.Customer.vat_number;
           }
+<<<<<<< HEAD
           if(res.Customer.credit_limit == 'null'){
             this.credit_limit = null;
           }
          
+=======
+          if (res.Customer.registry_number == "null") {
+            this.register_number = null;
+          }
+          if (res.Customer.registry_number != "null") {
+            this.register_number = res.Customer.registry_number;
+          }
+>>>>>>> 89afc7d (vendors last edit)
           this.selectedLocations = res.Customer.Address;
-          if (res.Customer.credit_limit) {
+          if (res.Customer.credit_limit != "null") {
             this.disable = false;
             this.activeCreditLimit = true;
             this.credit_limit = res.Customer.credit_limit;
           }
-          if (res.Customer.payment_term) {
+          if (res.Customer.payment_term != "null") {
             this.payment_term = res.Customer.payment_term;
             this.disabledPayment = false;
             this.activePayment = true;
             this.payment_term = res.Customer.payment_term;
           }
+<<<<<<< HEAD
           this.plate_number = res.Customer.plate_number;
           
+=======
+          if (res.Customer.plate_number == "null") {
+            this.plate_number = null;
+          }
+          if (res.Customer.plate_number != "null") {
+            this.plate_number = res.Customer.plate_number;
+          }
+
+          if (res.Customer.registration_code == "null") {
+            this.registration_code = null;
+          }
+          if (res.Customer.registration_code != "null") {
+            this.registration_code = res.Customer.registration_code;
+          }
+
+          // if (res.Customer.vat_number || res.Customer.registry_number) {
+          //   this.isCooperate = true;
+          // } else {
+          //   this.isCooperate = false;
+          // }
+>>>>>>> 89afc7d (vendors last edit)
           if (res.Customer.corporate == "true") {
             this.isCooperate = true;
-          }
-          else if (res.Customer.corporate == "false") {
+          } else if (res.Customer.corporate == "false") {
             this.isCooperate = false;
-          }
-          else{
-            this.isCooperate = res.Customer.corporate
+          } else {
+            this.isCooperate = res.Customer.corporate;
           }
         });
       }
@@ -2418,6 +2455,7 @@ export default {
     },
     // add new customer
     addNewCustomer(status) {
+      this.showInformation = true;
       document.getElementById(`addCustomer`).classList.toggle("hidden");
       // tabs
       // Select tabs and tab buttons
@@ -2491,17 +2529,19 @@ export default {
           } else if (this.active_user == false) {
             formdata.append("is_active", 0);
           }
-          if(this.isCooperate == true){
-          formdata.append("corporate", 1);
+          if (this.isCooperate == true) {
+            formdata.append("corporate", 1);
           }
-          if(this.isCooperate == false){
+          if (this.isCooperate == false) {
             formdata.append("corporate", 0);
           }
           formdata.append("address", this.address);
           formdata.append("snn", this.national_id);
           formdata.append("vat_number", this.vat_number);
           formdata.append("registry_number", this.register_number);
+          formdata.append("registration_code", this.registration_code);
           formdata.append("email", this.email);
+          formdata.append("plate_number", this.plate_number);
 
           this.selectedLocations.forEach((value, index) => {
             formdata.append(`location_id[${index}]`, value.Id);
@@ -2518,10 +2558,12 @@ export default {
                 )
                 .then((res) => {
                   this.customerTable = res.Customer.data;
-                  this.totalPages = res.Customer.meta.last_page;
-                  this.perPage = res.Customer.meta.per_page;
-                  this.total = res.Customer.meta.total;
-                  this.permissions = res.permissions;
+      this.customer_code = res.NextItem;
+      this.totalPages = res.Customer.meta.last_page;
+      this.perPage = res.Customer.meta.per_page;
+      this.total = res.Customer.meta.total;
+      this.permissions = res.permissions;
+      this.loading = false;
                 });
               document.getElementById(`addCustomer`).classList.toggle("hidden");
 
@@ -2561,17 +2603,18 @@ export default {
         formdata.append("registration_code", this.registration_code);
         formdata.append("credit_limit", this.credit_limit);
         formdata.append("payment_term", this.payment_term);
+        formdata.append("plate_number", this.plate_number);
         if (this.active_user == true) {
           formdata.append("is_active", 1);
         } else if (this.active_user == false) {
           formdata.append("is_active", 0);
         }
-            if(this.isCooperate == true){
+        if (this.isCooperate == true) {
           formdata.append("corporate", 1);
-          }
-          if(this.isCooperate == false){
-            formdata.append("corporate", 0);
-          }
+        }
+        if (this.isCooperate == false) {
+          formdata.append("corporate", 0);
+        }
         formdata.append("address", this.address);
         formdata.append("snn", this.national_id);
         formdata.append("vat_number", this.vat_number);
@@ -2594,10 +2637,12 @@ export default {
                 )
                 .then((res) => {
                   this.customerTable = res.Customer.data;
-                  this.totalPages = res.Customer.meta.last_page;
-                  this.perPage = res.Customer.meta.per_page;
-                  this.total = res.Customer.meta.total;
-                  this.permissions = res.permissions;
+      this.customer_code = res.NextItem;
+      this.totalPages = res.Customer.meta.last_page;
+      this.perPage = res.Customer.meta.per_page;
+      this.total = res.Customer.meta.total;
+      this.permissions = res.permissions;
+      this.loading = false;
                 });
               // document
               //   .getElementById(`modal${this.id}`)
@@ -2695,10 +2740,12 @@ export default {
       console.log(value);
       this.$axios.$get(`/Customer/GetAllCustomer?page=${value}`).then((res) => {
         this.customerTable = res.Customer.data;
-        this.totalPages = res.Customer.meta.last_page;
-        this.perPage = res.Customer.meta.per_page;
-        this.total = res.Customer.meta.total;
-        this.permissions = res.permissions;
+      this.customer_code = res.NextItem;
+      this.totalPages = res.Customer.meta.last_page;
+      this.perPage = res.Customer.meta.per_page;
+      this.total = res.Customer.meta.total;
+      this.permissions = res.permissions;
+      this.loading = false;
       });
       this.$router.push({ path: "/customer", query: { page: value } });
     },

@@ -4,26 +4,45 @@
       <Loading :text="'Loading'" />
     </div>
     <!-- <SecondVerticalNavBar v-if="loading == false" :type="'employee'" /> -->
-    <div v-if="loading == false" class="px-4 sm:px-8 direction-lang" :class="[
-      {
-        ltr: lang === 'en',
-        rtl: lang === 'ar',
-        container: open == 'true',
-        'w-[100%]': open == 'false',
-      },
-    ]">
+    <div
+      v-if="loading == false"
+      class="px-4 sm:px-8 direction-lang"
+      :class="[
+        {
+          ltr: lang === 'en',
+          rtl: lang === 'ar',
+          container: open == 'true',
+          'w-[100%]': open == 'false',
+        },
+      ]"
+    >
       <div class="w-[100%]">
-        <div style="padding-top: 0px" class="-mx-4 sm:-mx-8 px-4 py-4 overflow-x-auto add-margin-left remove-margin-left">
-          <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
+        <div
+          style="padding-top: 0px"
+          class="-mx-4 sm:-mx-8 px-4 py-4 overflow-x-auto add-margin-left remove-margin-left"
+        >
+          <div
+            class="inline-block min-w-full shadow-md rounded-lg overflow-hidden"
+          >
             <div class="mb-[13px] flex justify-space-between">
               <!-- add btn -->
-              <div :class="{
-                'p-[30px]': open == 'true',
-                'p-[25px]': open == 'false',
-              }" v-if="permissions.includes('can_add_location')" class="bg-filter">
-                <button @click="addNewLocation()"
-                  class="bg-blue-500 items-center flex add-new hover:bg-blue-900 text-white font-bold py-2 px-4 rounded">
-                  <img class="w-[20px]" src="../../assets/imgs/comman/PlusCircle.png" alt="" />
+              <div
+                :class="{
+                  'p-[30px]': open == 'true',
+                  'p-[25px]': open == 'false',
+                }"
+                v-if="permissions.includes('can_add_location')"
+                class="bg-filter"
+              >
+                <button
+                  @click="addNewLocation()"
+                  class="bg-blue-500 items-center flex add-new hover:bg-blue-900 text-white font-bold py-2 px-4 rounded"
+                >
+                  <img
+                    class="w-[20px]"
+                    src="../../assets/imgs/comman/PlusCircle.png"
+                    alt=""
+                  />
                   <p class="ml-[10px]">
                     {{ $t("Add new") }}
                   </p>
@@ -31,24 +50,45 @@
 
                 <!-- Add New Employee -->
 
-                <div class="fixed z-10 overflow-y-auto top-0 w-full left-0 hidden" id="addLocation">
+                <div
+                  class="fixed z-10 overflow-y-auto top-0 w-full left-0 hidden"
+                  id="addLocation"
+                >
                   <div
-                    class="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                    class="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0"
+                  >
                     <div class="fixed inset-0 transition-opacity">
                       <div class="absolute inset-0 bg-gray-900 opacity-75" />
                     </div>
-                    <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+                    <span
+                      class="hidden sm:inline-block sm:align-middle sm:h-screen"
+                      >&#8203;</span
+                    >
                     <div
                       class="p-[30px] media inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[776px] sm:w-full"
-                      role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+                      role="dialog"
+                      aria-modal="true"
+                      aria-labelledby="modal-headline"
+                    >
                       <div class="absolute w-[50%] ml-[154px] mt-[332px]">
                         <Loading v-if="loading" :text="'Saving'" />
                       </div>
                       <!-- close btn -->
-                      <div :disabled="loading" :class="{ 'cusror-disabled': loading }" class="px-4 py-3 text-left">
-                        <button type="button" class="py-2 px-4 bg-white text-black rounded mr-2 flex"
-                          @click="addNewLocation('close')">
-                          <img class="w-[24px]" src="../../assets/imgs/comman/close-square.png" alt="" />
+                      <div
+                        :disabled="loading"
+                        :class="{ 'cusror-disabled': loading }"
+                        class="px-4 py-3 text-left"
+                      >
+                        <button
+                          type="button"
+                          class="py-2 px-4 bg-white text-black rounded mr-2 flex"
+                          @click="addNewLocation('close')"
+                        >
+                          <img
+                            class="w-[24px]"
+                            src="../../assets/imgs/comman/close-square.png"
+                            alt=""
+                          />
                           <p class="ml-[12px]">
                             {{ $t("Close") }}
                           </p>
@@ -56,128 +96,234 @@
                       </div>
                       <!-- tabs start -->
 
-                      <div :disabled="loading" :class="{ 'cusror-disabled': loading }" v-if="showInformation"
-                        id="Informations" class="tab mt-1 items-center">
+                      <div
+                        :disabled="loading"
+                        :class="{ 'cusror-disabled': loading }"
+                        v-if="showInformation"
+                        id="Informations"
+                        class="tab mt-1 items-center"
+                      >
                         <div class="flex items-center justify-space-between">
                           <!-- information -->
-                          <div :class="{ 'text-right': lang == 'ar' }"
-                            class="text-lg font-bold rounded-lg w-[100%] mb-[20px]">
-                            <h1 :class="[
-                              {
-                                'text-right': lang == 'ar',
-                              },
-                            ]" class="mt-[20px] text-left">
+                          <div
+                            :class="{ 'text-right': lang == 'ar' }"
+                            class="text-lg font-bold rounded-lg w-[100%] mb-[20px]"
+                          >
+                            <h1
+                              :class="[
+                                {
+                                  'text-right': lang == 'ar',
+                                },
+                              ]"
+                              class="mt-[20px] text-left"
+                            >
                               {{ $t("Location") }} :
                             </h1>
 
-                            <div :class="{ 'text-right': lang == 'ar' }" class="form-style mt-[20px] p-[30px]">
+                            <div
+                              :class="{ 'text-right': lang == 'ar' }"
+                              class="form-style mt-[20px] p-[30px]"
+                            >
                               <!-- Choose country and Street -->
-                              <div :class="{ 'text-right': lang == 'ar' }" class="flex">
+                              <div
+                                :class="{ 'text-right': lang == 'ar' }"
+                                class="flex"
+                              >
                                 <!-- Employee name -->
                                 <div class="group w-[50%]">
-                                  <label :class="{ 'text-right': lang == 'ar' }" for="1"
-                                    class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400">{{
-                                      $t("Choose Country") }} :
+                                  <label
+                                    :class="{ 'text-right': lang == 'ar' }"
+                                    for="1"
+                                    class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                    >{{ $t("Choose Country") }} :
                                     <p class="required">*</p>
                                   </label>
                                   <div class="flex">
-                                    <select v-model="country_name"
-                                      class="appearance-none border-select w-full py-1 px-2 bg-white" name="whatever"
+                                    <select
+                                      v-model="country_name"
+                                      class="appearance-none border-select w-full py-1 px-2 bg-white"
+                                      name="whatever"
                                       :class="{
                                         'outline-error':
                                           emptyField.includes(
                                             'employee_email'
                                           ) || invalidEmail == true,
-                                      }" @change="chooseCountry" id="frm-whatever">
-                                      <option v-for="(country, i) in countries" :value="country.name" :key="i">
+                                      }"
+                                      @change="chooseCountry"
+                                      id="frm-whatever"
+                                    >
+                                      <option
+                                        v-for="(country, i) in countries"
+                                        :value="country.name"
+                                        :key="i"
+                                      >
                                         {{ country.name }}
                                       </option>
                                     </select>
 
-                                    <img :class="{
-                                      'arrow-select-arabic': lang == 'ar',
-                                    }" class="arrow-select" src="../../assets/imgs/comman/Icon.png" alt="" />
+                                    <img
+                                      :class="{
+                                        'arrow-select-arabic': lang == 'ar',
+                                      }"
+                                      class="arrow-select"
+                                      src="../../assets/imgs/comman/Icon.png"
+                                      alt=""
+                                    />
                                   </div>
-                                  <p :class="{ 'text-right': lang == 'ar' }" v-if="emptyField.includes('country_name')"
-                                    class="error-message text-left">
+                                  <p
+                                    :class="{ 'text-right': lang == 'ar' }"
+                                    v-if="emptyField.includes('country_name')"
+                                    class="error-message text-left"
+                                  >
                                     {{ $t("Choose Country") }}
                                     {{ $t("required") }}
                                   </p>
                                 </div>
                                 <!-- register code -->
-                                <div :class="{ 'mr-[20px]': lang == 'ar' }" class="group ml-[20px] w-[50%]">
-                                  <label :class="{ 'text-right': lang == 'ar' }" for="1"
-                                    class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400">{{
-                                      $t("Choose city") }} :
+                                <div
+                                  :class="{ 'mr-[20px]': lang == 'ar' }"
+                                  class="group ml-[20px] w-[50%]"
+                                >
+                                  <label
+                                    :class="{ 'text-right': lang == 'ar' }"
+                                    for="1"
+                                    class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                    >{{ $t("Choose city") }} :
                                     <p class="required">*</p>
                                   </label>
-                                  <img :class="{
-                                    'arrow-select-arabic-city': lang == 'ar',
-                                  }" style="left: 677px" class="arrow-select" src="../../assets/imgs/comman/Icon.png"
-                                    alt="" />
-                                  <select v-model="city_name"
-                                    class="appearance-none border-select w-full py-1 px-2 bg-white" name="whatever"
-                                    id="frm-whatever">
-                                    <option v-for="(city, i) in cities" :value="city" :key="i">
+                                  <img
+                                    :class="{
+                                      'arrow-select-arabic-city': lang == 'ar',
+                                    }"
+                                    style="left: 677px"
+                                    class="arrow-select"
+                                    src="../../assets/imgs/comman/Icon.png"
+                                    alt=""
+                                  />
+                                  <select
+                                    v-model="city_name"
+                                    class="appearance-none border-select w-full py-1 px-2 bg-white"
+                                    name="whatever"
+                                    id="frm-whatever"
+                                  >
+                                    <option
+                                      v-for="(city, i) in cities"
+                                      :value="city"
+                                      :key="i"
+                                    >
                                       {{ city }}
                                     </option>
                                   </select>
-                                  <p :class="{ 'text-right': lang == 'ar' }" v-if="emptyField.includes('city_name')"
-                                    class="error-message text-left">
+                                  <p
+                                    :class="{ 'text-right': lang == 'ar' }"
+                                    v-if="emptyField.includes('city_name')"
+                                    class="error-message text-left"
+                                  >
                                     {{ $t("Choose city") }}
                                     {{ $t("required") }}
                                   </p>
                                 </div>
                               </div>
                               <!-- Employee EMail and Employee Password -->
-                              <div :class="{ 'text-right': lang == 'ar' }" class="flex mt-[20px]">
+                              <div
+                                :class="{ 'text-right': lang == 'ar' }"
+                                class="flex mt-[20px]"
+                              >
                                 <!-- Employee name -->
                                 <div class="group w-[50%]">
-                                  <label :class="{ 'text-right': lang == 'ar' }" for="1"
-                                    class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400">{{
-                                      $t("Area") }} :</label>
-                                  <input id="1" type="text" v-model="area" placeholder=""
-                                    class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400" />
+                                  <label
+                                    :class="{ 'text-right': lang == 'ar' }"
+                                    for="1"
+                                    class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                    >{{ $t("Area") }} :</label
+                                  >
+                                  <input
+                                    id="1"
+                                    type="text"
+                                    v-model="area"
+                                    placeholder=""
+                                    class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                                  />
                                 </div>
                                 <!-- street name -->
-                                <div :class="{ 'mr-[20px]': lang == 'ar' }" class="group ml-[20px] w-[50%]">
-                                  <label :class="{ 'text-right': lang == 'ar' }" for="1"
-                                    class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400">{{
-                                      $t("street") }} :</label>
-                                  <input id="1" type="text" v-model="street" placeholder=""
-                                    class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400" />
+                                <div
+                                  :class="{ 'mr-[20px]': lang == 'ar' }"
+                                  class="group ml-[20px] w-[50%]"
+                                >
+                                  <label
+                                    :class="{ 'text-right': lang == 'ar' }"
+                                    for="1"
+                                    class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                    >{{ $t("street") }} :</label
+                                  >
+                                  <input
+                                    id="1"
+                                    type="text"
+                                    v-model="street"
+                                    placeholder=""
+                                    class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                                  />
                                 </div>
                               </div>
 
                               <!-- Employee Group and Employee position -->
-                              <div :class="{ 'text-right': lang == 'ar' }" class="flex mt-[20px]">
+                              <div
+                                :class="{ 'text-right': lang == 'ar' }"
+                                class="flex mt-[20px]"
+                              >
                                 <div class="group w-[50%]">
-                                  <label :class="{ 'text-right': lang == 'ar' }" for="1"
-                                    class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400">{{
-                                      $t("Building Number") }} :</label>
-                                  <input id="1" type="text" v-model="building_number" placeholder=""
-                                    class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400" />
+                                  <label
+                                    :class="{ 'text-right': lang == 'ar' }"
+                                    for="1"
+                                    class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                    >{{ $t("Building Number") }} :</label
+                                  >
+                                  <input
+                                    id="1"
+                                    type="text"
+                                    v-model="building_number"
+                                    placeholder=""
+                                    class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                                  />
                                 </div>
                                 <!-- register code -->
-                                <div :class="{ 'mr-[20px]': lang == 'ar' }" class="group ml-[20px] w-[50%]">
-                                  <label :class="{ 'text-right': lang == 'ar' }" for="1"
-                                    class="block text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400">{{
-                                      $t("Floor") }} :</label>
-                                  <input id="1" type="text" v-model="floor" placeholder="000012"
-                                    class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400" />
+                                <div
+                                  :class="{ 'mr-[20px]': lang == 'ar' }"
+                                  class="group ml-[20px] w-[50%]"
+                                >
+                                  <label
+                                    :class="{ 'text-right': lang == 'ar' }"
+                                    for="1"
+                                    class="block text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                    >{{ $t("Floor") }} :</label
+                                  >
+                                  <input
+                                    id="1"
+                                    type="text"
+                                    v-model="floor"
+                                    placeholder="000012"
+                                    class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                                  />
                                 </div>
                               </div>
                             </div>
                             <!-- Pick Location -->
                             <div class="group mt-[20px]">
-                              <label :class="{ 'text-right': lang == 'ar' }" for="1"
-                                class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400">{{
-                                  $t("Choose type") }} :
+                              <label
+                                :class="{ 'text-right': lang == 'ar' }"
+                                for="1"
+                                class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                >{{ $t("Choose type") }} :
                                 <p class="required">*</p>
                               </label>
                               <div class="flex">
-                                <select v-model="type" class="appearance-none border-select w-full py-1 px-2 bg-white"
-                                  name="whatever" @change="changeType" id="frm-whatever">
+                                <select
+                                  v-model="type"
+                                  class="appearance-none border-select w-full py-1 px-2 bg-white"
+                                  name="whatever"
+                                  @change="changeType"
+                                  id="frm-whatever"
+                                >
                                   <option value="vendor">
                                     {{ $t("Vendor") }}
                                   </option>
@@ -189,73 +335,128 @@
                                   </option>
                                 </select>
 
-                                <img :class="{ 'right-[706px]': lang == 'ar' }"
-                                  class="absolute right-[70px] w-[20px] mt-[19px]" src="../../assets/imgs/comman/Icon.png"
-                                  alt="" />
+                                <img
+                                  :class="{ 'right-[706px]': lang == 'ar' }"
+                                  class="absolute right-[70px] w-[20px] mt-[19px]"
+                                  src="../../assets/imgs/comman/Icon.png"
+                                  alt=""
+                                />
                               </div>
-                              <p v-if="chooseType == true" :class="{
-                                'text-right': lang == 'ar',
-                              }" class="error-message text-left">
+                              <p
+                                v-if="chooseType == true"
+                                :class="{
+                                  'text-right': lang == 'ar',
+                                }"
+                                class="error-message text-left"
+                              >
                                 {{ $t("Choose type") }}
                                 {{ $t("required") }}
                               </p>
                             </div>
                             <!-- vendor select -->
-                            <div v-if="type == 'vendor'" class="group mt-[20px]">
-                              <label :class="{ 'text-right': lang == 'ar' }" for="1"
-                                class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400">{{
-                                  $t("Choose vendor") }} :
+                            <div
+                              v-if="type == 'vendor'"
+                              class="group mt-[20px]"
+                            >
+                              <label
+                                :class="{ 'text-right': lang == 'ar' }"
+                                for="1"
+                                class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                >{{ $t("Choose vendor") }} :
                                 <p class="required">*</p>
                               </label>
-                              <multiselect v-model="selectedVendors" :options="vendors" track-by="vendorId"
-                                label="vendor_name" multiple style="border-radius: 25px" placeholder="Select Vendors">
+                              <multiselect
+                                v-model="selectedVendors"
+                                :options="vendors"
+                                track-by="vendorId"
+                                label="vendor_name"
+                                multiple
+                                style="border-radius: 25px"
+                               :placeholder="$t('select vendors')"
+                              >
                               </multiselect>
-                              <p :class="{ 'text-right': lang == 'ar' }" class="error-message text-left">
+                              <p
+                                :class="{ 'text-right': lang == 'ar' }"
+                                class="error-message text-left"
+                              >
                                 {{ $t("Choose vendor") }}
                                 {{ $t("required") }}
                               </p>
                             </div>
                             <!-- employee seleect -->
-                            <div v-if="type == 'customer'" class="group mt-[20px]">
-                              <label :class="{ 'text-right': lang == 'ar' }" for="1"
-                                class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400">{{
-                                  $t("Choose Customer") }} :
+                            <div
+                              v-if="type == 'customer'"
+                              class="group mt-[20px]"
+                            >
+                              <label
+                                :class="{ 'text-right': lang == 'ar' }"
+                                for="1"
+                                class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                >{{ $t("Choose Customer") }} :
                                 <p class="required">*</p>
                               </label>
 
-                              <multiselect v-model="selectedCustomers" :options="customers" track-by="id"
-                                label="customer_name" multiple style="border-radius: 25px" placeholder="Select Customers">
+                              <multiselect
+                                v-model="selectedCustomers"
+                                :options="customers"
+                                track-by="id"
+                                label="customer_name"
+                                multiple
+                                style="border-radius: 25px"
+                                :placeholder="$t('select customers')"
+                              >
                               </multiselect>
-
                             </div>
-                            <div v-if="type == 'employee'" class="group mt-[20px]">
-                              <label :class="{ 'text-right': lang == 'ar' }" for="1"
-                                class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400">{{
-                                  $t("Choose Employee") }} :
+                            <div
+                              v-if="type == 'employee'"
+                              class="group mt-[20px]"
+                            >
+                              <label
+                                :class="{ 'text-right': lang == 'ar' }"
+                                for="1"
+                                class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                >{{ $t("Choose Employee") }} :
                                 <p class="required">*</p>
                               </label>
 
-                              <multiselect v-model="selectedEmployee" :options="members" track-by="EmployeeId"
-                                label="EmployeeName" multiple style="border-radius: 25px" placeholder="Select Members">
+                              <multiselect
+                                v-model="selectedEmployee"
+                                :options="members"
+                                track-by="EmployeeId"
+                                label="EmployeeName"
+                                multiple
+                                style="border-radius: 25px"
+                                :placeholder="$t('select employee')"
+                              >
                               </multiselect>
-
                             </div>
                           </div>
                         </div>
                       </div>
 
                       <!-- tabs end -->
-                      <div :disabled="loading" :class="{ 'cusror-disabled': loading }" class="flex mb-[30px]">
+                      <div
+                        :disabled="loading"
+                        :class="{ 'cusror-disabled': loading }"
+                        class="flex mb-[30px]"
+                      >
                         <div class="w-[50%]">
-                          <button :disabled="loading" :class="{ 'cusror-disabled': loading }"
+                          <button
+                            :disabled="loading"
+                            :class="{ 'cusror-disabled': loading }"
                             @click="addNewLocation('close')"
-                            class="close-btn rounded-lg w-[100%] px-4 py-2 bg-gray-200 hover:bg-gray-300 duration-300">
+                            class="close-btn rounded-lg w-[100%] px-4 py-2 bg-gray-200 hover:bg-gray-300 duration-300"
+                          >
                             {{ $t("close") }}
                           </button>
                         </div>
                         <div class="w-[50%] ml-[6px]">
-                          <button :disabled="loading" :class="{ 'cusror-disabled': loading }" @click="postLocation('add')"
-                            class="action-btn rounded-lg w-[100%] px-4 py-2 bg-blue-500 text-blue-100 hover:bg-blue-600 duration-300">
+                          <button
+                            :disabled="loading"
+                            :class="{ 'cusror-disabled': loading }"
+                            @click="postLocation('add')"
+                            class="action-btn rounded-lg w-[100%] px-4 py-2 bg-blue-500 text-blue-100 hover:bg-blue-600 duration-300"
+                          >
                             {{ $t("Add") }}
                           </button>
                         </div>
@@ -265,38 +466,68 @@
                 </div>
               </div>
 
-              <div :class="{
-                'w-fulll': !permissions.includes('can_add_location'),
-              }" class="bg-filter w-[86%] flex">
+              <div
+                :class="{
+                  'w-fulll': !permissions.includes('can_add_location'),
+                }"
+                class="bg-filter w-[86%] flex"
+              >
                 <div class="items-center flex p-[30px]">
                   <h1 class="filter-text">{{ $t("Filter") }}</h1>
                 </div>
                 <div class="w-[50%] flex items-center">
-                  <div class="items-center justify-between flex rounded-full shadow-lg p-2 sticky w-[100%]"
-                    style="top: 5px">
+                  <div
+                    class="items-center justify-between flex rounded-full shadow-lg p-2 sticky w-[100%]"
+                    style="top: 5px"
+                  >
                     <div style="border-right: 1px solid #ebebeb">
-                      <div class="p-2 mr-1 rounded-full hover:bg-gray-100 cursor-pointer">
-                        <img class="w-[70%]" src="../../assets/imgs/verticalNav/search-status.png" alt="" />
+                      <div
+                        class="p-2 mr-1 rounded-full hover:bg-gray-100 cursor-pointer"
+                      >
+                        <img
+                          class="w-[70%]"
+                          src="../../assets/imgs/verticalNav/search-status.png"
+                          alt=""
+                        />
                       </div>
                     </div>
 
                     <input
                       class="font-bold uppercase rounded-full w-full py-4 pl-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:text-sm text-xs"
-                      type="text" v-model="search" @input="searchData" :placeholder="$t('search')" />
+                      type="text"
+                      v-model="search"
+                      @input="searchData"
+                      :placeholder="$t('search')"
+                    />
 
-                    <div :class="[{ rotate: lang == 'ar' }]" class="cursor-pointer">
-                      <img class="w-[70%]" src="../../assets/imgs/verticalNav/send.png" alt="" />
+                    <div
+                      :class="[{ rotate: lang == 'ar' }]"
+                      class="cursor-pointer"
+                    >
+                      <img
+                        class="w-[70%]"
+                        src="../../assets/imgs/verticalNav/send.png"
+                        alt=""
+                      />
                     </div>
                   </div>
                 </div>
 
                 <div class="flex items-center p-[29px]">
-                  <select class="appearance-none border-select branches w-full py-1 px-2 bg-white" name="whatever"
-                    v-model="branch_idd" id="frm-whatever">
+                  <select
+                    class="appearance-none border-select branches w-full py-1 px-2 bg-white"
+                    name="whatever"
+                    v-model="branch_idd"
+                    id="frm-whatever"
+                  >
                     <option disabled value="1">
                       {{ $t("All Branches") }}
                     </option>
-                    <option v-for="(branch, index) in allBranches" :key="index" :value="1">
+                    <option
+                      v-for="(branch, index) in allBranches"
+                      :key="index"
+                      :value="1"
+                    >
                       {{ branch.BranchName }}
                     </option>
                   </select>
@@ -304,14 +535,20 @@
 
                 <!-- all TYpes -->
 
-                <dropdown style="padding-left: 0px; padding-right: 20px" class="flex items-center pl-[0px] p-[29px]">
+                <dropdown
+                  style="padding-left: 0px; padding-right: 20px"
+                  class="flex items-center pl-[0px] p-[29px]"
+                >
                   <input id="allTypes" type="checkbox" />
                   <label for="allTypes" class="animate flex w-[180px]">
                     <p class="text-[#8897AE]">
                       {{ all_types }}
                     </p>
                   </label>
-                  <ul style="margin-top: 223px; margin-left: 24px" class="animate">
+                  <ul
+                    style="margin-top: 223px; margin-left: 24px"
+                    class="animate"
+                  >
                     <li @click="pickType('individual')" class="animate">
                       {{ $t("individual") }}
                     </li>
@@ -327,9 +564,14 @@
                   </ul>
                 </dropdown>
                 <!-- apply btn  -->
-                <div :class="{ 'mr-[20px]': lang == 'ar' }" class="grid items-center">
-                  <button @click="filter()"
-                    class="bg-blue-500 bg-[#394889] flex add-new hover:bg-blue-900 text-white font-bold py-2 px-4 rounded">
+                <div
+                  :class="{ 'mr-[20px]': lang == 'ar' }"
+                  class="grid items-center"
+                >
+                  <button
+                    @click="filter()"
+                    class="bg-blue-500 bg-[#394889] flex add-new hover:bg-blue-900 text-white font-bold py-2 px-4 rounded"
+                  >
                     <p class="">
                       {{ $t("Apply") }}
                     </p>
@@ -338,90 +580,179 @@
               </div>
             </div>
 
-            <div v-if="loading == false && locations.length > 0" class="p-[20px] bg-table">
+            <div
+              v-if="loading == false && locations.length > 0"
+              class="p-[20px] bg-table"
+            >
               <table class="min-w-full leading-normal table-style">
                 <thead>
                   <tr>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    <td
+                      class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+                    >
                       <div class="flex">
                         <div class="ml-3">
-                          <p class="text-gray-900 whitespace-no-wrap table-headers">
+                          <p
+                            class="text-gray-900 whitespace-no-wrap table-headers"
+                          >
                             {{ $t("Vendor") }}
                           </p>
                         </div>
                       </div>
                     </td>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    <td
+                      class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+                    >
                       <p class="text-gray-900 whitespace-no-wrap table-headers">
                         {{ $t("Customer") }}
                       </p>
                     </td>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    <td
+                      class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+                    >
+                      <p class="text-gray-900 whitespace-no-wrap table-headers">
+                        {{ $t("Employee") }}
+                      </p>
+                    </td>
+                    <td
+                      class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+                    >
                       <p class="text-gray-900 whitespace-no-wrap table-headers">
                         {{ $t("Location") }}
                       </p>
                     </td>
 
-                    <td v-if="permissions.includes('can_update_location')"
-                      class="px-5 py-5 border-b border-gray-200 bg-white text-sm"></td>
-                    <td v-if="permissions.includes('can_delete_location')"
-                      class="px-5 py-5 border-b border-gray-200 bg-white text-sm"></td>
+                    <td
+                      v-if="permissions.includes('can_update_location')"
+                      class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+                    ></td>
+                    <td
+                      v-if="permissions.includes('can_delete_location')"
+                      class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+                    ></td>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for="(location, index) in locations" :key="index">
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    <td
+                      class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+                    >
                       <div class="flex">
                         <div class="ml-3">
-                          <p class="text-gray-900 whitespace-no-wrap">
-                            <span v-for="vendor in location.Vendor"
-                              class="bg-blue-100 text-center text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">{{
-                                vendor.vendor_name }}</span>
+                          <p
+                            v-if="location.Vendor.length"
+                            class="text-gray-900 whitespace-no-wrap"
+                          >
+                            <span
+                              v-for="vendor in location.Vendor"
+                              class="bg-blue-100 text-center text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300"
+                              >{{ vendor.vendor_name }}</span
+                            >
+                          </p>
+                          <p v-else class="text-gray-900 whitespace-no-wrap">
+                            --
                           </p>
                         </div>
                       </div>
                     </td>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <p class="text-gray-900 whitespace-no-wrap">
-                        <span v-for="customer in location.Customer"
-                          class="bg-blue-100 text-center text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">{{
-                            customer.customer_name }}</span>
+                    <td
+                      class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+                    >
+                      <p
+                        v-if="location.Customer.length"
+                        class="text-gray-900 whitespace-no-wrap"
+                      >
+                        <span
+                          v-for="customer in location.Customer"
+                          class="bg-blue-100 text-center text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300"
+                          >{{ customer.customer_name }}</span
+                        >
                       </p>
+                      <p v-else class="text-gray-900 whitespace-no-wrap">--</p>
                     </td>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    <td
+                      class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+                    >
+                      <p
+                        v-if="location.Employee.length"
+                        class="text-gray-900 whitespace-no-wrap"
+                      >
+                        <span
+                          v-for="employee in location.Employee"
+                          class="bg-blue-100 text-center text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300"
+                          >{{ employee.name }}</span
+                        >
+                      </p>
+                      <p v-else class="text-gray-900 whitespace-no-wrap">--</p>
+                    </td>
+                    <td
+                      class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+                    >
                       <p class="text-gray-900 whitespace-no-wrap">
                         {{ location.Address }}
                       </p>
                     </td>
 
-                    <td v-if="permissions.includes('can_update_location')"
-                      class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    <td
+                      v-if="permissions.includes('can_update_location')"
+                      class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+                    >
                       <div>
-                        <button class="view-btn" @click="toggleModal(location.Id, 'open')">
-                          <img class="w-[18px] h-[18px]" src="../../assets/imgs/comman/eye.png" alt="" />
+                        <button
+                          class="view-btn"
+                          @click="toggleModal(location.Id, 'open')"
+                        >
+                          <img
+                            class="w-[18px] h-[18px]"
+                            src="../../assets/imgs/comman/eye.png"
+                            alt=""
+                          />
                           {{ $t("View") }}
                         </button>
                       </div>
                       <!-- view and edit modal -->
 
-                      <div class="fixed z-10 overflow-y-auto top-0 w-full left-0 hidden" :id="`modal` + location.Id">
+                      <div
+                        class="fixed z-10 overflow-y-auto top-0 w-full left-0 hidden"
+                        :id="`modal` + location.Id"
+                      >
                         <div
-                          class="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                          class="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0"
+                        >
                           <div class="fixed inset-0 transition-opacity">
-                            <div class="absolute inset-0 bg-gray-900 opacity-75" />
+                            <div
+                              class="absolute inset-0 bg-gray-900 opacity-75"
+                            />
                           </div>
-                          <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+                          <span
+                            class="hidden sm:inline-block sm:align-middle sm:h-screen"
+                            >&#8203;</span
+                          >
                           <div
                             class="p-[30px] media inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[776px] sm:w-full"
-                            role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+                            role="dialog"
+                            aria-modal="true"
+                            aria-labelledby="modal-headline"
+                          >
                             <div class="absolute w-[50%] ml-[154px] mt-[332px]">
                               <Loading v-if="loading" :text="'Saving'" />
                             </div>
                             <!-- close btn -->
-                            <div :disabled="loading" :class="{ 'cusror-disabled': loading }" class="px-4 py-3 text-left">
-                              <button type="button" class="py-2 px-4 bg-white text-black rounded mr-2 flex"
-                                @click="toggleModal(location.Id, 'close')">
-                                <img class="w-[24px]" src="../../assets/imgs/comman/close-square.png" alt="" />
+                            <div
+                              :disabled="loading"
+                              :class="{ 'cusror-disabled': loading }"
+                              class="px-4 py-3 text-left"
+                            >
+                              <button
+                                type="button"
+                                class="py-2 px-4 bg-white text-black rounded mr-2 flex"
+                                @click="toggleModal(location.Id, 'close')"
+                              >
+                                <img
+                                  class="w-[24px]"
+                                  src="../../assets/imgs/comman/close-square.png"
+                                  alt=""
+                                />
                                 <p class="ml-[12px]">
                                   {{ $t("Close") }}
                                 </p>
@@ -429,140 +760,250 @@
                             </div>
                             <!-- tabs start -->
 
-                            <div :disabled="loading" :class="{ 'cusror-disabled': loading }" v-if="showInformation"
-                              id="Informations" class="tab mt-1 items-center">
-                              <div class="flex items-center justify-space-between">
+                            <div
+                              :disabled="loading"
+                              :class="{ 'cusror-disabled': loading }"
+                              v-if="showInformation"
+                              id="Informations"
+                              class="tab mt-1 items-center"
+                            >
+                              <div
+                                class="flex items-center justify-space-between"
+                              >
                                 <!-- information -->
-                                <div :class="{ 'text-right': lang == 'ar' }"
-                                  class="text-lg font-bold rounded-lg w-[100%] mb-[20px]">
-                                  <h1 :class="[
-                                    {
-                                      'text-right': lang == 'ar',
-                                    },
-                                  ]" class="mt-[20px] text-left">
+                                <div
+                                  :class="{ 'text-right': lang == 'ar' }"
+                                  class="text-lg font-bold rounded-lg w-[100%] mb-[20px]"
+                                >
+                                  <h1
+                                    :class="[
+                                      {
+                                        'text-right': lang == 'ar',
+                                      },
+                                    ]"
+                                    class="mt-[20px] text-left"
+                                  >
                                     {{ $t("Location") }} :
                                   </h1>
 
-                                  <div :class="{ 'text-right': lang == 'ar' }" class="form-style mt-[20px] p-[30px]">
+                                  <div
+                                    :class="{ 'text-right': lang == 'ar' }"
+                                    class="form-style mt-[20px] p-[30px]"
+                                  >
                                     <!-- Choose country and Street -->
-                                    <div :class="{ 'text-right': lang == 'ar' }" class="flex">
+                                    <div
+                                      :class="{ 'text-right': lang == 'ar' }"
+                                      class="flex"
+                                    >
                                       <!-- Employee name -->
                                       <div class="group w-[50%]">
-                                        <label :class="{
-                                          'text-right': lang == 'ar',
-                                        }" for="1"
-                                          class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400">{{
-                                            $t("Choose Country") }} :
+                                        <label
+                                          :class="{
+                                            'text-right': lang == 'ar',
+                                          }"
+                                          for="1"
+                                          class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                          >{{ $t("Choose Country") }} :
                                           <p class="required">*</p>
                                         </label>
                                         <div class="flex">
-                                          <select v-model="country_name"
+                                          <select
+                                            v-model="country_name"
                                             class="appearance-none border-select w-full py-1 px-2 bg-white"
-                                            name="whatever" :class="{
+                                            name="whatever"
+                                            :class="{
                                               'outline-error':
                                                 emptyField.includes(
                                                   'employee_email'
                                                 ) || invalidEmail == true,
-                                            }" @change="chooseCountry" id="frm-whatever">
-                                            <option v-for="(country, i) in countries" :value="country.name" :key="i">
+                                            }"
+                                            @change="chooseCountry"
+                                            id="frm-whatever"
+                                          >
+                                            <option
+                                              v-for="(country, i) in countries"
+                                              :value="country.name"
+                                              :key="i"
+                                            >
                                               {{ country.name }}
                                             </option>
                                           </select>
 
-                                          <img class="arrow-select" src="../../assets/imgs/comman/Icon.png" alt="" />
+                                          <img
+                                            class="arrow-select"
+                                            src="../../assets/imgs/comman/Icon.png"
+                                            alt=""
+                                          />
                                         </div>
-                                        <p :class="{
-                                          'text-right': lang == 'ar',
-                                        }" v-if="emptyField.includes('country_name')
-  " class="error-message text-left">
+                                        <p
+                                          :class="{
+                                            'text-right': lang == 'ar',
+                                          }"
+                                          v-if="
+                                            emptyField.includes('country_name')
+                                          "
+                                          class="error-message text-left"
+                                        >
                                           {{ $t("Choose Country") }}
                                           {{ $t("required") }}
                                         </p>
                                       </div>
                                       <!-- register code -->
-                                      <div :class="{ 'mr-[20px]': lang == 'ar' }" class="group ml-[20px] w-[50%]">
-                                        <label :class="{
-                                          'text-right': lang == 'ar',
-                                        }" for="1"
-                                          class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400">{{
-                                            $t("Choose city") }} :
+                                      <div
+                                        :class="{ 'mr-[20px]': lang == 'ar' }"
+                                        class="group ml-[20px] w-[50%]"
+                                      >
+                                        <label
+                                          :class="{
+                                            'text-right': lang == 'ar',
+                                          }"
+                                          for="1"
+                                          class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                          >{{ $t("Choose city") }} :
                                           <p class="required">*</p>
                                         </label>
-                                        <img style="left: 677px" class="arrow-select"
-                                          src="../../assets/imgs/comman/Icon.png" alt="" />
-                                        <select v-model="city_name"
-                                          class="appearance-none border-select w-full py-1 px-2 bg-white" name="whatever"
-                                          id="frm-whatever">
-                                          <option v-for="(city, i) in cities" :value="city" :key="i">
+                                        <img
+                                          style="left: 677px"
+                                          class="arrow-select"
+                                          src="../../assets/imgs/comman/Icon.png"
+                                          alt=""
+                                        />
+                                        <select
+                                          v-model="city_name"
+                                          class="appearance-none border-select w-full py-1 px-2 bg-white"
+                                          name="whatever"
+                                          id="frm-whatever"
+                                        >
+                                          <option
+                                            v-for="(city, i) in cities"
+                                            :value="city"
+                                            :key="i"
+                                          >
                                             {{ city }}
                                           </option>
                                         </select>
-                                        <p :class="{
-                                          'text-right': lang == 'ar',
-                                        }" v-if="emptyField.includes('city_name')" class="error-message text-left">
+                                        <p
+                                          :class="{
+                                            'text-right': lang == 'ar',
+                                          }"
+                                          v-if="
+                                            emptyField.includes('city_name')
+                                          "
+                                          class="error-message text-left"
+                                        >
                                           {{ $t("Choose city") }}
                                           {{ $t("required") }}
                                         </p>
                                       </div>
                                     </div>
                                     <!-- Employee EMail and Employee Password -->
-                                    <div :class="{ 'text-right': lang == 'ar' }" class="flex mt-[20px]">
+                                    <div
+                                      :class="{ 'text-right': lang == 'ar' }"
+                                      class="flex mt-[20px]"
+                                    >
                                       <!-- Employee name -->
                                       <div class="group w-[50%]">
-                                        <label :class="{
-                                          'text-right': lang == 'ar',
-                                        }" for="1"
-                                          class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400">{{
-                                            $t("Area") }} :</label>
-                                        <input id="1" type="text" v-model="area" placeholder=""
-                                          class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400" />
+                                        <label
+                                          :class="{
+                                            'text-right': lang == 'ar',
+                                          }"
+                                          for="1"
+                                          class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                          >{{ $t("Area") }} :</label
+                                        >
+                                        <input
+                                          id="1"
+                                          type="text"
+                                          v-model="area"
+                                          placeholder=""
+                                          class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                                        />
                                       </div>
                                       <!-- street name -->
-                                      <div :class="{ 'mr-[20px]': lang == 'ar' }" class="group ml-[20px] w-[50%]">
-                                        <label :class="{
-                                          'text-right': lang == 'ar',
-                                        }" for="1"
-                                          class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400">{{
-                                            $t("street") }} :</label>
-                                        <input id="1" type="text" v-model="street" placeholder=""
-                                          class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400" />
+                                      <div
+                                        :class="{ 'mr-[20px]': lang == 'ar' }"
+                                        class="group ml-[20px] w-[50%]"
+                                      >
+                                        <label
+                                          :class="{
+                                            'text-right': lang == 'ar',
+                                          }"
+                                          for="1"
+                                          class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                          >{{ $t("street") }} :</label
+                                        >
+                                        <input
+                                          id="1"
+                                          type="text"
+                                          v-model="street"
+                                          placeholder=""
+                                          class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                                        />
                                       </div>
                                     </div>
 
                                     <!-- Employee Group and Employee position -->
-                                    <div :class="{ 'text-right': lang == 'ar' }" class="flex mt-[20px]">
+                                    <div
+                                      :class="{ 'text-right': lang == 'ar' }"
+                                      class="flex mt-[20px]"
+                                    >
                                       <div class="group w-[50%]">
-                                        <label :class="{
-                                          'text-right': lang == 'ar',
-                                        }" for="1"
-                                          class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400">{{
-                                            $t("Building Number") }} :</label>
-                                        <input id="1" type="text" v-model="building_number" placeholder=""
-                                          class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400" />
+                                        <label
+                                          :class="{
+                                            'text-right': lang == 'ar',
+                                          }"
+                                          for="1"
+                                          class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                          >{{ $t("Building Number") }} :</label
+                                        >
+                                        <input
+                                          id="1"
+                                          type="text"
+                                          v-model="building_number"
+                                          placeholder=""
+                                          class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                                        />
                                       </div>
                                       <!-- register code -->
-                                      <div :class="{ 'mr-[20px]': lang == 'ar' }" class="group ml-[20px] w-[50%]">
-                                        <label :class="{
-                                          'text-right': lang == 'ar',
-                                        }" for="1"
-                                          class="block text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400">{{
-                                            $t("Floor") }} :</label>
-                                        <input id="1" type="text" v-model="floor" placeholder="000012"
-                                          class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400" />
+                                      <div
+                                        :class="{ 'mr-[20px]': lang == 'ar' }"
+                                        class="group ml-[20px] w-[50%]"
+                                      >
+                                        <label
+                                          :class="{
+                                            'text-right': lang == 'ar',
+                                          }"
+                                          for="1"
+                                          class="block text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                          >{{ $t("Floor") }} :</label
+                                        >
+                                        <input
+                                          id="1"
+                                          type="text"
+                                          v-model="floor"
+                                          placeholder="000012"
+                                          class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                                        />
                                       </div>
                                     </div>
                                   </div>
                                   <!-- Pick Location -->
                                   <div class="group mt-[20px]">
-                                    <label :class="{ 'text-right': lang == 'ar' }" for="1"
-                                      class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400">{{
-                                        $t("Choose type") }} :
+                                    <label
+                                      :class="{ 'text-right': lang == 'ar' }"
+                                      for="1"
+                                      class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                      >{{ $t("Choose type") }} :
                                       <p class="required">*</p>
                                     </label>
                                     <div class="flex">
-                                      <select v-model="type"
-                                        class="appearance-none border-select w-full py-1 px-2 bg-white" name="whatever"
-                                        @change="changeType" id="frm-whatever">
+                                      <select
+                                        v-model="type"
+                                        class="appearance-none border-select w-full py-1 px-2 bg-white"
+                                        name="whatever"
+                                        @change="changeType"
+                                        id="frm-whatever"
+                                      >
                                         <option value="vendor">
                                           {{ $t("Vendor") }}
                                         </option>
@@ -574,77 +1015,124 @@
                                         </option>
                                       </select>
 
-                                      <img :class="{
-                                        'right-[706px]': lang == 'ar',
-                                      }" class="absolute right-[70px] w-[20px] mt-[19px]"
-                                        src="../../assets/imgs/comman/Icon.png" alt="" />
+                                      <img
+                                        :class="{
+                                          'right-[706px]': lang == 'ar',
+                                        }"
+                                        class="absolute right-[70px] w-[20px] mt-[19px]"
+                                        src="../../assets/imgs/comman/Icon.png"
+                                        alt=""
+                                      />
                                     </div>
-                                    <p :class="{
-                                      'text-right': lang == 'ar',
-                                    }" v-if="chooseType" class="error-message text-left">
+                                    <p
+                                      :class="{
+                                        'text-right': lang == 'ar',
+                                      }"
+                                      v-if="chooseType"
+                                      class="error-message text-left"
+                                    >
                                       {{ $t("Choose type") }}
                                       {{ $t("required") }}
                                     </p>
                                   </div>
                                   <!-- vendor select -->
-                                  <div v-if="type == 'vendor'" class="group mt-[20px]">
-                                    <label :class="{ 'text-right': lang == 'ar' }" for="1"
-                                      class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400">{{
-                                        $t("Choose vendor") }} :
+                                  <div
+                                    v-if="type == 'vendor'"
+                                    class="group mt-[20px]"
+                                  >
+                                    <label
+                                      :class="{ 'text-right': lang == 'ar' }"
+                                      for="1"
+                                      class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                      >{{ $t("Choose vendor") }} :
                                       <p class="required">*</p>
                                     </label>
-                                    >
-                                    <multiselect v-model="selectedVendors" :options="vendors" track-by="vendorId"
-                                      label="vendor_name" multiple style="border-radius: 25px"
-                                      placeholder="Select Vendors">
-                                    </multiselect>
 
+                                    <multiselect
+                                      v-model="selectedVendors"
+                                      :options="vendors"
+                                      track-by="vendorId"
+                                      label="vendor_name"
+                                      multiple
+                                      style="border-radius: 25px"
+                                      :placeholder="$t('select vendors')"
+                                    >
+                                    </multiselect>
                                   </div>
                                   <!-- employee seleect -->
-                                  <div v-if="type == 'customer'" class="group mt-[20px]">
-                                    <label :class="{ 'text-right': lang == 'ar' }" for="1"
-                                      class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400">{{
-                                        $t("Choose Customer") }} :
+                                  <div
+                                    v-if="type == 'customer'"
+                                    class="group mt-[20px]"
+                                  >
+                                    <label
+                                      :class="{ 'text-right': lang == 'ar' }"
+                                      for="1"
+                                      class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                      >{{ $t("Choose Customer") }} :
                                       <p class="required">*</p>
                                     </label>
-                                    <multiselect v-model="selectedCustomers" :options="customers" track-by="id"
-                                      label="customer_name" multiple style="border-radius: 25px"
-                                      placeholder="Select Customers">
+                                    <multiselect
+                                      v-model="selectedCustomers"
+                                      :options="customers"
+                                      track-by="id"
+                                      label="customer_name"
+                                      multiple
+                                      style="border-radius: 25px"
+                                      :placeholder="$t('select customers')"
+                                    >
                                     </multiselect>
-
-
                                   </div>
                                   <!-- employeee -->
-                                  <div v-if="type == 'employee'" class="group mt-[20px]">
-                                    <label :class="{ 'text-right': lang == 'ar' }" for="1"
-                                      class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400">{{
-                                        $t("Choose Employee") }} :
+                                  <div
+                                    v-if="type == 'employee'"
+                                    class="group mt-[20px]"
+                                  >
+                                    <label
+                                      :class="{ 'text-right': lang == 'ar' }"
+                                      for="1"
+                                      class="block flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                      >{{ $t("Choose Employee") }} :
                                       <p class="required">*</p>
                                     </label>
 
-                                    <multiselect v-model="selectedEmployee" :options="members" track-by="EmployeeId"
-                                      label="EmployeeName" multiple style="border-radius: 25px"
-                                      placeholder="Select Members">
+                                    <multiselect
+                                      v-model="selectedEmployee"
+                                      :options="members"
+                                      track-by="EmployeeId"
+                                      label="name"
+                                      multiple
+                                      style="border-radius: 25px"
+                                      :placeholder="$t('select employee')"
+                                    >
                                     </multiselect>
-
                                   </div>
                                 </div>
                               </div>
                             </div>
 
                             <!-- tabs end -->
-                            <div :disabled="loading" :class="{ 'cusror-disabled': loading }" class="flex mb-[30px]">
+                            <div
+                              :disabled="loading"
+                              :class="{ 'cusror-disabled': loading }"
+                              class="flex mb-[30px]"
+                            >
                               <div class="w-[50%]">
-                                <button :disabled="loading" :class="{ 'cusror-disabled': loading }"
+                                <button
+                                  :disabled="loading"
+                                  :class="{ 'cusror-disabled': loading }"
                                   @click="toggleModal(location.Id, 'close')"
-                                  class="close-btn rounded-lg w-[100%] px-4 py-2 bg-gray-200 hover:bg-gray-300 duration-300">
+                                  class="close-btn rounded-lg w-[100%] px-4 py-2 bg-gray-200 hover:bg-gray-300 duration-300"
+                                >
                                   {{ $t("close") }}
                                 </button>
                               </div>
                               <div class="w-[50%] ml-[6px]">
-                                <button :disabled="loading" :class="{ 'cusror-disabled': loading }"
+                                <button
+                                  :disabled="loading"
+                                  :class="{ 'cusror-disabled': loading }"
                                   @click="editLocation()"
-                                  class="action-btn rounded-lg w-[100%] px-4 py-2 bg-blue-500 text-blue-100 hover:bg-blue-600 duration-300">
+                                  class="action-btn rounded-lg w-[100%] px-4 py-2 bg-blue-500 text-blue-100 hover:bg-blue-600 duration-300"
+                                >
                                   {{ $t("Edit") }}
                                 </button>
                               </div>
@@ -653,58 +1141,103 @@
                         </div>
                       </div>
                     </td>
-                    <td v-if="permissions.includes('can_delete_location')"
-                      class="px-5 py-5 border-b border-gray-200 bg-white text-sm cursor-pointer">
-                      <div @click="deleteLocation(location.Id, 'open')" class="w-[20px]">
-                        <img clas="w-[20px]" src="../../assets/imgs/comman/delete-removebg-preview.png" alt="" />
+                    <td
+                      v-if="permissions.includes('can_delete_location')"
+                      class="px-5 py-5 border-b border-gray-200 bg-white text-sm cursor-pointer"
+                    >
+                      <div
+                        @click="deleteLocation(location.Id, 'open')"
+                        class="w-[20px]"
+                      >
+                        <img
+                          clas="w-[20px]"
+                          src="../../assets/imgs/comman/delete-removebg-preview.png"
+                          alt=""
+                        />
                       </div>
                       <!-- are you sure delete modal  -->
-                      <div class="fixed z-10 overflow-y-auto top-0 w-full left-0 hidden"
-                        :id="`Deletemodal${location.Id}`">
+                      <div
+                        class="fixed z-10 overflow-y-auto top-0 w-full left-0 hidden"
+                        :id="`Deletemodal${location.Id}`"
+                      >
                         <div
-                          class="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                          class="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0"
+                        >
                           <div class="fixed inset-0 transition-opacity">
-                            <div class="absolute inset-0 bg-gray-900 opacity-75" />
+                            <div
+                              class="absolute inset-0 bg-gray-900 opacity-75"
+                            />
                           </div>
-                          <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+                          <span
+                            class="hidden sm:inline-block sm:align-middle sm:h-screen"
+                            >&#8203;</span
+                          >
                           <div
                             class="p-[30px] inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[785px] sm:w-full"
-                            role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+                            role="dialog"
+                            aria-modal="true"
+                            aria-labelledby="modal-headline"
+                          >
                             <!-- loading component -->
                             <div class="absolute w-[50%] ml-[154px] mt-[332px]">
                               <Loading v-if="loading" :text="'Saving'" />
                             </div>
                             <!-- close btn -->
-                            <div :disabled="loading" :class="{ 'cusror-disabled': loading }" class="px-4 py-3 text-left">
-                              <button type="button" class="py-2 px-4 bg-white text-black rounded mr-2 flex"
-                                @click="deleteLocation(location.Id, 'close')">
-                                <img class="w-[24px]" src="../../assets/imgs/comman/close-square.png" alt="" />
+                            <div
+                              :disabled="loading"
+                              :class="{ 'cusror-disabled': loading }"
+                              class="px-4 py-3 text-left"
+                            >
+                              <button
+                                type="button"
+                                class="py-2 px-4 bg-white text-black rounded mr-2 flex"
+                                @click="deleteLocation(location.Id, 'close')"
+                              >
+                                <img
+                                  class="w-[24px]"
+                                  src="../../assets/imgs/comman/close-square.png"
+                                  alt=""
+                                />
                                 <p class="ml-[12px]">
                                   {{ $t("Close") }}
                                 </p>
                               </button>
                             </div>
-                            <div class="px-4 py-3 text-left flex justify-center">
+                            <div
+                              class="px-4 py-3 text-left flex justify-center"
+                            >
                               <h1 class="flex are-you-sure-delete-text">
                                 {{ $t("Are You Sure You want to Delete ?") }}
                                 {{ location.Address }}
-                                <img class="w-[20px] ml-[15px]" src="../../assets/imgs/comman/delete-removebg-preview.png"
-                                  alt="" />
+                                <img
+                                  class="w-[20px] ml-[15px]"
+                                  src="../../assets/imgs/comman/delete-removebg-preview.png"
+                                  alt=""
+                                />
                               </h1>
                             </div>
                             <!-- tabs end -->
-                            <div :class="{ 'cusror-disabled': loading }" class="flex mt-[60px]">
+                            <div
+                              :class="{ 'cusror-disabled': loading }"
+                              class="flex mt-[60px]"
+                            >
                               <div class="w-[50%]">
-                                <button :disabled="loading" :class="{ 'cusror-disabled': loading }"
+                                <button
+                                  :disabled="loading"
+                                  :class="{ 'cusror-disabled': loading }"
                                   @click="deleteLocation(location.Id, 'close')"
-                                  class="close-btn rounded-lg w-[100%] px-4 py-2 bg-gray-200 hover:bg-gray-300 duration-300">
+                                  class="close-btn rounded-lg w-[100%] px-4 py-2 bg-gray-200 hover:bg-gray-300 duration-300"
+                                >
                                   {{ $t("close") }}
                                 </button>
                               </div>
                               <div class="w-[50%] ml-[6px]">
-                                <button :disabled="loading" :class="{ 'cusror-disabled': loading }"
+                                <button
+                                  :disabled="loading"
+                                  :class="{ 'cusror-disabled': loading }"
                                   @click="deleteLocation(location.Id, 'delete')"
-                                  class="delete-btn rounded-lg w-[100%] px-4 py-2 bg-red-500 text-blue-100 hover:bg-red-600 duration-300">
+                                  class="delete-btn rounded-lg w-[100%] px-4 py-2 bg-red-500 text-blue-100 hover:bg-red-600 duration-300"
+                                >
                                   {{ $t("Delete") }}
                                 </button>
                               </div>
@@ -717,15 +1250,27 @@
                 </tbody>
               </table>
               <div class="mt-[20px]">
-                <pagination :total-pages="totalPages" :total="total" v-model="currentPage" :per-page="perPage"
-                  :current-page="currentPage" :has-more-pages="hasMorePages" @pagechanged="showMore">
+                <pagination
+                  :total-pages="totalPages"
+                  :total="total"
+                  v-model="currentPage"
+                  :per-page="perPage"
+                  :current-page="currentPage"
+                  :has-more-pages="hasMorePages"
+                  @pagechanged="showMore"
+                >
                 </pagination>
               </div>
             </div>
-            <div v-else-if="loading == false && locations.length == 0" class="w-[100%]">
+            <div
+              v-else-if="loading == false && locations.length == 0"
+              class="w-[100%]"
+            >
               <div class="flex justify-center mt-[135px]">
-                <img src="../../assets/imgs/comman/no-data-empty-data-concept-vector-41830412-removebg-preview.png"
-                  alt="" />
+                <img
+                  src="../../assets/imgs/comman/no-data-empty-data-concept-vector-41830412-removebg-preview.png"
+                  alt=""
+                />
               </div>
               <h1 class="text-center no-data">
                 {{ $t("There is No Location") }}
@@ -744,7 +1289,7 @@ import "vue-multiselect/dist/vue-multiselect.min.css";
 
 export default {
   components: {
-    Multiselect
+    Multiselect,
   },
   data() {
     return {
@@ -806,11 +1351,9 @@ export default {
       customers: [],
       chooseType: false,
 
-
       selectedVendors: [],
       selectedCustomers: [],
       selectedEmployee: [],
-      
     };
   },
   mounted() {
@@ -888,11 +1431,11 @@ export default {
       console.log(event);
       if (event.target.value == "vendor") {
         this.customer_id = null;
-        this.employee_id = null
+        this.employee_id = null;
       }
       if (event.target.value == "customer") {
         this.vendor_id = null;
-        this.employee_id = null
+        this.employee_id = null;
       }
       if (event.target.value == "employee") {
         this.vendor_id = null;
@@ -934,9 +1477,7 @@ export default {
     },
     // is validate employee_email
     validateEmail(employee_email) {
-      if (
-        /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(employee_email)
-      ) {
+      if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)+$/.test(employee_email)) {
         this.invalidEmail = false;
         return;
       } else if (this.employee_email == "") {
@@ -968,32 +1509,6 @@ export default {
         this.$axios.$get(`/Location/GetLocationById/${id}`).then((res) => {
           this.city_name = res.Location.City;
 
-          
-          if(res.Location.Vendor.length){
-            this.type = 'vendor'
-            this.selectedVendor = res.Location.Vendor;
-          }
-          if(res.Location.Customer.length){
-            this.type = 'customer'
-            this.selectedCustomer = res.Location.Customer;
-          }
-          if(res.Location.Employee.length){
-            this.type = 'employee'
-            this.selectedEmployee = res.Location.Employee;
-          }
-          
-
-          this.country_name = res.Location.Country;
-          if (res.Location.Vendor_Id != 0) {
-            this.type = "vendor";
-            this.vendor_id = res.Location.Vendor_Id;
-          }
-          if (res.Location.Employee_Id != 0) {
-            this.type = "employee";
-            this.employee_id = res.Location.Employee_Id;
-          }
-
-          this.employee_id = res.Location.Employee_Id;
           if (res.Location.Street == "null") {
             this.street = null;
           }
@@ -1006,8 +1521,6 @@ export default {
           if (res.Location.Floor == "null") {
             this.floor = null;
           }
-         
-
 
           let data = {
             country: res.Location.Country,
@@ -1017,6 +1530,20 @@ export default {
             .then((res) => {
               this.cities = res.data;
             });
+          this.selectedVendors = res.Location.Vendor;
+          this.selectedCustomer = res.Location.Customer;
+          this.selectedEmployee = res.Location.Employee;
+          this.country_name = res.Location.Country;
+
+          if (this.selectedVendors.length) {
+            this.type = "vendor";
+          }
+          if (this.selectedCustomer.length) {
+            this.type = "customer";
+          }
+          if (this.selectedEmployee.length) {
+            this.type = "employee";
+          }
         });
       }
 
@@ -1169,7 +1696,6 @@ export default {
           this.loading = true;
           let formdata = new FormData();
 
-
           formdata.append("country", this.country_name);
           formdata.append("city", this.city_name);
           formdata.append("area", this.area);
@@ -1177,18 +1703,18 @@ export default {
           formdata.append("floor", this.floor);
           formdata.append("bulding_number", this.building_number);
 
-          if (this.type == 'customer') {
+          if (this.type == "customer") {
             this.selectedCustomers.forEach((value, index) => {
               formdata.append(`customer_id[${index}]`, value.id);
             });
           }
-          if (this.type == 'vendor') {
+          if (this.type == "vendor") {
             this.selectedVendors.forEach((value, index) => {
               formdata.append(`vendor_id[${index}]`, value.vendorId);
             });
           }
 
-          if (this.type == 'employee') {
+          if (this.type == "employee") {
             this.selectedEmployee.forEach((value, index) => {
               formdata.append(`user_id[${index}]`, value.EmployeeId);
             });
@@ -1208,16 +1734,13 @@ export default {
                 this.loading = false;
               });
 
-              document
-                .getElementById(`addLocation`)
-                .classList.toggle("hidden");
+              document.getElementById(`addLocation`).classList.toggle("hidden");
               this.addNewLocation();
             } else {
               this.$toast.error(res.message);
               this.loading = false;
             }
           });
-
         }
       }
     },
@@ -1237,64 +1760,61 @@ export default {
       } else if (this.invalidEmail == true) {
         return;
       } else {
-          this.loading = true;
-          let formdata = new FormData();
+        this.loading = true;
+        let formdata = new FormData();
 
-          formdata.append("country", this.country_name);
-          formdata.append("city", this.city_name);
-          formdata.append("area", this.area);
-          formdata.append("street", this.street);
-          formdata.append("floor", this.floor);
-          formdata.append("bulding_number", this.building_number);
+        formdata.append("country", this.country_name);
+        formdata.append("city", this.city_name);
+        formdata.append("area", this.area);
+        formdata.append("street", this.street);
+        formdata.append("floor", this.floor);
+        formdata.append("bulding_number", this.building_number);
 
+        if (this.type == "customer") {
+          this.selectedCustomers.forEach((value, index) => {
+            formdata.append(`customer_id[${index}]`, value.id);
+          });
+        }
+        if (this.type == "vendor") {
+          this.selectedVendors.forEach((value, index) => {
+            formdata.append(`vendor_id[${index}]`, value.vendorId);
+          });
+        }
 
-          if (this.type == 'customer') {
-            this.selectedCustomers.forEach((value, index) => {
-              formdata.append(`customer_id[${index}]`, value.id);
-            });
-          }
-          if (this.type == 'vendor') {
-            this.selectedVendors.forEach((value, index) => {
-              formdata.append(`vendor_id[${index}]`, value.vendorId);
-            });
-          }
+        if (this.type == "employee") {
+          this.selectedEmployee.forEach((value, index) => {
+            formdata.append(`user_id[${index}]`, value.EmployeeId);
+          });
+        }
 
-          if (this.type == 'employee') {
-            this.selectedEmployee.forEach((value, index) => {
-              formdata.append(`user_id[${index}]`, value.EmployeeId);
-            });
-          }
-
-          this.$axios
-            .$post(`/Location/EditLocation/${this.id}`, formdata)
-            .then((res) => {
-              if (res.status == 200) {
-                this.loading = false;
-                this.$toast.success("Location Edit Successfully");
-                // get data again
-                this.$axios
-                  .$get(
-                    `/Location/GetAllLocation?page=${this.$route.query.page || 1
-                    }`
-                  )
-                  .then((res) => {
-                    this.locations = res.Location.data;
-                    this.totalPages = res.Location.meta.last_page;
-                    this.perPage = res.Location.meta.per_page;
-                    this.total = res.Location.meta.total;
-                    this.permissions = res.permissions;
-                    this.loading = false;
-                  });
-                document
-                  .getElementById(`modal${this.id}`)
-                  .classList.toggle("hidden");
-                this.addNewLocation();
-              } else {
-                this.$toast.error("Sorry , There is an Error");
-                this.loading = false;
-              }
-            });
-      
+        this.$axios
+          .$post(`/Location/EditLocation/${this.id}`, formdata)
+          .then((res) => {
+            if (res.status == 200) {
+              this.loading = false;
+              this.$toast.success("Location Edit Successfully");
+              // get data again
+              this.$axios
+                .$get(
+                  `/Location/GetAllLocation?page=${this.$route.query.page || 1}`
+                )
+                .then((res) => {
+                  this.locations = res.Location.data;
+                  this.totalPages = res.Location.meta.last_page;
+                  this.perPage = res.Location.meta.per_page;
+                  this.total = res.Location.meta.total;
+                  this.permissions = res.permissions;
+                  this.loading = false;
+                });
+              document
+                .getElementById(`modal${this.id}`)
+                .classList.toggle("hidden");
+              this.addNewLocation();
+            } else {
+              this.$toast.error("Sorry , There is an Error");
+              this.loading = false;
+            }
+          });
       }
     },
     // delete employee
@@ -1315,7 +1835,8 @@ export default {
             if (this.locations.length == 1) {
               this.$axios
                 .$get(
-                  `/Location/GetAllLocation?page=${this.$route.query.page - 1 || 1
+                  `/Location/GetAllLocation?page=${
+                    this.$route.query.page - 1 || 1
                   }`
                 )
                 .then((res) => {
@@ -1511,7 +2032,7 @@ dropdown input {
   display: none;
 }
 
-dropdown input~ul {
+dropdown input ~ ul {
   position: absolute;
   visibility: hidden;
   opacity: 0;
@@ -1519,12 +2040,12 @@ dropdown input~ul {
   z-index: 1;
 }
 
-dropdown input:checked+label {
+dropdown input:checked + label {
   background: #ffffff;
   color: #000000;
 }
 
-dropdown input:checked~ul {
+dropdown input:checked ~ ul {
   visibility: visible;
   opacity: 1;
   top: 0;

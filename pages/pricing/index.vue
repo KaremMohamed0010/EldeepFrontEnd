@@ -801,7 +801,7 @@ export default {
     // is validate employee_email
     validateEmail(employee_email) {
       if (
-        /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(employee_email)
+        /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)+$/.test(employee_email)
       ) {
         this.invalidEmail = false;
         return;

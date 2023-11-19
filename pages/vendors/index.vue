@@ -61,7 +61,11 @@
                       >&#8203;</span
                     >
                     <div
-                      style="height: 756px; overflow-y: auto"
+                      :style="{
+                        height: showInformation == true ? '766px' : 'auto',
+                        'overflow-y':
+                          showInformation == true ? 'auto' : 'visible',
+                      }"
                       class="p-[30px] media inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[776px] sm:w-full"
                       role="dialog"
                       aria-modal="true"
@@ -228,7 +232,7 @@
                                   :isEdit="false"
                                 />
                               </div>
-                             
+
                               <!-- SSN number  -->
                               <div class="group mt-[20px]"></div>
                               <!-- Models number  -->
@@ -276,7 +280,7 @@
                                     >{{ $t("Phone") }} :</label
                                   >
                                   <PhoneNumber
-                                    :phoneNumber="phone"
+                                    :phoneNumber="mobile_number"
                                     @update:phoneNumber="UpdatePhoneNumberValue"
                                     :isEdit="false"
                                   />
@@ -290,7 +294,7 @@
                                     >{{ $t("mobile_number") }} :</label
                                   >
                                   <MobileNumber
-                                    :phoneNumber="mobile_number"
+                                    :mobileNumber="other_mobile_number"
                                     @update:mobileNumber="updateMobileNumber"
                                     :isEdit="false"
                                   />
@@ -347,7 +351,7 @@
                                     label="Address"
                                     multiple
                                     style="border-radius: 25px"
-                                    placeholder="Select Locations"
+                                    :placeholder="$t('Select locations')"
                                     @select="handleLocationSelect"
                                     @input="handleMultiselectChange"
                                   >
@@ -710,8 +714,14 @@
                     >
                       <div class="flex">
                         <div class="ml-3">
-                          <p class="text-gray-900 whitespace-no-wrap">
+                          <p
+                            v-if="vendor.vendor_code != 'null'"
+                            class="text-gray-900 whitespace-no-wrap"
+                          >
                             {{ vendor.vendor_code }}
+                          </p>
+                          <p v-else class="text-gray-900 whitespace-no-wrap">
+                            --
                           </p>
                         </div>
                       </div>
@@ -726,23 +736,35 @@
                     <td
                       class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
                     >
-                      <p class="text-gray-900 whitespace-no-wrap">
+                      <p
+                        v-if="vendor.registration_code != 'null'"
+                        class="text-gray-900 whitespace-no-wrap"
+                      >
                         {{ vendor.registration_code }}
                       </p>
+                      <p v-else class="text-gray-900 whitespace-no-wrap">--</p>
                     </td>
                     <td
                       class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
                     >
-                      <p class="text-gray-900 whitespace-no-wrap">
+                      <p
+                        v-if="vendor.credit_limit != 'null'"
+                        class="text-gray-900 whitespace-no-wrap"
+                      >
                         {{ vendor.credit_limit }}
                       </p>
+                      <p v-else class="text-gray-900 whitespace-no-wrap">--</p>
                     </td>
                     <td
                       class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
                     >
-                      <p class="text-gray-900 whitespace-no-wrap">
+                      <p
+                        v-if="vendor.payment_term != 'null'"
+                        class="text-gray-900 whitespace-no-wrap"
+                      >
                         {{ vendor.payment_term }}
                       </p>
+                      <p v-else class="text-gray-900 whitespace-no-wrap">--</p>
                     </td>
                     <td
                       class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
@@ -780,7 +802,12 @@
                           >
 
                           <div
-                            style="height: 756px; overflow-y: auto"
+                            :style="{
+                              height:
+                                showInformation == true ? '766px' : 'auto',
+                              'overflow-y':
+                                showInformation == true ? 'auto' : 'visible',
+                            }"
                             class="p-[30px] media inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[776px] sm:w-full"
                             role="dialog"
                             aria-modal="true"
@@ -863,58 +890,56 @@
                                   </h1>
                                   <div class="form-style mt-[20px] p-[30px]">
                                     <!-- customer code and registration code -->
-                                    <div class="flex">
-                                      <!-- customer code -->
-                                      <div class="group">
-                                        <label
-                                          for="1"
-                                          class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                                          >{{ $t("Vendor code") }}
+                                    <div class="group">
+                                      <label
+                                        for="1"
+                                        class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                        >{{ $t("Vendor code") }}
 
-                                          :</label
-                                        >
-                                        <input
-                                          v-model="vendor_codee"
-                                          id="1"
-                                          type="text"
-                                          placeholder="U-001"
-                                          class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
-                                        />
-                                      </div>
-                                      <!-- register code -->
-                                      <div class="group ml-[20px]">
-                                        <label
-                                          for="1"
-                                          class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                                          >{{ $t("Registration code") }}
+                                        :</label
+                                      >
+                                      <input
+                                        v-model="vendor_codee"
+                                        id="1"
+                                        type="text"
+                                        placeholder="U-001"
+                                        class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                                      />
+                                    </div>
 
-                                          :</label
-                                        >
-                                        <input
-                                          id="1"
-                                          type="text"
-                                          v-model="registration_code"
-                                          :class="{
-                                            'outline-error':
-                                              emptyField.includes(
-                                                'registration_code'
-                                              ),
-                                          }"
-                                          placeholder="000012"
-                                          class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
-                                        />
-                                        <p
-                                          v-if="
+                                    <!-- register code -->
+                                    <div class="group mt-[20px]">
+                                      <label
+                                        for="1"
+                                        class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                        >{{ $t("Registration code") }}
+
+                                        :</label
+                                      >
+                                      <input
+                                        id="1"
+                                        type="text"
+                                        v-model="registration_code"
+                                        :class="{
+                                          'outline-error':
                                             emptyField.includes(
                                               'registration_code'
-                                            )
-                                          "
-                                          class="error-message"
-                                        >
-                                          {{ $t("Registration code") }}
-                                          {{ $t("required") }}
-                                        </p>
-                                      </div>
+                                            ),
+                                        }"
+                                        placeholder="000012"
+                                        class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                                      />
+                                      <p
+                                        v-if="
+                                          emptyField.includes(
+                                            'registration_code'
+                                          )
+                                        "
+                                        class="error-message"
+                                      >
+                                        {{ $t("Registration code") }}
+                                        {{ $t("required") }}
+                                      </p>
                                     </div>
                                     <!-- customer name -->
                                     <div class="group mt-[20px]">
@@ -961,7 +986,7 @@
                                         :isEdit="true"
                                       />
                                     </div>
-                                   
+
                                     <!-- Models number  -->
                                     <!-- <div class="group mt-[20px]">
                                       <label
@@ -1028,7 +1053,7 @@
                                           >{{ $t("mobile_number") }} :</label
                                         >
                                         <MobileNumber
-                                          :phoneNumber="mobile_number"
+                                          :mobileNumber="mobile_number"
                                           @update:mobileNumber="
                                             updateMobileNumber
                                           "
@@ -1087,7 +1112,7 @@
                                           label="Address"
                                           multiple
                                           style="border-radius: 25px"
-                                          placeholder="Select Locations"
+                                          :placeholder="$t('Select locations')"
                                           @select="handleLocationSelect"
                                           @input="handleMultiselectChange"
                                         >
@@ -1869,6 +1894,7 @@ export default {
 
       selectedLocations: [],
       vendor_codee: "",
+      other_mobile_number: null,
     };
   },
   computed: {
@@ -1958,6 +1984,8 @@ export default {
       this.$axios
         .$get(`/Vendor/GetAllVendor?search=${this.search}`)
         .then((res) => {
+          this.vendor_codee = res.NextItem;
+
           this.vendorTable = res.Vendor.data;
           this.totalPages = res.Vendor.meta.last_page;
           this.perPage = res.Vendor.meta.per_page;
@@ -2040,6 +2068,7 @@ export default {
         (this.national_id = null),
         (this.id = "");
       this.selectedLocations = [];
+      this.other_mobile_number = null;
     },
     // clear location
     clearLocation() {
@@ -2054,10 +2083,12 @@ export default {
     },
     // is validate email
     validateEmail(email) {
-      if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+      if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)+$/.test(email)) {
         this.invalidEmail = false;
         return;
       } else if (this.email == "") {
+        this.invalidEmail = false;
+      } else if (this.email == null) {
         this.invalidEmail = false;
       } else {
         this.invalidEmail = true;
@@ -2075,6 +2106,8 @@ export default {
     },
     // toggle modal open and close the modal
     toggleModal(id, status) {
+      this.showInformation = true;
+      this.showPayemnt = false;
       this.emptyField = "";
       // show modal
       document.getElementById(`modal${id}`).classList.toggle("hidden");
@@ -2083,24 +2116,68 @@ export default {
         this.$axios.$get(`/Vendor/GetVendorById/${id}`).then((res) => {
           this.location = res.Vendor.location.id;
           this.data = res.Vendor;
+          if (res.Vendor.vendor_code == "null") {
+            this.vendor_codee = null;
+          }
+          if (res.Vendor.vendor_code != "null") {
+            this.vendor_codee = res.Vendor.vendor_code;
+          }
 
-          this.vendor_codee = res.Vendor.vendor_code;
           this.vendor_name = res.Vendor.vendor_name;
-          this.mobile_number = res.Vendor.other_mobile_number;
-          this.registration_code = res.Vendor.registration_code;
 
-          this.vat_number = res.Vendor.vat_number;
-          this.ssn_number = res.Vendor.ssn;
-          this.phone = res.Vendor.mobile_number;
-          this.email = res.Vendor.email;
-          this.address = res.Vendor.address;
-          this.national_id = res.Vendor.snn;
-          if (res.Vendor.credit_limit) {
+          if (res.Vendor.other_mobile_number == "null") {
+            this.mobile_number = null;
+          }
+
+          if (res.Vendor.mobile_number != "null") {
+            this.mobile_number = res.Vendor.other_mobile_number;
+          }
+
+         
+         
+          if (res.Vendor.registration_code != "null") {
+            this.registration_code = res.Vendor.registration_code;
+          }
+
+          if (res.Vendor.registration_code == "null") {
+            this.registration_code = null;
+          }
+
+          if (res.Vendor.vat_number != "null") {
+            this.vat_number = res.Vendor.vat_number;
+          }
+
+          if (res.Vendor.vat_number == "null") {
+            this.vat_number = null;
+          }
+
+          if (res.Vendor.mobile_number != "null") {
+            this.phone = res.Vendor.mobile_number;
+          }
+          if (res.Vendor.mobile_number == "null") {
+            this.phone = null;
+          }
+
+          if (res.Vendor.email != "null") {
+            this.email = res.Vendor.email;
+          }
+          if (res.Vendor.email == "null") {
+            this.email = null;
+          }
+
+          if (res.Vendor.address != "null") {
+            this.address = res.Vendor.address;
+          }
+          if (res.Vendor.address == "null") {
+            this.address = null;
+          }
+
+          if (res.Vendor.credit_limit != "null") {
             this.disable = false;
             this.activeCreditLimit = true;
             this.credit_limit = res.Vendor.credit_limit;
           }
-          if (res.Vendor.payment_term) {
+          if (res.Vendor.payment_term != "null") {
             this.payment_term = res.Vendor.payment_term;
             this.disabledPayment = false;
             this.activePayment = true;
@@ -2108,6 +2185,8 @@ export default {
           }
           this.vin_number = res.Vendor.vin_number;
           this.plate_number = res.Vendor.plate_number;
+
+          this.selectedLocations = res.Vendor.location;
         });
       }
       // Select tabs and tab buttons
@@ -2150,15 +2229,9 @@ export default {
     show(type) {
       if (type == "Informations") {
         this.showInformation = true;
-        this.showVichels = false;
         this.showPayemnt = false;
       } else if (type == "Payment") {
         this.showPayemnt = true;
-        this.showInformation = false;
-        this.showVichels = false;
-      } else if (type == "Vehicles") {
-        this.showVichels = true;
-        this.showPayemnt = false;
         this.showInformation = false;
       }
     },
@@ -2213,6 +2286,7 @@ export default {
     },
     // add new customer
     addNewVendor(status) {
+      this.showInformation = true;
       document.getElementById(`addVendor`).classList.toggle("hidden");
       // tabs
       // Select tabs and tab buttons
@@ -2276,7 +2350,7 @@ export default {
           let formdata = new FormData();
 
           formdata.append("vendor_name", this.vendor_name);
-          formdata.append("vendor_code", this.vendor_code);
+          formdata.append("vendor_code", this.vendor_codee);
           formdata.append("email", this.email);
           formdata.append("mobile_number", this.phone);
           formdata.append("other_mobile_number", this.mobile_number);
@@ -2297,6 +2371,8 @@ export default {
               this.$toast.success("Vendor Added Successfully");
               // get data again
               this.$axios.$get("/Vendor/GetAllVendor").then((res) => {
+                this.vendor_codee = res.NextItem;
+
                 this.vendorTable = res.Vendor.data;
                 this.totalPages = res.Vendor.meta.last_page;
                 this.perPage = res.Vendor.meta.per_page;
@@ -2334,7 +2410,7 @@ export default {
         let formdata = new FormData();
 
         formdata.append("vendor_name", this.vendor_name);
-        formdata.append("vendor_code", this.vendor_code);
+        formdata.append("vendor_code", this.vendor_codee);
         formdata.append("email", this.email);
         formdata.append("mobile_number", this.phone);
         formdata.append("other_mobile_number", this.mobile_number);
@@ -2361,6 +2437,8 @@ export default {
                   `/Vendor/GetAllVendor?page=${this.$route.query.page || 1}`
                 )
                 .then((res) => {
+                  this.vendor_codee = res.NextItem;
+
                   this.vendorTable = res.Vendor.data;
                   this.totalPages = res.Vendor.meta.last_page;
                   this.perPage = res.Vendor.meta.per_page;
@@ -2393,6 +2471,8 @@ export default {
             this.$axios
               .$get(`/Vendor/GetAllVendor?page=${this.$route.query.page || 1}`)
               .then((res) => {
+                this.vendor_codee = res.NextItem;
+
                 this.vendorTable = res.Vendor.data;
                 this.totalPages = res.Vendor.meta.last_page;
                 this.perPage = res.Vendor.meta.per_page;
@@ -2459,13 +2539,8 @@ export default {
             .$get("/Location/GetAllLocationDropDownList")
             .then((res) => {
               this.locations = res.Location;
-              var lastId = this.locations.length + 2;
+              var lastItem = res.Location[res.Location.length - 1];
 
-              console.log(lastId, "last id");
-
-              var lastItem = this.locations.find(
-                (location) => location.Id == lastId
-              );
               this.selectedLocations.push(lastItem);
             });
 
@@ -2535,6 +2610,8 @@ export default {
     currentPage(value) {
       console.log(value);
       this.$axios.$get(`/Vendor/GetAllVendor?page=${value}`).then((res) => {
+        this.vendor_codee = res.NextItem;
+
         this.vendorTable = res.Vendor.data;
         this.totalPages = res.Vendor.meta.last_page;
         this.perPage = res.Vendor.meta.per_page;

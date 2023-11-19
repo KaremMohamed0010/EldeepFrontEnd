@@ -440,7 +440,7 @@
                                     label="Address"
                                     multiple
                                     style="border-radius: 25px"
-                                    placeholder="Select Locations"
+                                    :placeholder="$t('Select locations')"
                                     @select="handleLocationSelect"
                                     @input="handleMultiselectChange"
                                   >
@@ -1233,13 +1233,7 @@
                         {{ $t("Employee Group") }}
                       </p>
                     </td>
-                    <td
-                      class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
-                    >
-                      <p class="text-gray-900 whitespace-no-wrap table-headers">
-                        {{ $t("Employee target") }}
-                      </p>
-                    </td>
+
                     <td
                       class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
                     >
@@ -1301,30 +1295,71 @@
                     <td
                       class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
                     >
-                      <p class="text-gray-900 whitespace-no-wrap">
-                        {{ employee.EmployeeGroup }}
+                      <p
+                        v-if="employee.EmployeeGroup == '1'"
+                        class="text-gray-900 whitespace-no-wrap"
+                      >
+                        Admin
+                      </p>
+                      <p
+                        v-if="employee.EmployeeGroup == '5'"
+                        class="text-gray-900 whitespace-no-wrap"
+                      >
+                        Pricing
+                      </p>
+                      <p
+                        v-if="employee.EmployeeGroup == '2'"
+                        class="text-gray-900 whitespace-no-wrap"
+                      >
+                        Requester
+                      </p>
+                      <p
+                        v-if="employee.EmployeeGroup == '3'"
+                        class="text-gray-900 whitespace-no-wrap"
+                      >
+                        Inventory
+                      </p>
+                      <p
+                        v-if="employee.EmployeeGroup == '4'"
+                        class="text-gray-900 whitespace-no-wrap"
+                      >
+                        Delivery
+                      </p>
+                      <p
+                        v-if="employee.EmployeeGroup == '6'"
+                        class="text-gray-900 whitespace-no-wrap"
+                      >
+                        Purchasing
+                      </p>
+                      <p
+                        v-if="employee.EmployeeGroup == '7'"
+                        class="text-gray-900 whitespace-no-wrap"
+                      >
+                        Financial
                       </p>
                     </td>
+
                     <td
                       class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
                     >
-                      <p class="text-gray-900 whitespace-no-wrap">
-                        {{ employee.EmployeeTarget }}
-                      </p>
-                    </td>
-                    <td
-                      class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
-                    >
-                      <p class="text-gray-900 whitespace-no-wrap">
+                      <p
+                        v-if="employee.Effiency != null"
+                        class="text-gray-900 whitespace-no-wrap"
+                      >
                         {{ employee.Effiency }}
                       </p>
+                      <p v-else class="text-gray-900 whitespace-no-wrap">--</p>
                     </td>
                     <td
                       class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
                     >
-                      <p class="text-gray-900 whitespace-no-wrap">
+                      <p
+                        v-if="employee.TotalTime != null"
+                        class="text-gray-900 whitespace-no-wrap"
+                      >
                         {{ employee.TotalTime }}
                       </p>
+                      <p v-else class="text-gray-900 whitespace-no-wrap">--</p>
                     </td>
 
                     <td
@@ -1746,7 +1781,7 @@
                                           label="Address"
                                           multiple
                                           style="border-radius: 25px"
-                                          placeholder="Select Locations"
+                                          :placeholder="$t('Select locations')"
                                           @select="handleLocationSelect"
                                           @input="handleMultiselectChange"
                                         >
@@ -1944,7 +1979,12 @@
                                         {{ $t("View") }}</label
                                       >
                                       <input
-                                        @input="ViewAll"
+                                        @input="
+                                          ViewAllEdit(
+                                            $event,
+                                            employee.EmployeeId
+                                          )
+                                        "
                                         v-model="selectAllView"
                                         id="viewAll"
                                         class="input-switch"
@@ -1963,7 +2003,12 @@
                                         class="input-switch"
                                         id="add"
                                         v-model="selectAllAdd"
-                                        @input="addAll"
+                                        @input="
+                                          addAllEdit(
+                                            $event,
+                                            employee.EmployeeId
+                                          )
+                                        "
                                         type="checkbox"
                                       />
                                       <label for="add" class="swicthh">
@@ -1976,7 +2021,12 @@
                                         {{ $t("Edit") }}</label
                                       >
                                       <input
-                                        @input="editAll"
+                                        @input="
+                                          editAllEdit(
+                                            $event,
+                                            employee.EmployeeId
+                                          )
+                                        "
                                         id="edit"
                                         v-model="selectAllEdit"
                                         class="input-switch"
@@ -1992,7 +2042,12 @@
                                         {{ $t("Delete") }}</label
                                       >
                                       <input
-                                        @input="deleteAll"
+                                        @input="
+                                          deleteAllEdit(
+                                            $event,
+                                            employee.EmployeeId
+                                          )
+                                        "
                                         id="delete"
                                         v-model="selectAllDelete"
                                         class="input-switch"
@@ -2034,7 +2089,9 @@
                                     <!-- can delete -->
                                     <div>
                                       <input
-                                        id="ViewCustomer"
+                                        :id="
+                                          `ViewCustomer` + employee.EmployeeId
+                                        "
                                         name="checkbox"
                                         v-model="can_view_customer"
                                         type="checkbox"
@@ -2101,7 +2158,7 @@
                                     <!-- can delete -->
                                     <div>
                                       <input
-                                        id="viewvendor"
+                                        :id="`viewvendor` + employee.EmployeeId"
                                         name="checkbox"
                                         type="checkbox"
                                         v-model="can_view_vendor"
@@ -2169,7 +2226,9 @@
                                     <!-- can delete -->
                                     <div>
                                       <input
-                                        id="ViewEmployee"
+                                        :id="
+                                          `ViewEmployee` + employee.EmployeeId
+                                        "
                                         name="checkbox"
                                         type="checkbox"
                                         v-model="can_view_employee"
@@ -2237,7 +2296,7 @@
                                     <!-- can delete -->
                                     <div>
                                       <input
-                                        id="viewParts"
+                                        :id="`viewParts` + employee.EmployeeId"
                                         name="checkbox"
                                         type="checkbox"
                                         v-model="can_view_parts"
@@ -2305,7 +2364,9 @@
                                     <!-- can delete -->
                                     <div>
                                       <input
-                                        id="viewlocation"
+                                        :id="
+                                          `viewlocation` + employee.EmployeeId
+                                        "
                                         name="checkbox"
                                         type="checkbox"
                                         v-model="can_view_location"
@@ -3180,13 +3241,8 @@ export default {
             .$get("/Location/GetAllLocationDropDownList")
             .then((res) => {
               this.locations = res.Location;
-              var lastId = this.locations.length + 2;
+              var lastItem = res.Location[res.Location.length - 1];
 
-              console.log(lastId, "last id");
-
-              var lastItem = this.locations.find(
-                (location) => location.Id == lastId
-              );
               this.selectedLocations.push(lastItem);
             });
 
@@ -3249,15 +3305,54 @@ export default {
         (this.location = null),
         (this.id = "");
       this.target = null;
+      (this.selectedLocations = []),
+        (this.invalidEmail = false),
+        (this.errorpasswordValidation = false);
+      (this.selectAllPages = false),
+        (this.selectAllView = false),
+        (this.selectAllAdd = false),
+        (this.selectAllEdit = false),
+        (this.selectAllDelete = false),
+        // pages
+        (this.customerPage = false),
+        (this.vendorPage = false),
+        (this.employeePage = false),
+        (this.partsPage = false),
+        (this.locationPage = false),
+        // view
+        (this.can_view_customer = false),
+        (this.can_view_vendor = false),
+        (this.can_view_employee = false),
+        (this.can_view_parts = false),
+        (this.can_view_location = false),
+        // add
+        (this.can_add_customer = false),
+        (this.can_add_vendor = false),
+        (this.can_add_employee = false),
+        (this.can_add_parts = false),
+        (this.can_add_location = false),
+        // edit
+
+        (this.can_edit_customer = false),
+        (this.can_edit_vendor = false),
+        (this.can_edit_employee = false),
+        (this.can_edit_parts = false),
+        (this.can_edit_location = false),
+        // delete
+        (this.can_delete_customer = false),
+        (this.can_delete_vendor = false),
+        (this.can_delete_employee = false),
+        (this.can_delete_parts = false),
+        (this.can_delete_location = false);
     },
     // is validate employee_email
     validateEmail(employee_email) {
-      if (
-        /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(employee_email)
-      ) {
+      if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)+$/.test(employee_email)) {
         this.invalidEmail = false;
         return;
       } else if (this.employee_email == "") {
+        this.invalidEmail = false;
+      } else if (this.employee_email == null) {
         this.invalidEmail = false;
       } else {
         this.invalidEmail = true;
@@ -3271,6 +3366,16 @@ export default {
         this.errorpasswordValidation = false;
         this.login = false;
         return;
+      }
+      if (this.password == "") {
+        this.errorpasswordValidation = false;
+        this.login = false;
+        return;
+      }
+      if (this.password == null) {
+        this.errorpasswordValidation = false;
+        this.login = false;
+        return;
       } else {
         this.errorpasswordValidation = true;
         this.login = true;
@@ -3278,6 +3383,8 @@ export default {
     },
     // toggle modal open and close the modal
     toggleModal(id, status) {
+      this.showInformation = true;
+      this.showPermission = false;
       this.emptyField = "";
       // show modal
       document.getElementById(`modal${id}`).classList.toggle("hidden");
@@ -3288,8 +3395,20 @@ export default {
           this.employee_name = res.user.name;
           this.employee_email = res.user.email;
           this.employee_position = res.user.position;
-          this.target = res.user.target;
-          this.unit_of_target = res.user.unit_of_target;
+          if (res.user.target == "null") {
+            this.target = null;
+          }
+          if (res.user.target != "null") {
+            this.target = res.user.target;
+          }
+
+          if (res.user.unit_of_target == "null") {
+            this.unit_of_target = null;
+          }
+          if (res.user.unit_of_target != "null") {
+            this.target = res.user.unit_of_target;
+          }
+
           this.employee_code = res.user.code;
           this.branch_id = res.user.branch_id;
           if (res.user.start_date == "null") {
@@ -3819,6 +3938,7 @@ export default {
         formdata.append("code", this.employee_code);
         formdata.append("branch_id", this.branch_id);
         formdata.append("area", this.area);
+
         if (this.start_date != null) {
           formdata.append("start_date", this.start_date);
         }
@@ -3991,24 +4111,20 @@ export default {
             this.loading = false;
 
             // get data again
-            if (this.employeeTable.length == 1) {
-              this.$axios
-                .$get(
-                  `/Member/GetAllMember?page=${this.$route.query.page - 1 || 1}`
-                )
-                .then((res) => {
-                  this.employeeTable = res.Employee.data;
-                  this.totalPages = res.Employee.meta.last_page;
-                  this.perPage = res.Employee.meta.per_page;
-                  this.total = res.Employee.meta.total;
-                  this.permissions = res.permission;
-                  this.loading = false;
-                });
-              this.$router.push({
-                path: "/employee",
-                query: { page: this.$route.query.page - 1 },
+            this.$axios
+              .$get(
+                `/Customer/GetAllCustomer?page=${this.$route.query.page || 1}`
+              )
+              .then((res) => {
+                this.customerTable = res.Customer.data;
+                this.customer_code = res.NextItem;
+                this.totalPages = res.Customer.meta.last_page;
+                this.perPage = res.Customer.meta.per_page;
+                this.total = res.Customer.meta.total;
+                this.permissions = res.permissions;
+                this.loading = false;
               });
-            }
+
             // close the modal
             document
               .getElementById(`Deletemodal${id}`)
@@ -4167,14 +4283,14 @@ export default {
         viewLocation.checked = false;
 
         this.can_view_customer = false;
-        this.can_view_vendor = true;
-        this.can_view_employee = true;
-        this.can_view_parts = true;
-        this.can_view_location = true;
+        this.can_view_vendor = false;
+        this.can_view_employee = false;
+        this.can_view_parts = false;
+        this.can_view_location = false;
         console.log(this.can_view_customer, "status");
       }
     },
-    // viewAllEdit
+
     // view All
     addAll(status) {
       if (status.target.checked == true) {
@@ -4195,12 +4311,6 @@ export default {
 
         const addlocation = document.getElementById("addlocation");
         addlocation.checked = true;
-
-        this.can_add_customer = true;
-        this.can_add_vendor = true;
-        this.can_add_employee = true;
-        this.can_add_parts = true;
-        this.can_add_location = true;
       } else if (status.target.checked == false) {
         const addcustomer = document.getElementById("addcustomer");
         addcustomer.checked = false;
@@ -4367,6 +4477,69 @@ export default {
     },
     leftClass() {
       this.$route.query.toggle == true;
+    },
+    selectAllView(value) {
+      console.log(value, "value watch");
+      if (value == true) {
+        this.can_view_customer = true;
+        this.can_view_vendor = true;
+        this.can_view_employee = true;
+        this.can_view_parts = true;
+        this.can_view_location = true;
+      } else {
+        this.can_view_customer = false;
+        this.can_view_vendor = false;
+        this.can_view_employee = false;
+        this.can_view_parts = false;
+        this.can_view_location = false;
+      }
+    },
+    selectAllAdd(value) {
+      if (value == true) {
+        this.can_add_customer = true;
+        this.can_add_vendor = true;
+        this.can_add_employee = true;
+        this.can_add_parts = true;
+        this.can_add_location = true;
+      } else {
+        this.can_add_customer = false;
+        this.can_add_vendor = false;
+        this.can_add_employee = false;
+        this.can_add_parts = false;
+        this.can_add_location = false;
+      }
+    },
+
+    selectAllEdit(value) {
+      if (value == true) {
+        this.can_edit_customer = true;
+        this.can_edit_vendor = true;
+        this.can_edit_employee = true;
+        this.can_edit_parts = true;
+        this.can_edit_location = true;
+      } else {
+        this.can_edit_customer = false;
+        this.can_edit_vendor = false;
+        this.can_edit_employee = false;
+        this.can_edit_parts = false;
+        this.can_edit_location = false;
+      }
+    },
+
+    selectAllDelete(value) {
+      if (value == true) {
+        this.can_delete_customer = true;
+        this.can_delete_vendor = true;
+        this.can_delete_employee = true;
+        this.can_delete_parts = true;
+        this.can_delete_location = true;
+      } else {
+        this.can_delete_customer = false;
+        this.can_delete_vendor = false;
+        this.can_delete_employee = false;
+        this.can_delete_parts = false;
+        this.can_delete_location = false;
+      }
     },
   },
 
