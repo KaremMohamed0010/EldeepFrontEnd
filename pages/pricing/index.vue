@@ -1,147 +1,271 @@
 <template>
   <div class="p-[12px]">
+    <div v-if="loading == true" class="flex justify-center w-[100%]">
+      <Loading :text="'Loading'" />
+    </div>
     <div
       v-if="loading == false && pricing.length > 0"
       class="p-[20px] bg-table"
     >
-    <div class="p-[20px]">
-      <h1 class="total-request">{{ $t("total_request") }}</h1>
-    </div>
-      <table class="min-w-full leading-normal table-style">
-        <thead>
-          <tr>
-            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-              <div class="flex">
-                <div class="ml-3">
-                  <p class="text-gray-900 whitespace-no-wrap table-headers">
-                    {{ $t("Req N.O.") }}
-                  </p>
+      <div class="p-[20px]">
+        <h1 class="total-request">{{ $t("total_request") }}</h1>
+      </div>
+      <div class="table-container overflow-x-auto">
+        <table class="min-w-full leading-normal table-style">
+          <thead>
+            <tr>
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <div class="flex">
+                  <div class="ml-3">
+                    <p class="text-gray-900 whitespace-no-wrap table-headers">
+                      {{ $t("Req N.O.") }}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </td>
-            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-              <p class="text-gray-900 whitespace-no-wrap table-headers">
-                {{ $t("Part Name") }}
-              </p>
-            </td>
-            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-              <p class="text-gray-900 whitespace-no-wrap table-headers">
-                {{ $t("Condition") }}
-              </p>
-            </td>
+              </td>
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <p class="text-gray-900 whitespace-no-wrap table-headers">
+                  {{ $t("Part Name") }}
+                </p>
+              </td>
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <p class="text-gray-900 whitespace-no-wrap table-headers">
+                  {{ $t("Condition") }}
+                </p>
+              </td>
 
-            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-              <p class="text-gray-900 whitespace-no-wrap table-headers">
-                {{ $t("QTY") }}
-              </p>
-            </td>
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <p class="text-gray-900 whitespace-no-wrap table-headers">
+                  {{ $t("QTY") }}
+                </p>
+              </td>
 
-             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-              <p class="text-gray-900 whitespace-no-wrap table-headers">
-                {{ $t("Vin Car") }}
-              </p>
-            </td>
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <p class="text-gray-900 whitespace-no-wrap table-headers">
+                  {{ $t("Vin Car") }}
+                </p>
+              </td>
 
-             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-              <p class="text-gray-900 whitespace-no-wrap table-headers">
-                {{ $t("Car Type") }}
-              </p>
-            </td>
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <p class="text-gray-900 whitespace-no-wrap table-headers">
+                  {{ $t("Car Type") }}
+                </p>
+              </td>
 
-            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-              <p class="text-gray-900 whitespace-no-wrap table-headers">
-                {{ $t("Model") }}
-              </p>
-            </td>
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <p class="text-gray-900 whitespace-no-wrap table-headers">
+                  {{ $t("Model") }}
+                </p>
+              </td>
 
-            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-              <p class="text-gray-900 whitespace-no-wrap table-headers">
-                {{ $t("Part N.O.") }}
-              </p>
-            </td>
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <p class="text-gray-900 whitespace-no-wrap table-headers">
+                  {{ $t("Part N.O.") }}
+                </p>
+              </td>
 
-             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-              <p class="text-gray-900 whitespace-no-wrap table-headers">
-                {{ $t("Vendor") }}
-              </p>
-            </td>
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <p class="text-gray-900 whitespace-no-wrap table-headers">
+                  {{ $t("Vendor") }}
+                </p>
+              </td>
 
-             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-              <p class="text-gray-900 whitespace-no-wrap table-headers">
-                {{ $t("Location") }}
-              </p>
-            </td>
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <p class="text-gray-900 whitespace-no-wrap table-headers">
+                  {{ $t("Location") }}
+                </p>
+              </td>
 
-             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-              <p class="text-gray-900 whitespace-no-wrap table-headers">
-                {{ $t("Location") }}
-              </p>
-            </td>
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <p class="text-gray-900 whitespace-no-wrap table-headers">
+                  {{ $t("Pricing group") }}
+                </p>
+              </td>
 
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <p class="text-gray-900 whitespace-no-wrap table-headers">
+                  {{ $t("Price") }}
+                </p>
+              </td>
 
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(location, index) in locations" :key="index">
-            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-              <div class="flex">
-                <div class="ml-3">
-                  <p class="text-gray-900 whitespace-no-wrap">
-                    {{ location.Vendor }}
-                  </p>
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <p class="text-gray-900 whitespace-no-wrap table-headers"></p>
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(price, index) in pricing" :key="index">
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <div class="flex">
+                  <div class="ml-3">
+                    <p class="text-gray-900 whitespace-no-wrap">
+                      {{ price.Req_No }}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </td>
-            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-              <p class="text-gray-900 whitespace-no-wrap">
-                {{ location.Employee }}
-              </p>
-            </td>
-            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-              <p class="text-gray-900 whitespace-no-wrap">
-                {{ location.Address }}
-              </p>
-            </td>
+              </td>
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <p class="text-gray-900 whitespace-no-wrap">
+                  {{ price.PartName }}
+                </p>
+              </td>
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <p class="text-gray-900 whitespace-no-wrap">
+                  {{ price.Condition }}
+                </p>
+              </td>
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <p class="text-gray-900 whitespace-no-wrap">
+                  {{ price.QTY }}
+                </p>
+              </td>
 
-            <td
-              v-if="permissions.includes('can_update_location')"
-              class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
-            >
-              <div>
-                <button
-                  class="view-btn"
-                  @click="toggleModal(location.Id, 'open')"
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <p
+                  v-if="price.VinCar != null"
+                  class="text-gray-900 whitespace-no-wrap"
                 >
+                  {{ price.VinCar }}
+                </p>
+                <p v-else class="text-gray-900 whitespace-no-wrap">--</p>
+              </td>
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <p
+                  v-if="price.CarType != null"
+                  class="text-gray-900 whitespace-no-wrap"
+                >
+                  {{ price.CarType }}
+                </p>
+                <p v-else class="text-gray-900 whitespace-no-wrap">--</p>
+              </td>
+
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <p
+                  v-if="price.Model != null"
+                  class="text-gray-900 whitespace-no-wrap"
+                >
+                  {{ price.Model }}
+                </p>
+                <p v-else class="text-gray-900 whitespace-no-wrap">--</p>
+              </td>
+
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <div class="relative">
                   <img
-                    class="w-[18px] h-[18px]"
-                    src="../../assets/imgs/comman/eye.png"
+                    :class="{
+                      'arrow-select-arabic-city': lang == 'ar',
+                    }"
+                    class="arrow-select"
+                    src="../../assets/imgs/comman/Icon.png"
                     alt=""
                   />
-                  {{ $t("View") }}
-                </button>
-              </div>
-              <!-- view and edit modal -->
+                  <select
+                    v-model="city_name"
+                    class="appearance-none border-select w-[117px] py-1 px-2 bg-white"
+                    name="whatever"
+                    id="frm-whatever"
+                  >
+                    <option v-for="(city, i) in cities" :value="city" :key="i">
+                      {{ city }}
+                    </option>
+                  </select>
+                </div>
+              </td>
 
-             
-            </td>
-            <td
-              v-if="permissions.includes('can_delete_location')"
-              class="px-5 py-5 border-b border-gray-200 bg-white text-sm cursor-pointer"
-            >
-              <div
-                @click="deleteLocation(location.Id, 'open')"
-                class="w-[20px]"
-              >
-                <img
-                  clas="w-[20px]"
-                  src="../../assets/imgs/comman/delete-removebg-preview.png"
-                  alt=""
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <div class="relative">
+                  <img
+                    :class="{
+                      'arrow-select-arabic-city': lang == 'ar',
+                    }"
+                    class="arrow-select-vendor"
+                    src="../../assets/imgs/comman/Icon.png"
+                    alt=""
+                  />
+                  <select
+                    v-model="city_name"
+                    class="appearance-none border-select w-[153px] py-1 px-2 bg-white"
+                    name="whatever"
+                    id="frm-whatever"
+                  >
+                    <option v-for="(city, i) in cities" :value="city" :key="i">
+                      {{ city }}
+                    </option>
+                  </select>
+                </div>
+              </td>
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <div class="relative">
+                  <img
+                    :class="{
+                      'arrow-select-arabic-city': lang == 'ar',
+                    }"
+                    class="arrow-select arrow-select-vendor"
+                    src="../../assets/imgs/comman/Icon.png"
+                    alt=""
+                  />
+                  <select
+                    v-model="city_name"
+                    class="appearance-none border-select w-[153px] py-1 px-2 bg-white"
+                    name="whatever"
+                    id="frm-whatever"
+                  >
+                    <option v-for="(city, i) in cities" :value="city" :key="i">
+                      {{ city }}
+                    </option>
+                  </select>
+                </div>
+              </td>
+
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <div class="relative">
+                  <img
+                    :class="{
+                      'arrow-select-arabic-city': lang == 'ar',
+                    }"
+                    class="arrow-select-vendor"
+                    src="../../assets/imgs/comman/Icon.png"
+                    alt=""
+                  />
+                  <select
+                    v-model="city_name"
+                    class="appearance-none border-select w-[153px] py-1 px-2 bg-white"
+                    name="whatever"
+                    id="frm-whatever"
+                  >
+                    <option v-for="(city, i) in cities" :value="city" :key="i">
+                      {{ city }}
+                    </option>
+                  </select>
+                </div>
+              </td>
+
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <input
+                  id="1"
+                  type="text"
+                  v-model="area"
+                  placeholder=""
+                  class="peer w-[120px] input-style h-10 rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
                 />
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+              </td>
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <button
+                  :disabled="loading"
+                  :class="{
+                    'cusror-disabled': loading,
+                  }"
+                  @click="addNewLocation('close')"
+                  class="close-btn rounded-lg w-[100%] px-4 py-2 bg-gray-200 hover:bg-gray-300 duration-300"
+                >
+                  {{ $t("save") }}
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
       <div class="mt-[20px]">
         <pagination
           :total-pages="totalPages"
@@ -170,25 +294,32 @@
 </template>
 
 <script>
+import Multiselect from "vue-multiselect";
+import "vue-multiselect/dist/vue-multiselect.min.css";
+
 export default {
   data() {
     return {
-      pricing : []
+      pricing: [],
+      loading: true,
+      currentPage: 1,
     };
   },
+  components: {
+    Multiselect,
+  },
   mounted() {
-  
     // get all locations
 
     this.$axios.$post("/Pricing/GetPricingRequest").then((res) => {
-      this.pricing = res.Location.data;
-      this.totalPages = res.Location.meta.last_page;
-      this.perPage = res.Location.meta.per_page;
-      this.total = res.Location.meta.total;
+      console.log(res);
+      this.pricing = res.quotes.data;
+      this.totalPages = res.quotes.meta.last_page;
+      this.perPage = res.quotes.meta.per_page;
+      this.total = res.quotes.meta.total;
       this.loading = false;
     });
 
- 
     // tabs code
     this.lang = localStorage.getItem("lang");
 
@@ -201,16 +332,13 @@ export default {
     this.open = localStorage.getItem("open");
   },
   methods: {
- 
     // show more
     showMore(page) {
       this.page = page;
       this.currentPage = page;
     },
-  
   },
   watch: {
- 
     // currect page
     currentPage(value) {
       console.log(value);
@@ -225,7 +353,6 @@ export default {
 
       this.$router.push({ path: "/locations", query: { page: value } });
     },
-   
   },
 };
 </script>
@@ -410,7 +537,7 @@ input[type="file"] {
   width: 100%;
 }
 .border-select {
-  border-radius: 20px;
+  border-radius: 10px;
   border: 1px solid var(--primary-dark-20, rgba(66, 66, 66, 0.2));
   background: var(--colors-base-00, #fff);
 
@@ -429,9 +556,15 @@ input[type="file"] {
 /* arrow of select */
 .arrow-select {
   position: absolute;
-  left: 346px;
   margin-top: 19px;
   width: 20px;
+  margin-left: 69px;
+}
+.arrow-select-vendor {
+  position: absolute;
+  margin-top: 19px;
+  width: 20px;
+  margin-left: 108px;
 }
 .arrow-select-arabic {
   position: absolute;
@@ -527,5 +660,14 @@ input[type="file"] {
     height: 650px;
     overflow-y: auto;
   }
+}
+.close-btn {
+  border-radius: 10px !important;
+}
+.input-style {
+  border-radius: 10px !important;
+}
+.table-container {
+  overflow-x: auto;
 }
 </style>

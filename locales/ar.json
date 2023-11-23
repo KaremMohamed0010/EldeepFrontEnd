@@ -192,5 +192,11 @@
   "select customers": "اختر عميل",
   "select vendors": "اختر مورد ",
   "select employee": "اختر موظف ",
-  "There is No Pricing":"لا يوجد تسعير"
+  "There is No Pricing": "لا يوجد تسعير",
+  "Req N.O.": "رقم الطلب",
+  "QTY": "الكمية",
+  "Vin Car": "عربه",
+  "Car Type": "نوع السيارة",
+  "Part N.O.": "الجزء رقم",
+  "Pricing group": "مجموعة التسعير"
 }

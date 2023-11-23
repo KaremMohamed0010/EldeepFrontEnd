@@ -178,5 +178,11 @@
   "select customers":"select customers",
   "select vendors":"select vendors",
   "select employee": "select employee",
-  "There is No Pricing":"There is No Pricing"
+  "There is No Pricing":"There is No Pricing",
+  "Req N.O.":"Req N.O.",
+  "QTY":"QTY",
+  "Vin Car":"Vin Car",
+  "Car Type":"Car Type",
+  "Part N.O.":"Part N.O.",
+  "Pricing group":"Pricing group"
 }
