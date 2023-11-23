@@ -2291,19 +2291,16 @@ export default {
           if (res.Customer.vat_number != "null") {
             this.vat_number = res.Customer.vat_number;
           }
-<<<<<<< HEAD
           if(res.Customer.credit_limit == 'null'){
             this.credit_limit = null;
           }
          
-=======
           if (res.Customer.registry_number == "null") {
             this.register_number = null;
           }
           if (res.Customer.registry_number != "null") {
             this.register_number = res.Customer.registry_number;
           }
->>>>>>> 89afc7d (vendors last edit)
           this.selectedLocations = res.Customer.Address;
           if (res.Customer.credit_limit != "null") {
             this.disable = false;
@@ -2316,10 +2313,6 @@ export default {
             this.activePayment = true;
             this.payment_term = res.Customer.payment_term;
           }
-<<<<<<< HEAD
-          this.plate_number = res.Customer.plate_number;
-          
-=======
           if (res.Customer.plate_number == "null") {
             this.plate_number = null;
           }
@@ -2339,7 +2332,6 @@ export default {
           // } else {
           //   this.isCooperate = false;
           // }
->>>>>>> 89afc7d (vendors last edit)
           if (res.Customer.corporate == "true") {
             this.isCooperate = true;
           } else if (res.Customer.corporate == "false") {
