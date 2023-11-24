@@ -28,6 +28,9 @@
        <h1 v-if="this.$route.path == '/pricing'" class="dashboard">
         {{ $t(`Pricing`) }}
       </h1>
+       <h1 v-if="this.$route.path == '/history'" class="dashboard">
+        {{ $t(`History`) }}
+      </h1>
       <div class="flex md:hidden">
         <button id="hamburger">
           <img

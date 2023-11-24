@@ -55,9 +55,18 @@ export default {
   mounted() {
     if (this.$cookies.get("token")) {
       if (localStorage.getItem("role") == "5") {
-        this.$router.push("/pricing");
+        if (this.$router.path == "/pricing") {
+          this.$router.push("/pricing");
+        }
+        if (this.$router.path == "/history") {
+          this.$router.push("/history");
+        } 
+        // else {
+        //   this.$router.push("/pricing");
+        // }
       }
-      if (localStorage.getItem("role") == "1" && this.$route.path == '/') {
+      
+      if (localStorage.getItem("role") == "1" && this.$route.path == "/") {
         this.$router.push("/dashboard");
       }
     } else if (!this.$cookies.get("token")) {

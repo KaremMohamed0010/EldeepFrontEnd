@@ -15,7 +15,8 @@
           ></div>
           <div x-show="isSidebarOpen" class="fixed inset-y-0 z-10 w-16"></div>
           <!-- super admin -->
-          <nav v-if="role == '1'"
+          <nav
+            v-if="role == '1'"
             aria-label="Options"
             class="z-20 flex-col items-center flex-shrink-0 hidden w-16 py-4 bg-white border-r-2 border-indigo-100 shadow-md sm:flex"
           >
@@ -48,7 +49,7 @@
               </button>
 
               <!-- Menu button -->
-              <button 
+              <button
                 @click="goToPages()"
                 class="transition-colors hover:text-white focus:outline-none focus:ring-offset-white focus:ring-offset-2"
                 :class="
@@ -77,7 +78,8 @@
             </div>
           </nav>
           <!-- pricing -->
-           <nav v-if="role == '5'"
+          <nav
+            v-if="role == '5'"
             aria-label="Options"
             class="z-20 flex-col items-center flex-shrink-0 hidden w-16 py-4 bg-white border-r-2 border-indigo-100 shadow-md sm:flex"
           >
@@ -110,17 +112,17 @@
               </button>
 
               <!-- Menu button -->
-              <button 
-                @click="goToStatus()"
-                class="transition-colors hover:text-white focus:outline-none focus:ring-offset-white focus:ring-offset-2"
+              <button
+                @click="goToHistory()"
+                class="transition-colors p-[10px] hover:text-white focus:outline-none focus:ring-offset-white focus:ring-offset-2"
                 :class="
-                  this.$route.path == '/status'
+                  this.$route.path == '/history'
                     ? 'text-white bg-[#EBEBEB] border-4 border-r-[#D11C1C]'
                     : 'text-gray-500 bg-white'
                 "
               >
-                 <img
-                  src="../assets/imgs/verticalNav/btn-sidebar(1).png"
+                <img
+                  src="../assets/imgs/verticalNav/award.svg"
                   alt=""
                 />
               </button>
@@ -142,7 +144,7 @@
             </div>
           </nav>
 
-          <div 
+          <div
             v-if="this.$route.path != '/dashboard' && role == '1'"
             :class="{ 'second-nav-arabic': lang == 'ar' }"
             class="second-nav w-[0%] appear-nav"
@@ -240,7 +242,8 @@
                     </p>
                   </div>
                   <!-- Parts   -->
-                  <div  v-if="permission.can_view_parts == 1"
+                  <div
+                    v-if="permission.can_view_parts == 1"
                     :class="{ top: permission.can_view_parts == 1 }"
                     @click="goToParts()"
                     class="flex items-center pt-[20px] cursor-pointer"
@@ -447,32 +450,32 @@ export default {
         this.$router.push("/customer");
       }
       if (
-        this.permission.can_view_vendor == 1 
+        this.permission.can_view_vendor == 1
       ) {
         this.$router.push("/vendors");
       }
       if (
-        this.permission.can_view_employee == 1 
+        this.permission.can_view_employee == 1
       ) {
         this.$router.push("/employee");
       }
       if (
-        this.permission.can_view_condition == 1 
+        this.permission.can_view_condition == 1
       ) {
         this.$router.push("/conditions");
       }
       if (
-        this.permission.can_view_location == 1 
+        this.permission.can_view_location == 1
       ) {
         this.$router.push("/locations");
       }
       if (
-        this.permission.can_view_parts == 1 
+        this.permission.can_view_parts == 1
       ) {
         this.$router.push("/parts");
       }
     },
-    // go to pricing 
+    // go to pricing
     goToPricingPage (){
        if (this.isSidebarOpen && this.currentSidebarTab == "messagesTab") {
         this.isSidebarOpen = false;
@@ -481,6 +484,17 @@ export default {
       }
       this.currentSidebarTab = "messagesTab";
       this.$router.push("/pricing");
+    },
+    // go to history
+    goToHistory(){
+
+       if (this.isSidebarOpen && this.currentSidebarTab == "messagesTab") {
+        this.isSidebarOpen = false;
+      } else {
+        this.isSidebarOpen = true;
+      }
+      this.currentSidebarTab = "messagesTab";
+      this.$router.push("/history");
     },
     // logout
     logOut() {
