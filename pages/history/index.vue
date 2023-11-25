@@ -1,9 +1,6 @@
 <template>
   <div class="p-[12px]">
-    <div v-if="loading == true" class="flex justify-center w-[100%]">
-      <Loading :text="'Loading'" />
-    </div>
-    <div v-if="loading == false && pricing.length > 0" class="mb-[13px] flex justify-space-between">
+    <div v-if="loading == false" class="mb-[13px] flex justify-space-between">
       <!-- add btn -->
       <div
         :class="{
@@ -14,7 +11,7 @@
       >
         <img src="../../assets/imgs/verticalNav/award.png" alt="" />
         <h1 class="kpis">{{ $t("Your KPIs") }}</h1>
-        <h3 class="kpi-number">120</h3>
+        <h3 class="kpi-number">{{ Kpi }}</h3>
       </div>
 
       <div
@@ -27,7 +24,7 @@
         <img src="../../assets/imgs/verticalNav/Icon.svg" alt="" />
 
         <h1 class="total-requests">{{ $t("Total Requests") }}</h1>
-        <h3 class="kpi-number">100000</h3>
+        <h3 class="kpi-number">{{ request }}</h3>
       </div>
 
       <div class="bg-filter w-[72%] flex">
@@ -37,7 +34,7 @@
         <!-- seacrh -->
         <div class="w-[50%] flex items-center">
           <div
-            class="items-center justify-between flex rounded-full shadow-lg p-2 sticky w-[100%]"
+            class="items-center search-round justify-between flex rounded-full shadow-lg p-2 sticky w-[100%]"
             style="top: 5px"
           >
             <div style="border-right: 1px solid #ebebeb">
@@ -56,7 +53,6 @@
               class="font-bold uppercase rounded-full w-full py-4 pl-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:text-sm text-xs"
               type="text"
               v-model="search"
-              @input="searchData"
               :placeholder="$t('search')"
             />
 
@@ -67,34 +63,45 @@
                 alt=""
               />
             </div>
-            
           </div>
-          
         </div>
         <!--  -->
-         <div class="w-[40%] ml-[21px] flex items-center">
+        <div class="w-[40%] ml-[21px] flex items-center">
           <div
-            class="items-center justify-between flex rounded-full shadow-lg p-2 sticky w-[100%]"
+            class="items-center date-round justify-between flex rounded-full shadow-lg p-2 sticky w-[100%]"
             style="top: 5px"
           >
-           
+            <div class="flex items-center">
+              <div class="mr-4">
+                <input
+                  id="start_date"
+                  class="font-bold uppercase rounded-full py-4 pl-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:text-sm text-xs"
+                  type="date"
+                  v-model="startDate"
+                  placeholder="Start Date"
+                />
+              </div>
 
-            <input
-              class="font-bold uppercase rounded-full w-full py-4 pl-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:text-sm text-xs"
-              type="date"
-              v-model="search"
-              @input="searchData"
-              :placeholder="$t('search')"
-            />
-
-            
+              <div>
+                <input
+                  id="end_date"
+                  class="font-bold uppercase rounded-full py-4 pl-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:text-sm text-xs"
+                  type="date"
+                  v-model="endDate"
+                  placeholder="End Date"
+                />
+              </div>
+            </div>
           </div>
         </div>
 
         <!-- apply btn  -->
-        <div :class="{ 'mr-[20px]': lang == 'ar' }" class="grid ml-[22px] mr-[20px] items-center">
+        <div
+          :class="{ 'mr-[20px]': lang == 'ar' }"
+          class="grid ml-[22px] mr-[20px] items-center"
+        >
           <button
-            @click="filter()"
+            @click="filterData()"
             class="bg-blue-500 bg-[#394889] flex add-new hover:bg-blue-900 text-white font-bold py-2 px-4 rounded"
           >
             <p class="">
@@ -104,17 +111,20 @@
         </div>
       </div>
     </div>
+    <div v-if="loading == true" class="flex justify-center w-[100%]">
+      <Loading :text="'Loading'" />
+    </div>
     <div
-    v-if="loading == false && pricing.length > 0"
-      
+      v-if="loading == false && pricing.length > 0"
       class="p-[20px] bg-table"
     >
       <div class="p-[20px] flex justify-between">
         <div class="flex">
-          <h1 class="total-request">14/12/2023 : 20/12/2023</h1>
-          <span class="total-request-number"> 1000 {{ $t("Request") }}</span>
+          <h1 class="total-request">{{ startDate }} : {{ endDate }}</h1>
+          <span class="total-request-number">
+            {{ request }} {{ $t("Request") }}</span
+          >
         </div>
-        
       </div>
       <!-- add new parts -->
 
@@ -268,35 +278,32 @@
               </td>
 
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                 <p
+                <p
                   v-if="price.Vendor != null"
                   class="text-gray-900 whitespace-no-wrap"
                 >
                   {{ price.Vendor }}
                 </p>
                 <p v-else class="text-gray-900 whitespace-no-wrap">--</p>
-
               </td>
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                 <p
-                  v-if="price.Address != null"
+                <p
+                  v-if="price.Address.length"
                   class="text-gray-900 whitespace-no-wrap"
                 >
                   {{ price.Address }}
                 </p>
                 <p v-else class="text-gray-900 whitespace-no-wrap">--</p>
-
               </td>
 
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                 <p
+                <p
                   v-if="price.PricingGroup != null"
                   class="text-gray-900 whitespace-no-wrap"
                 >
                   {{ price.PricingGroup }}
                 </p>
                 <p v-else class="text-gray-900 whitespace-no-wrap">--</p>
-
               </td>
 
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -307,9 +314,7 @@
                   {{ price.price }}
                 </p>
                 <p v-else class="text-gray-900 whitespace-no-wrap">--</p>
-
               </td>
-             
             </tr>
           </tbody>
         </table>
@@ -379,6 +384,11 @@ export default {
       location_id: [],
       pricing_group: [],
       pricee: [],
+      Kpi: "",
+      request: "",
+      startDate: "",
+      endDate: "",
+      search: "",
     };
   },
   components: {
@@ -386,9 +396,9 @@ export default {
   },
   mounted() {
     // get all Pricing
-
     this.$axios.$post("/Pricing/GetPricingRequest").then((res) => {
-      console.log(res);
+      this.request = res.TotalRequest;
+      this.Kpi = res.KPI;
       this.pricing = res.quotes.data;
       this.totalPages = res.quotes.meta.last_page;
       this.perPage = res.quotes.meta.per_page;
@@ -425,6 +435,23 @@ export default {
   },
   created() {},
   methods: {
+    // filter data
+    filterData() {
+      let data = {
+        start_date: this.startDate,
+        end_date: this.endDate,
+        search: this.search,
+      };
+      this.$axios.$post("/Pricing/GetPricingRequest", data).then((res) => {
+        this.request = res.TotalRequest;
+        this.Kpi = res.KPI;
+        this.pricing = res.quotes.data;
+        this.totalPages = res.quotes.meta.last_page;
+        this.perPage = res.quotes.meta.per_page;
+        this.total = res.quotes.meta.total;
+        this.loading = false;
+      });
+    },
     // show more
     showMore(page) {
       this.page = page;
@@ -611,16 +638,17 @@ export default {
     // currect page
     currentPage(value) {
       console.log(value);
-      this.$axios.$get(`/Location/GetAllLocation?page=${value}`).then((res) => {
-        this.locations = res.Location.data;
-        this.totalPages = res.Location.meta.last_page;
-        this.perPage = res.Location.meta.per_page;
-        this.total = res.Location.meta.total;
-        this.permissions = res.permissions;
-        this.loading = false;
-      });
 
-      this.$router.push({ path: "/locations", query: { page: value } });
+      this.$axios
+        .$post(`/Pricing/GetPricingRequest?page=${value}`)
+        .then((res) => {
+          this.request = res.TotalRequest;
+          this.pricing = res.quotes.data;
+          this.totalPages = res.quotes.meta.last_page;
+          this.perPage = res.quotes.meta.per_page;
+          this.total = res.quotes.meta.total;
+          this.loading = false;
+        });
     },
   },
 };
@@ -845,6 +873,7 @@ input[type="file"] {
   width: 20px;
   margin-left: 118px;
 }
+
 .arrow-select-arabic {
   position: absolute;
   right: 331px;
@@ -983,5 +1012,23 @@ input[type="file"] {
   font-weight: 700;
   line-height: 24px; /* 133.333% */
   letter-spacing: -0.2px;
+}
+.date-round {
+  border-radius: 20px;
+  border: 1px solid var(--primary-dark-20, rgba(66, 66, 66, 0.2));
+  background: var(--colors-base-00, #fff);
+
+  /* Shadow/lg */
+  box-shadow: 0px 8px 11px -4px rgba(45, 54, 67, 0.04),
+    0px 20px 24px -4px rgba(45, 54, 67, 0.04);
+}
+.search-round {
+  border-radius: 20px;
+  border: 1px solid var(--primary-dark-20, rgba(66, 66, 66, 0.2));
+  background: var(--colors-base-00, #fff);
+
+  /* Shadow/lg */
+  box-shadow: 0px 8px 11px -4px rgba(45, 54, 67, 0.04),
+    0px 20px 24px -4px rgba(45, 54, 67, 0.04);
 }
 </style>

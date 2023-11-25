@@ -10,7 +10,9 @@
       <div class="p-[20px] flex justify-between">
         <div class="flex">
           <h1 class="total-request">{{ $t("total_request") }}</h1>
-          <span class="total-request-number"> 1000 {{ $t("Request") }}</span>
+          <span class="total-request-number">
+            {{ request }} {{ $t("Request") }}</span
+          >
         </div>
         <button
           @click="addNewParts()"
@@ -745,10 +747,10 @@
 
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <p
-                  v-if="price.Model != null"
+                  v-if="price.model != null"
                   class="text-gray-900 whitespace-no-wrap"
                 >
-                  {{ price.Model }}
+                  {{ price.model }}
                 </p>
                 <p v-else class="text-gray-900 whitespace-no-wrap">--</p>
               </td>
@@ -757,9 +759,8 @@
                 <div class="relative">
                   <img
                     :class="{
-                      'arrow-select-arabic-city': lang == 'ar',
+                      'arrow-select-arabic-city arrow-select-arrabic': lang == 'ar', 'arrow-select' : lang == 'en'
                     }"
-                    class="arrow-select"
                     src="../../assets/imgs/comman/Icon.png"
                     alt=""
                   />
@@ -783,10 +784,9 @@
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <div class="relative">
                   <img
-                    :class="{
-                      'arrow-select-arabic-city': lang == 'ar',
+                     :class="{
+                      'arrow-select-arabic-city arrow-select-vendor-arabic': lang == 'ar', 'arrow-select-vendor' : lang== 'en'
                     }"
-                    class="arrow-select-vendor"
                     src="../../assets/imgs/comman/Icon.png"
                     alt=""
                   />
@@ -810,9 +810,8 @@
                 <div class="relative">
                   <img
                     :class="{
-                      'arrow-select-arabic-city': lang == 'ar',
+                      'arrow-select-arabic-city arrow-select-vendor-arabic': lang == 'ar', 'arrow-select-vendor' : lang== 'en'
                     }"
-                    class="arrow-select arrow-select-vendor"
                     src="../../assets/imgs/comman/Icon.png"
                     alt=""
                   />
@@ -837,9 +836,8 @@
                 <div class="relative">
                   <img
                     :class="{
-                      'arrow-select-arabic-city': lang == 'ar',
+                      'arrow-select-arabic-city arrow-select-vendor-arabic': lang == 'ar', 'arrow-select-vendor' : lang== 'en'
                     }"
-                    class="arrow-select-vendor"
                     src="../../assets/imgs/comman/Icon.png"
                     alt=""
                   />
@@ -946,6 +944,7 @@ export default {
       location_id: [],
       pricing_group: [],
       pricee: [],
+      request: "",
     };
   },
   components: {
@@ -955,7 +954,7 @@ export default {
     // get all Pricing
 
     this.$axios.$post("/Pricing/GetPricingRequest").then((res) => {
-      console.log(res);
+      this.request = res.TotalRequest;
       this.pricing = res.quotes.data;
       this.totalPages = res.quotes.meta.last_page;
       this.perPage = res.quotes.meta.per_page;
@@ -975,14 +974,14 @@ export default {
     this.open = localStorage.getItem("open");
 
     // get all parts
-    this.$axios.$get("/Part/GetParts").then((res) => {
-      this.partsTable = res.Parts.data;
+    this.$axios.$get("/UnPaginated/getPart").then((res) => {
+      this.partsTable = res.Parts;
     });
 
     // get all Vendors
 
-    this.$axios.$get("/Vendor/GetAllVendor").then((res) => {
-      this.vendorTable = res.Vendor.data;
+    this.$axios.$get("/UnPaginated/allVendor").then((res) => {
+      this.vendorTable = res.Vendor;
     });
 
     // get all locations
@@ -1084,6 +1083,13 @@ export default {
         (this.warranty = false),
         (this.alternatives = [{ alternative_id: 1, code: "" }]);
     },
+    clearSavingData() {
+      (this.part_number = []),
+        (this.vendor_id = []),
+        (this.location_id = []),
+        (this.pricing_group = []),
+        (this.pricee = []);
+    },
     // save pricin index
     SavePricingRow(price, index) {
       console.log("Price at index", index, this.pricee);
@@ -1097,10 +1103,19 @@ export default {
           price: this.pricee[index],
         };
         this.$axios
-          .$post(`Pricing/UpdatePricingRequest/${price.id}`, dataToSave)
+          .$post(`Pricing/UpdatePricingRequest/${price.Id}`, dataToSave)
           .then((res) => {
             if (res.status == 200) {
               this.$toast.success(" Pricing Saved Successfully");
+              this.$axios.$post("/Pricing/GetPricingRequest").then((res) => {
+                this.request = res.TotalRequest;
+                this.pricing = res.quotes.data;
+                this.totalPages = res.quotes.meta.last_page;
+                this.perPage = res.quotes.meta.per_page;
+                this.total = res.quotes.meta.total;
+                this.loading = false;
+              });
+              this.clearSavingData();
             } else {
               this.$toast.error(res.message);
             }
@@ -1160,8 +1175,8 @@ export default {
               this.loading = false;
               this.$toast.success("Part Added Successfully");
               // get data again
-              this.$axios.$get("/Part/GetParts").then((res) => {
-                this.partsTable = res.Parts.data;
+              this.$axios.$get("/UnPaginated/getPart").then((res) => {
+                this.partsTable = res.Parts;
               });
               document.getElementById(`addPart`).classList.toggle("hidden");
               this.addNewParts();
@@ -1178,16 +1193,16 @@ export default {
     // currect page
     currentPage(value) {
       console.log(value);
-      this.$axios.$get(`/Location/GetAllLocation?page=${value}`).then((res) => {
-        this.locations = res.Location.data;
-        this.totalPages = res.Location.meta.last_page;
-        this.perPage = res.Location.meta.per_page;
-        this.total = res.Location.meta.total;
-        this.permissions = res.permissions;
+
+      this.$axios.$post(`/Pricing/GetPricingRequest?page=${value}`).then((res) => {
+        this.request = res.TotalRequest;
+        this.pricing = res.quotes.data;
+        this.totalPages = res.quotes.meta.last_page;
+        this.perPage = res.quotes.meta.per_page;
+        this.total = res.quotes.meta.total;
         this.loading = false;
       });
 
-      this.$router.push({ path: "/locations", query: { page: value } });
     },
   },
 };
@@ -1406,11 +1421,23 @@ input[type="file"] {
   width: 20px;
   margin-left: 83px;
 }
+.arrow-select-arrabic {
+  position: absolute;
+  margin-top: 19px;
+  width: 20px;
+  margin-left: 15px;
+}
 .arrow-select-vendor {
   position: absolute;
   margin-top: 19px;
   width: 20px;
   margin-left: 118px;
+}
+.arrow-select-vendor-arabic {
+  position: absolute;
+  margin-top: 19px;
+  width: 20px;
+  margin-left: 15px;
 }
 .arrow-select-arabic {
   position: absolute;
@@ -1421,7 +1448,7 @@ input[type="file"] {
 }
 .arrow-select-arabic-city {
   position: absolute;
-  right: 655px;
+  left: 655px;
   left: 0px !important;
   margin-top: 19px;
   width: 20px;

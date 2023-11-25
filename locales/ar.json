@@ -185,7 +185,7 @@
   "Permission": "الاذن",
   "Select All": "تحديد الكل",
   "Financial": "مالي",
-  "total_request": "الطلب الإجمالي",
+  "total_request": "اجمالي الطلبات",
   "Pricing": "التسعير",
   "There is No Location": "لا يوجد عناوين",
   "Select locations": "اختر عناوين",
@@ -202,5 +202,6 @@
   "Request":"طلب",
   "History":"تاريخ",
   "Your KPIs":"Your KPIs",
-  "Total Requests":"إجمالي الطلبات"
+  "Total Requests":"إجمالي الطلبات",
+  "save":"حفظ"
 }
