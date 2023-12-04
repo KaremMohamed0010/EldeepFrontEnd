@@ -233,7 +233,7 @@
                                   class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
                                   >{{ $t("Registration code") }} :</label
                                 >
-                               
+
                                 <NationalId
                                   :nationalId="registration_code"
                                   @update:nationalId="updateNationalId"
@@ -1072,11 +1072,11 @@
                                           }}
                                           :</label
                                         >
-                                         <NationalId
-                                  :nationalId="registration_code"
-                                  @update:nationalId="updateNationalId"
-                                  :isEdit="true"
-                                />
+                                        <NationalId
+                                          :nationalId="registration_code"
+                                          @update:nationalId="updateNationalId"
+                                          :isEdit="true"
+                                        />
                                       </div>
                                     </div>
                                   </div>
@@ -1330,94 +1330,203 @@
                               <h2 class="font-semibold text-2xl mt-[20px]">
                                 {{ $t("Vehicles") }} :
                               </h2>
-                              <div class="form-style p-[20px] mt-[20px]">
-                                <!-- plate Number -->
-                                <div class="group mt-[20px]">
-                                  <label
-                                    for="1"
-                                    class="block label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                                    >{{ $t("Plate number") }} :</label
-                                  >
-                                  <input
-                                    id="1"
-                                    type="text"
-                                    v-model="plate_number"
-                                    placeholder="ج ح ا ١٨٩"
-                                    class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
-                                  />
-                                </div>
+                              <div class="h-[480px] overflow-y-auto" v-if="cars.length">
+                                <div v-for="(car , i ) in cars" :key="i" class="form-style p-[20px] mt-[20px]">
+                                  <!-- plate Number -->
+                                  <div class="group mt-[20px]">
+                                    <label
+                                      for="1"
+                                      class="block label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                      >{{ $t("Plate number") }} :</label
+                                    >
+                                    <input
+                                      id="1"
+                                      type="text"
+                                      v-model="car.plate_number"
+                                      placeholder="ج ح ا ١٨٩"
+                                      class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                                    />
+                                  </div>
 
-                                <!-- conditions -->
+                                  <!-- conditions -->
 
-                                <div
-                                  class="flex justify-space-between mt-[30px] form-style p-[20px]"
-                                >
-                                  <h1 v-if="isCooperate" class="active-user">
-                                    {{ $t("Cooperate") }}
-                                  </h1>
+                                  <div
+                                    class="flex justify-space-between mt-[30px] form-style p-[20px]"
+                                  >
+                                    <h1 v-if="isCooperate" class="active-user">
+                                      {{ $t("Cooperate") }}
+                                    </h1>
 
-                                  <h1
-                                    v-if="isCooperate == false"
-                                    class="active-user"
+                                    <h1
+                                      v-if="isCooperate == false"
+                                      class="active-user"
+                                    >
+                                      {{ $t("Individual") }}
+                                    </h1>
+                                    <button
+                                      class="flex ltr items-center transition ease-in-out duration-300 w-10 h-4 rounded-full focus:outline-none"
+                                      :class="{ 'bg-[#1C2E50]': isCooperate }"
+                                      @click="isCooperate = !isCooperate"
+                                    >
+                                      <div
+                                        class="transition ease-in-out duration-300 rounded-full h-5 w-5 bg-white shadow border"
+                                        :class="{
+                                          'transform translate-x-full ':
+                                            isCooperate,
+                                        }"
+                                      ></div>
+                                    </button>
+                                  </div>
+                                  <!-- Vat Number -->
+                                  <div
+                                    v-if="isCooperate"
+                                    class="group mt-[20px]"
                                   >
-                                    {{ $t("Individual") }}
-                                  </h1>
-                                  <button
-                                    class="flex ltr items-center transition ease-in-out duration-300 w-10 h-4 rounded-full focus:outline-none"
-                                    :class="{ 'bg-[#1C2E50]': isCooperate }"
-                                    @click="isCooperate = !isCooperate"
+                                    <label
+                                      for="1"
+                                      class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                      >{{ $t("Vat Number") }} :</label
+                                    >
+                                    <VatNumber
+                                      :VatNumber="car.vin_number"
+                                      @update:VatNumber="UpdateVatNumer"
+                                      :isEdit="true"
+                                    />
+                                  </div>
+                                  <!-- register number  -->
+                                  <div
+                                    v-if="isCooperate"
+                                    class="group mt-[20px]"
                                   >
-                                    <div
-                                      class="transition ease-in-out duration-300 rounded-full h-5 w-5 bg-white shadow border"
+                                    <label
+                                      for="1"
+                                      class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                      >{{ $t("Register Number") }} :</label
+                                    >
+                                    <input
+                                      id="1"
                                       :class="{
-                                        'transform translate-x-full ':
-                                          isCooperate,
+                                        'outline-error':
+                                          emptyField.includes(
+                                            'register_number'
+                                          ),
                                       }"
-                                    ></div>
-                                  </button>
+                                      type="text"
+                                      v-model="car.registery_number"
+                                      placeholder="14%"
+                                      class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                                    />
+                                    <p
+                                      v-if="
+                                        emptyField.includes('register_number')
+                                      "
+                                      class="error-message"
+                                    >
+                                      {{ $t("Register Number") }}
+                                      {{ $t("required") }}
+                                    </p>
+                                  </div>
+                                  <!-- ssn number individual -->
                                 </div>
-                                <!-- Vat Number -->
-                                <div v-if="isCooperate" class="group mt-[20px]">
-                                  <label
-                                    for="1"
-                                    class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                                    >{{ $t("Vat Number") }} :</label
+                              </div>
+                              <div v-else-if="cars.length == 0">
+                                <div class="form-style p-[20px] mt-[20px]">
+                                  <!-- plate Number -->
+                                  <div class="group mt-[20px]">
+                                    <label
+                                      for="1"
+                                      class="block label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                      >{{ $t("Plate number") }} :</label
+                                    >
+                                    <input
+                                      id="1"
+                                      type="text"
+                                      v-model="plate_number"
+                                      placeholder="ج ح ا ١٨٩"
+                                      class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                                    />
+                                  </div>
+
+                                  <!-- conditions -->
+
+                                  <div
+                                    class="flex justify-space-between mt-[30px] form-style p-[20px]"
                                   >
-                                  <VatNumber
-                                    :VatNumber="vat_number"
-                                    @update:VatNumber="UpdateVatNumer"
-                                    :isEdit="true"
-                                  />
+                                    <h1 v-if="isCooperate" class="active-user">
+                                      {{ $t("Cooperate") }}
+                                    </h1>
+
+                                    <h1
+                                      v-if="isCooperate == false"
+                                      class="active-user"
+                                    >
+                                      {{ $t("Individual") }}
+                                    </h1>
+                                    <button
+                                      class="flex ltr items-center transition ease-in-out duration-300 w-10 h-4 rounded-full focus:outline-none"
+                                      :class="{ 'bg-[#1C2E50]': isCooperate }"
+                                      @click="isCooperate = !isCooperate"
+                                    >
+                                      <div
+                                        class="transition ease-in-out duration-300 rounded-full h-5 w-5 bg-white shadow border"
+                                        :class="{
+                                          'transform translate-x-full ':
+                                            isCooperate,
+                                        }"
+                                      ></div>
+                                    </button>
+                                  </div>
+                                  <!-- Vat Number -->
+                                  <div
+                                    v-if="isCooperate"
+                                    class="group mt-[20px]"
+                                  >
+                                    <label
+                                      for="1"
+                                      class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                      >{{ $t("Vat Number") }} :</label
+                                    >
+                                    <VatNumber
+                                      :VatNumber="vat_number"
+                                      @update:VatNumber="UpdateVatNumer"
+                                      :isEdit="true"
+                                    />
+                                  </div>
+                                  <!-- register number  -->
+                                  <div
+                                    v-if="isCooperate"
+                                    class="group mt-[20px]"
+                                  >
+                                    <label
+                                      for="1"
+                                      class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                      >{{ $t("Register Number") }} :</label
+                                    >
+                                    <input
+                                      id="1"
+                                      :class="{
+                                        'outline-error':
+                                          emptyField.includes(
+                                            'register_number'
+                                          ),
+                                      }"
+                                      type="text"
+                                      v-model="register_number"
+                                      placeholder="14%"
+                                      class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                                    />
+                                    <p
+                                      v-if="
+                                        emptyField.includes('register_number')
+                                      "
+                                      class="error-message"
+                                    >
+                                      {{ $t("Register Number") }}
+                                      {{ $t("required") }}
+                                    </p>
+                                  </div>
+                                  <!-- ssn number individual -->
                                 </div>
-                                <!-- register number  -->
-                                <div v-if="isCooperate" class="group mt-[20px]">
-                                  <label
-                                    for="1"
-                                    class="block flex label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
-                                    >{{ $t("Register Number") }} :</label
-                                  >
-                                  <input
-                                    id="1"
-                                    :class="{
-                                      'outline-error':
-                                        emptyField.includes('register_number'),
-                                    }"
-                                    type="text"
-                                    v-model="register_number"
-                                    placeholder="14%"
-                                    class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
-                                  />
-                                  <p
-                                    v-if="
-                                      emptyField.includes('register_number')
-                                    "
-                                    class="error-message"
-                                  >
-                                    {{ $t("Register Number") }}
-                                    {{ $t("required") }}
-                                  </p>
-                                </div>
-                                <!-- ssn number individual -->
                               </div>
                             </div>
                             <!-- tabs end -->
@@ -1984,6 +2093,7 @@ export default {
       // search
       search: "",
       customer_codee: null,
+      cars: [],
     };
   },
   mounted() {
@@ -2249,6 +2359,7 @@ export default {
           this.data = res.Customer;
           this.customer_code = res.Customer.customer_code;
           this.customer_name = res.Customer.customer_name;
+          this.cars = res.Customer.cars;
           if (res.Customer.vat_number == "null") {
             this.vat_number = null;
           }
@@ -2291,10 +2402,10 @@ export default {
           if (res.Customer.vat_number != "null") {
             this.vat_number = res.Customer.vat_number;
           }
-          if(res.Customer.credit_limit == 'null'){
+          if (res.Customer.credit_limit == "null") {
             this.credit_limit = null;
           }
-         
+
           if (res.Customer.registry_number == "null") {
             this.register_number = null;
           }
