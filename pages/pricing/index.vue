@@ -802,9 +802,9 @@
 
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <div class="relative">
-                  <select
+                  <select style="padding: 12px;"
                     v-model="part_number[index + i]"
-                    class="border-select w-[117px] py-1 px-2 bg-white"
+                    class="border-select w-[117px] py-1 p-[12px] px-2 bg-white"
                     name="whatever"
                     id="frm-whatever"
                   >
@@ -821,9 +821,9 @@
 
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <div class="relative">
-                  <select
+                  <select style="padding: 12px;"
                     v-model="vendor_id[index + i]"
-                    class="border-select w-[153px] py-1 px-2 bg-white"
+                    class="border-select w-[153px] py-1 p-[12px] px-2 bg-white"
                     name="whatever"
                     id="frm-whatever"
                   >
@@ -839,9 +839,9 @@
               </td>
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <div class="relative">
-                  <select
+                  <select style="padding: 12px;"
                     v-model="location_id[index + i]"
-                    class="border-select w-[153px] py-1 px-2 bg-white"
+                    class="border-select w-[153px] py-1 p-[12px] px-2 bg-white"
                     name="whatever"
                     id="frm-whatever"
                   >
@@ -858,9 +858,9 @@
 
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <div class="relative">
-                  <select
+                  <select style="padding: 12px;"
                     v-model="pricing_group[index + i]"
-                    class="border-select w-[153px] py-1 px-2 bg-white"
+                    class="border-select w-[153px] py-1 p-[12px] px-2 bg-white"
                     name="whatever"
                     id="frm-whatever"
                   >
