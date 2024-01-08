@@ -120,7 +120,9 @@
     >
       <div class="p-[20px] flex justify-between">
         <div class="flex">
-          <h1 class="total-request">{{ startDate }} : {{ endDate }}</h1>
+          <h1 v-if="startDate" class="total-request">
+            {{ startDate }} : {{ endDate }}
+          </h1>
           <span class="total-request-number">
             {{ request }} {{ $t("Request") }}</span
           >
@@ -132,6 +134,9 @@
         <table class="min-w-full leading-normal table-style">
           <thead>
             <tr>
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <div class="flex"></div>
+              </td>
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <div class="flex">
                   <div class="ml-3">
@@ -211,8 +216,59 @@
               </td>
             </tr>
           </thead>
-          <tbody>
-            <tr v-for="(price, index) in pricing" :key="index">
+          <tbody v-for="(data, index) in pricing" :key="index">
+            <tr>
+              <td
+                class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+              ></td>
+
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <div class="flex">
+                  <div class="ml-3"></div>
+                </div>
+              </td>
+              <td
+                class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+              ></td>
+              <td
+                class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+              ></td>
+              <td
+                class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+              ></td>
+
+              <td
+                class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+              ></td>
+              <td
+                class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+              ></td>
+
+              <td
+                class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+              ></td>
+
+              <td
+                class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+              ></td>
+
+              <td
+                class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+              ></td>
+              <td
+                class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+              ></td>
+
+              <td
+                class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+              ></td>
+
+              <td
+                class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+              ></td>
+            </tr>
+            <tr v-for="(price, i) in data.QuoteParts" :key="i">
+              <td></td>
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <div class="flex">
                   <div class="ml-3">
@@ -240,10 +296,10 @@
 
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <p
-                  v-if="price.VinCar != null"
+                  v-if="price.VinNumber != null"
                   class="text-gray-900 whitespace-no-wrap"
                 >
-                  {{ price.VinCar }}
+                  {{ price.VinNumber }}
                 </p>
                 <p v-else class="text-gray-900 whitespace-no-wrap">--</p>
               </td>
@@ -286,7 +342,10 @@
                 </p>
                 <p v-else class="text-gray-900 whitespace-no-wrap">--</p>
               </td>
-              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <td
+                v-if="price.Address"
+                class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+              >
                 <p
                   v-if="price.Address.length"
                   class="text-gray-900 whitespace-no-wrap"
@@ -308,7 +367,7 @@
 
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <p
-                  v-if="price.price != null"
+                  v-if="price.Price != null"
                   class="text-gray-900 whitespace-no-wrap"
                 >
                   {{ price.price }}

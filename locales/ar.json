@@ -203,5 +203,7 @@
   "History":"تاريخ",
   "Your KPIs":"Your KPIs",
   "Total Requests":"إجمالي الطلبات",
-  "save":"حفظ"
+  "save":"حفظ",
+  "Add Price" :"اضافه سعر",
+  "ORM Price":"سعر ORM"
 }

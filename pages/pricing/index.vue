@@ -621,6 +621,9 @@
           <thead>
             <tr>
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <div class="flex"></div>
+              </td>
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <div class="flex">
                   <div class="ml-3">
                     <p class="text-gray-900 whitespace-no-wrap table-headers">
@@ -689,18 +692,60 @@
               </td>
 
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                <p class="text-gray-900 whitespace-no-wrap table-headers">
-                  {{ $t("Price") }}
-                </p>
-              </td>
-
-              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <p class="text-gray-900 whitespace-no-wrap table-headers"></p>
               </td>
             </tr>
           </thead>
-          <tbody>
-            <tr v-for="(price, index) in pricing" :key="index">
+          <tbody v-for="(data, index) in pricing" :key="index">
+            <tr>
+              <td
+                class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+              ></td>
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <div class="flex"></div>
+              </td>
+              <td
+                class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+              ></td>
+              <td
+                class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+              ></td>
+              <td
+                class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+              ></td>
+
+              <td
+                class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+              ></td>
+              <td
+                class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+              ></td>
+
+              <td
+                class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+              ></td>
+
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                --
+              </td>
+
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                --
+              </td>
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                --
+              </td>
+
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                --
+              </td>
+
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                --
+              </td>
+            </tr>
+            <tr v-for="(price, i) in data.QuoteParts" :key="i">
+              <td></td>
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <div class="flex">
                   <div class="ml-3">
@@ -728,10 +773,10 @@
 
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <p
-                  v-if="price.VinCar != null"
+                  v-if="price.VinNumber != null"
                   class="text-gray-900 whitespace-no-wrap"
                 >
-                  {{ price.VinCar }}
+                  {{ price.VinNumber }}
                 </p>
                 <p v-else class="text-gray-900 whitespace-no-wrap">--</p>
               </td>
@@ -757,16 +802,9 @@
 
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <div class="relative">
-                  <img
-                    :class="{
-                      'arrow-select-arabic-city arrow-select-arrabic': lang == 'ar', 'arrow-select' : lang == 'en'
-                    }"
-                    src="../../assets/imgs/comman/Icon.png"
-                    alt=""
-                  />
                   <select
-                    v-model="part_number[index]"
-                    class="appearance-none border-select w-[117px] py-1 px-2 bg-white"
+                    v-model="part_number[index + i]"
+                    class="border-select w-[117px] py-1 px-2 bg-white"
                     name="whatever"
                     id="frm-whatever"
                   >
@@ -783,16 +821,9 @@
 
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <div class="relative">
-                  <img
-                     :class="{
-                      'arrow-select-arabic-city arrow-select-vendor-arabic': lang == 'ar', 'arrow-select-vendor' : lang== 'en'
-                    }"
-                    src="../../assets/imgs/comman/Icon.png"
-                    alt=""
-                  />
                   <select
-                    v-model="vendor_id[index]"
-                    class="appearance-none border-select w-[153px] py-1 px-2 bg-white"
+                    v-model="vendor_id[index + i]"
+                    class="border-select w-[153px] py-1 px-2 bg-white"
                     name="whatever"
                     id="frm-whatever"
                   >
@@ -808,16 +839,9 @@
               </td>
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <div class="relative">
-                  <img
-                    :class="{
-                      'arrow-select-arabic-city arrow-select-vendor-arabic': lang == 'ar', 'arrow-select-vendor' : lang== 'en'
-                    }"
-                    src="../../assets/imgs/comman/Icon.png"
-                    alt=""
-                  />
                   <select
-                    v-model="location_id[index]"
-                    class="appearance-none border-select w-[153px] py-1 px-2 bg-white"
+                    v-model="location_id[index + i]"
+                    class="border-select w-[153px] py-1 px-2 bg-white"
                     name="whatever"
                     id="frm-whatever"
                   >
@@ -834,16 +858,9 @@
 
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <div class="relative">
-                  <img
-                    :class="{
-                      'arrow-select-arabic-city arrow-select-vendor-arabic': lang == 'ar', 'arrow-select-vendor' : lang== 'en'
-                    }"
-                    src="../../assets/imgs/comman/Icon.png"
-                    alt=""
-                  />
                   <select
-                    v-model="pricing_group[index]"
-                    class="appearance-none border-select w-[153px] py-1 px-2 bg-white"
+                    v-model="pricing_group[index + i]"
+                    class="border-select w-[153px] py-1 px-2 bg-white"
                     name="whatever"
                     id="frm-whatever"
                   >
@@ -855,21 +872,12 @@
               </td>
 
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                <input
-                  id="1"
-                  type="text"
-                  v-model="pricee[index]"
-                  placeholder=""
-                  class="peer w-[120px] input-style h-10 rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
-                />
-              </td>
-              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <button
                   :disabled="loading"
                   :class="{
                     'cusror-disabled': loading,
                   }"
-                  @click="SavePricingRow(price, index)"
+                  @click="SavePricingRow(price, index + i)"
                   class="close-btn rounded-lg w-[100%] px-4 py-2 bg-gray-200 hover:bg-gray-300 duration-300"
                 >
                   {{ $t("save") }}
@@ -945,6 +953,7 @@ export default {
       pricing_group: [],
       pricee: [],
       request: "",
+      lastCounts: {}, // Object to store last counts for each pricing index
     };
   },
   components: {
@@ -991,6 +1000,10 @@ export default {
   },
   created() {},
   methods: {
+    // toggle modal add new price
+    addNewPrice(status, id) {
+      document.getElementById(`addPrice` + id).classList.toggle("hidden");
+    },
     // show more
     showMore(page) {
       this.page = page;
@@ -1092,7 +1105,7 @@ export default {
     },
     // save pricin index
     SavePricingRow(price, index) {
-      console.log("Price at index", index, this.pricee);
+      console.log(index);
       const sameIndex = index;
       if (sameIndex == index) {
         const dataToSave = {
@@ -1194,15 +1207,16 @@ export default {
     currentPage(value) {
       console.log(value);
 
-      this.$axios.$post(`/Pricing/GetPricingRequest?page=${value}`).then((res) => {
-        this.request = res.TotalRequest;
-        this.pricing = res.quotes.data;
-        this.totalPages = res.quotes.meta.last_page;
-        this.perPage = res.quotes.meta.per_page;
-        this.total = res.quotes.meta.total;
-        this.loading = false;
-      });
-
+      this.$axios
+        .$post(`/Pricing/GetPricingRequest?page=${value}`)
+        .then((res) => {
+          this.request = res.TotalRequest;
+          this.pricing = res.quotes.data;
+          this.totalPages = res.quotes.meta.last_page;
+          this.perPage = res.quotes.meta.per_page;
+          this.total = res.quotes.meta.total;
+          this.loading = false;
+        });
     },
   },
 };

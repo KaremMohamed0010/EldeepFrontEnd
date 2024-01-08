@@ -502,6 +502,7 @@ export default {
       localStorage.setItem("token", "Bearer", "");
       localStorage.setItem("name", "");
       localStorage.setItem("permissions" , "");
+      localStorage.setItem("role" , "")
 
       // this.$router.push("/");
       location.reload();
