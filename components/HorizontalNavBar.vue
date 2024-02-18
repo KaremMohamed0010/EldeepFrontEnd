@@ -1,6 +1,7 @@
 <template>
-  <div  class="w-[100%]">
+  <div class="w-[100%]">
     <nav
+      :class="lang == 'en' ? 'ml-[68px]' : 'mr-[68px]'"
       class="flex flex-wrap items-center justify-between p-5 bg-white mt-[3px]"
     >
       <h1 v-if="this.$route.path == '/dashboard'" class="dashboard">
@@ -22,14 +23,23 @@
       <h1 v-if="this.$route.path == '/conditions'" class="dashboard">
         {{ $t(`Setups Conditions`) }}
       </h1>
-       <h1 v-if="this.$route.path == '/locations'" class="dashboard">
+      <h1 v-if="this.$route.path == '/locations'" class="dashboard">
         {{ $t(`Setups Locations`) }}
       </h1>
-       <h1 v-if="this.$route.path == '/pricing'" class="dashboard">
+      <h1 v-if="this.$route.path == '/pricing'" class="dashboard">
         {{ $t(`Pricing`) }}
       </h1>
-       <h1 v-if="this.$route.path == '/history'" class="dashboard">
+      <h1 v-if="this.$route.path == '/history'" class="dashboard">
         {{ $t(`History`) }}
+      </h1>
+      <h1 v-if="this.$route.path == '/purchase'" class="dashboard">
+        {{ $t(`Purchase`) }}
+      </h1>
+      <h1 v-if="this.$route.path == '/delivery'" class="dashboard">
+        {{ $t(`Delivery Tracking`) }}
+      </h1>
+      <h1 v-if="this.$route.path == '/financial'" class="dashboard">
+        {{ $t(`Financial`) }}
       </h1>
       <div class="flex md:hidden">
         <button id="hamburger">

@@ -12,7 +12,13 @@ export default {
       { hid: "description", name: "description", content: "" },
       { name: "format-detection", content: "telephone=no" },
     ],
-    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+    link: [
+      { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
+      {
+        rel: "stylesheet",
+        href: "https://cdn.jsdelivr.net/npm/vue-select@3.16.0/dist/vue-select.css",
+      },
+    ],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -22,6 +28,7 @@ export default {
   plugins: [
     "~/plugins/axios",
     { src: "~/plugins/apexcChart.js", mode: "client" },
+    "~/plugins/v-select.js",
 
     // Other plugins
   ], // Auto import components: https://go.nuxtjs.dev/config-components
@@ -42,7 +49,6 @@ export default {
       brands: true,
     },
   },
-
 
   script: [
     {

@@ -1,5 +1,8 @@
 <template>
-  <div class="flex p-[12px] justify-end">
+  <div
+    :class="lang == 'en' ? 'ml-[68px]' : 'mr-[68px]'"
+    class="flex p-[12px] justify-end"
+  >
     <div v-if="loading == true" class="flex justify-center w-[100%]">
       <Loading :text="'Loading'" />
     </div>
@@ -18,7 +21,7 @@
     >
       <div class="w-[100%]">
         <div
-          style="padding-top: 0px"
+          style="padding-top: 0px;"
           class="-mx-4 sm:-mx-8 px-4 py-4 overflow-x-auto add-margin-left remove-margin-left"
         >
           <div class="inline-block min-w-full overflow-hidden">
@@ -1330,8 +1333,15 @@
                               <h2 class="font-semibold text-2xl mt-[20px]">
                                 {{ $t("Vehicles") }} :
                               </h2>
-                              <div class="h-[480px] overflow-y-auto" v-if="cars.length">
-                                <div v-for="(car , i ) in cars" :key="i" class="form-style p-[20px] mt-[20px]">
+                              <div
+                                class="h-[480px] overflow-y-auto"
+                                v-if="cars.length"
+                              >
+                                <div
+                                  v-for="(car, i) in cars"
+                                  :key="i"
+                                  class="form-style p-[20px] mt-[20px]"
+                                >
                                   <!-- plate Number -->
                                   <div class="group mt-[20px]">
                                     <label

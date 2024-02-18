@@ -1,5 +1,8 @@
 <template>
-  <div class="flex p-[12px] justify-end">
+  <div
+    :class="lang == 'en' ? 'ml-[68px]' : 'mr-[68px]'"
+    class="flex p-[12px] justify-end"
+  >
     <div v-if="loading == true" class="flex justify-center w-[100%]">
       <Loading :text="'Loading'" />
     </div>
@@ -112,7 +115,10 @@
                         <div
                           data-tabopen="permission"
                           @click="show('permission')"
-                          :class="{ 'tab-style': showPermission }"
+                          :class="{
+                            'tab-style': showPermission,
+                            disabled: employee_group != '1',
+                          }"
                           class="tabbtn tab-un-active cursor-pointer px-2 py-1 ml-[26px]"
                         >
                           {{ $t("Permission") }}
@@ -375,6 +381,7 @@
                                   </label>
                                   <div class="flex">
                                     <select
+                                      @input="removeDisabledGroup"
                                       v-model="employee_group"
                                       :class="{
                                         'outline-error':
@@ -2969,6 +2976,7 @@ export default {
       // data
       employee_name: null,
       employee_group: null,
+      disabledd: true,
       employee_code: null,
       employee_position: null,
       vat_number: null,
@@ -3117,6 +3125,14 @@ export default {
       });
   },
   methods: {
+    // check if employee group is admin or not to close the permission
+    removeDisabledGroup() {
+      if (this.employee_group == "1") {
+        this.disabledd = false;
+      } else {
+        this.disabled = true;
+      }
+    },
     // clear location
     clearLocation() {
       (this.country_name = null),
@@ -3632,14 +3648,16 @@ export default {
     },
     // show and hide
     show(type) {
-      if (type == "Informations") {
-        this.showInformation = true;
-        this.showVichels = false;
-        this.showPermission = false;
-      } else if (type == "permission") {
-        this.showPermission = true;
-        this.showInformation = false;
-        this.showVichels = false;
+      if (this.employee_group == "1") {
+        if (type == "Informations") {
+          this.showInformation = true;
+          this.showVichels = false;
+          this.showPermission = false;
+        } else if (type == "permission") {
+          this.showPermission = true;
+          this.showInformation = false;
+          this.showVichels = false;
+        }
       }
     },
     // allow numbers only

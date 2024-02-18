@@ -15,7 +15,10 @@
         </p>
       </h1>
     </div>
-    <div class="grid grid-cols-3 gap-2 p-[20px]">
+    <div
+      :class="'ml-[20px]' ? lang == 'en' : 'mr-[20px]'"
+      class="grid grid-cols-3 gap-2 p-[20px]"
+    >
       <div class="bg-white p-10 rounded">
         <div class="flex justify-space-between">
           <h1 class="apex-line-title">
@@ -113,7 +116,7 @@
           </select>
         </div>
 
-        <div class="relative overflow-x-auto">
+        <div style="height: 300px; overflow-y: auto;" class="relative overflow-x-auto">
           <table class="min-w-full leading-normal table-style">
             <thead>
               <tr>
@@ -124,7 +127,7 @@
                   <div class="flex">
                     <div class="ml-3">
                       <p class="text-gray-900 whitespace-no-wrap table-headers">
-                        {{ $t("total") }}
+                        {{ $t("quote") }}
                       </p>
                     </div>
                   </div>
@@ -133,10 +136,30 @@
                   style="width: 80px"
                   class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
                 >
-                 
+                  {{ $t("value") }}
                 </td>
               </tr>
-              <!-- <tr>
+            </thead>
+            <tbody>
+              <tr v-for="(item, i) in structuredQuotes" :key="i">
+                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                  <div class="flex">
+                    <div class="ml-3">
+                      <p class="text-gray-900 whitespace-no-wrap table-text">
+                        {{ item.quote }}
+                      </p>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                  <p class="text-gray-900 whitespace-no-wrap table-text">
+                    {{ item.value }}
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- <tr>
                 <td
                   style="width: 80px"
                   class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
@@ -175,8 +198,6 @@
                 
                 </td>
               </tr> -->
-            </thead>
-          </table>
         </div>
       </div>
     </div>
@@ -189,17 +210,17 @@ export default {
     return {
       // Requester department
       filter: "",
-      customerr : "",
+      customerr: "",
       customer: "Select Customer",
       location: "Select Location",
-      seriesPiePricingChart: [20, 40, 50],
+      seriesPiePricingChart: [],
       chartOptionsPiePricingChart: {
-        colors: ["#7B61FF", "#002D56", "#FFC125"],
+        colors: ["#7B61FF", "#002D56", "#FFC125", "#FF0000"],
         chart: {
           width: 380,
           type: "pie",
         },
-        labels: ["Not Available", "Price", "Quality"],
+        labels: ["ReturnOrder", "PoorMaterial", "HighCost", "PartDefect"],
         responsive: [
           {
             breakpoint: 480,
@@ -216,6 +237,7 @@ export default {
       },
 
       lang: "",
+      structuredQuotes: [],
     };
   },
   methods: {
@@ -228,6 +250,14 @@ export default {
   },
   mounted() {
     this.lang = localStorage.getItem("lang");
+    this.$axios.get("/Dashboard/RejectedItemWithReason").then((res) => {
+      console.log(res.data.Labels, "res");
+      this.labels = res.data.Labels;
+      this.seriesPiePricingChart = res.data.Series;
+    });
+    this.$axios.post("Dashboard/TotalQuotationSale").then((res) => {
+      this.structuredQuotes = res.data.structuredQuotes;
+    });
   },
 };
 </script>

@@ -1,135 +1,21 @@
 <template>
   <div :class="lang == 'en' ? 'ml-[68px]' : 'mr-[68px]'" class="p-[12px]">
-    <div v-if="loading == false" class="mb-[13px] flex justify-space-between">
-      <!-- add btn -->
-      <div
-        :class="{
-          'p-[30px]': open == 'true',
-          'p-[25px]': open == 'false',
-        }"
-        class="bg-filter flex items-center w-[200px]"
-      >
-        <img src="../../assets/imgs/verticalNav/award.png" alt="" />
-        <h1 class="kpis">{{ $t("Your KPIs") }}</h1>
-        <h3 class="kpi-number">{{ Kpi }}</h3>
-      </div>
-
-      <div
-        :class="{
-          'p-[20px]': open == 'true',
-          'p-[25px]': open == 'false',
-        }"
-        class="bg-filter flex items-center justify-between w-[270px]"
-      >
-        <img src="../../assets/imgs/verticalNav/Icon.svg" alt="" />
-
-        <h1 class="total-requests">{{ $t("Total Requests") }}</h1>
-        <h3 class="kpi-number">{{ request }}</h3>
-      </div>
-
-      <div class="bg-filter w-[72%] flex">
-        <div class="items-center flex p-[30px]">
-          <h1 class="filter-text">{{ $t("Filter") }}</h1>
-        </div>
-        <!-- seacrh -->
-        <div class="w-[50%] flex items-center">
-          <div
-            class="items-center search-round justify-between flex rounded-full shadow-lg p-2 sticky w-[100%]"
-            style="top: 5px"
-          >
-            <div style="border-right: 1px solid #ebebeb">
-              <div
-                class="p-2 mr-1 rounded-full hover:bg-gray-100 cursor-pointer"
-              >
-                <img
-                  class="w-[70%]"
-                  src="../../assets/imgs/verticalNav/search-status.png"
-                  alt=""
-                />
-              </div>
-            </div>
-
-            <input
-              class="font-bold uppercase rounded-full w-full py-4 pl-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:text-sm text-xs"
-              type="text"
-              v-model="search"
-              :placeholder="$t('search')"
-            />
-
-            <div :class="[{ rotate: lang == 'ar' }]" class="cursor-pointer">
-              <img
-                class="w-[70%]"
-                src="../../assets/imgs/verticalNav/send.png"
-                alt=""
-              />
-            </div>
-          </div>
-        </div>
-        <!--  -->
-        <div class="w-[40%] ml-[21px] flex items-center">
-          <div
-            class="items-center date-round justify-between flex rounded-full shadow-lg p-2 sticky w-[100%]"
-            style="top: 5px"
-          >
-            <div class="flex items-center">
-              <div class="mr-4">
-                <input
-                  id="start_date"
-                  class="font-bold uppercase rounded-full py-4 pl-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:text-sm text-xs"
-                  type="date"
-                  v-model="startDate"
-                  placeholder="Start Date"
-                />
-              </div>
-
-              <div>
-                <input
-                  id="end_date"
-                  class="font-bold uppercase rounded-full py-4 pl-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:text-sm text-xs"
-                  type="date"
-                  v-model="endDate"
-                  placeholder="End Date"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- apply btn  -->
-        <div
-          :class="{ 'mr-[20px]': lang == 'ar' }"
-          class="grid ml-[22px] mr-[20px] items-center"
-        >
-          <button
-            @click="filterData()"
-            class="bg-blue-500 bg-[#394889] flex add-new hover:bg-blue-900 text-white font-bold py-2 px-4 rounded"
-          >
-            <p class="">
-              {{ $t("Apply") }}
-            </p>
-          </button>
-        </div>
-      </div>
-    </div>
     <div v-if="loading == true" class="flex justify-center w-[100%]">
       <Loading :text="'Loading'" />
     </div>
     <div
-      v-if="loading == false && pricing.length > 0"
+      v-if="loading == false && financial.length > 0"
       class="p-[20px] bg-table"
     >
       <div class="p-[20px] flex justify-between">
         <div class="flex">
-          <h1 v-if="startDate" class="total-request">
-            {{ startDate }} : {{ endDate }}
-          </h1>
+          <h1 class="total-request">{{ $t("total_request") }}</h1>
           <span class="total-request-number">
             {{ request }} {{ $t("Request") }}</span
           >
         </div>
       </div>
       <!-- add new parts -->
-
       <div class="table-container overflow-x-auto">
         <table class="min-w-full leading-normal table-style">
           <thead>
@@ -183,31 +69,24 @@
 
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <p class="text-gray-900 whitespace-no-wrap table-headers">
-                  {{ $t("Part N.O.") }}
-                </p>
-              </td>
-
-              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                <p class="text-gray-900 whitespace-no-wrap table-headers">
-                  {{ $t("Vendor") }}
-                </p>
-              </td>
-
-              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                <p class="text-gray-900 whitespace-no-wrap table-headers">
-                  {{ $t("Location") }}
-                </p>
-              </td>
-
-              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                <p class="text-gray-900 whitespace-no-wrap table-headers">
                   {{ $t("Pricing group") }}
                 </p>
               </td>
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <p class="text-gray-900 whitespace-no-wrap table-headers">
+                  {{ $t("Payment Term") }}
+                </p>
+              </td>
 
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <p class="text-gray-900 whitespace-no-wrap table-headers">
-                  {{ $t("Price") }}
+                  {{ $t("customer Code") }}
+                </p>
+              </td>
+
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <p class="text-gray-900 whitespace-no-wrap table-headers">
+                  {{ $t("Approval") }}
                 </p>
               </td>
 
@@ -216,16 +95,13 @@
               </td>
             </tr>
           </thead>
-          <tbody v-for="(data, index) in pricing" :key="index">
+          <tbody v-for="(data, index) in financial" :key="index">
             <tr>
               <td
                 class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
               ></td>
-
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                <div class="flex">
-                  <div class="ml-3"></div>
-                </div>
+                <div class="flex"></div>
               </td>
               <td
                 class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
@@ -248,24 +124,24 @@
                 class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
               ></td>
 
-              <td
-                class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
-              ></td>
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                --
+              </td>
 
-              <td
-                class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
-              ></td>
-              <td
-                class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
-              ></td>
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                --
+              </td>
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                --
+              </td>
 
-              <td
-                class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
-              ></td>
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                --
+              </td>
 
-              <td
-                class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
-              ></td>
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                --
+              </td>
             </tr>
             <tr v-for="(price, i) in data.QuoteParts" :key="i">
               <td></td>
@@ -315,64 +191,90 @@
 
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <p
-                  v-if="price.Model != null"
+                  v-if="price.model != null"
                   class="text-gray-900 whitespace-no-wrap"
                 >
-                  {{ price.Model }}
+                  {{ price.model }}
                 </p>
                 <p v-else class="text-gray-900 whitespace-no-wrap">--</p>
               </td>
 
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <div class="relative">
+                  <select
+                    style="padding: 12px"
+                    v-model="pricing_group[index + i]"
+                    class="border-select w-[153px] py-1 p-[12px] px-2 bg-white"
+                    name="whatever"
+                    id="frm-whatever"
+                  >
+                    <option value="100">100</option>
+                    <option value="130">130</option>
+                    <option value="140">140</option>
+                  </select>
+                </div>
+              </td>
+
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <p
-                  v-if="price.PartNO != null"
+                  v-if="price.PaymentMethod != null"
                   class="text-gray-900 whitespace-no-wrap"
                 >
-                  {{ price.PartNO }}
+                  {{ price.PaymentMethod }}
                 </p>
                 <p v-else class="text-gray-900 whitespace-no-wrap">--</p>
               </td>
 
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                <p
-                  v-if="price.Vendor != null"
-                  class="text-gray-900 whitespace-no-wrap"
-                >
-                  {{ price.Vendor }}
-                </p>
-                <p v-else class="text-gray-900 whitespace-no-wrap">--</p>
-              </td>
-              <td
-                v-if="price.Address"
-                class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
-              >
-                <p
-                  v-if="price.Address.length"
-                  class="text-gray-900 whitespace-no-wrap"
-                >
-                  {{ price.Address }}
-                </p>
-                <p v-else class="text-gray-900 whitespace-no-wrap">--</p>
+                <div class="relative">
+                  <select
+                    style="padding: 12px"
+                    v-model="customer_id[index + i]"
+                    class="border-select w-[153px] py-1 p-[12px] px-2 bg-white"
+                    name="whatever"
+                    id="frm-whatever"
+                  >
+                    <option
+                      v-for="(customer, i) in Customers"
+                      :value="customer.id"
+                      :key="i"
+                    >
+                      {{ customer.customer_code }}
+                    </option>
+                  </select>
+                </div>
               </td>
 
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                <p
-                  v-if="price.PricingGroup != null"
-                  class="text-gray-900 whitespace-no-wrap"
-                >
-                  {{ price.PricingGroup }}
-                </p>
-                <p v-else class="text-gray-900 whitespace-no-wrap">--</p>
+                <div class="relative">
+                  <label
+                    :for="`toggle` + price.Id"
+                    class="flex items-center cursor-pointer"
+                  >
+                    <input
+                      v-model="approve[index + i]"
+                      type="checkbox"
+                      :id="`toggle` + price.Id"
+                      class="sr-only peer"
+                    />
+                    <div
+                      class="block relative bg-[#D1D1D1] w-16 h-9 p-1 rounded-full before:absolute before:bg-[#394889] before:w-7 before:h-7 before:p-1 before:rounded-full before:transition-all before:duration-500 before:left-1 peer-checked:before:left-8 peer-checked:bg-[#394889] peer-checked:before:bg-white"
+                    ></div>
+                  </label>
+                </div>
               </td>
 
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                <p
-                  v-if="price.Price != null"
-                  class="text-gray-900 whitespace-no-wrap"
+                <button
+                  :disabled="loading"
+                  :class="{
+                    'cusror-disabled': loading,
+                  }"
+                  @click="saveFinancial(price.Id)"
+                  class="close-btn rounded-lg w-[100%] px-4 py-2 bg-gray-200 hover:bg-gray-300 duration-300"
                 >
-                  {{ price.price }}
-                </p>
-                <p v-else class="text-gray-900 whitespace-no-wrap">--</p>
+                  {{ $t("save") }}
+                </button>
               </td>
             </tr>
           </tbody>
@@ -392,7 +294,7 @@
         </pagination>
       </div>
     </div>
-    <div v-else-if="loading == false && pricing.length == 0" class="w-[100%]">
+    <div v-else-if="loading == false && financial.length == 0" class="w-[100%]">
       <div class="flex justify-center mt-[135px]">
         <img
           src="../../assets/imgs/comman/no-data-empty-data-concept-vector-41830412-removebg-preview.png"
@@ -400,7 +302,7 @@
         />
       </div>
       <h1 class="text-center no-data">
-        {{ $t("There is No Pricing") }}
+        {{ $t("There is No Financial") }}
       </h1>
     </div>
   </div>
@@ -430,7 +332,7 @@ export default {
       national_id: null,
       unit: null,
 
-      pricing: [],
+      financial: [],
       loading: true,
       hasMorePages: true,
       currentPage: 1,
@@ -442,12 +344,12 @@ export default {
       vendor_id: [],
       location_id: [],
       pricing_group: [],
+      customer_id: [],
       pricee: [],
-      Kpi: "",
       request: "",
-      startDate: "",
-      endDate: "",
-      search: "",
+      lastCounts: {}, // Object to store last counts for each pricing index
+      Customers: [],
+      approve: [],
     };
   },
   components: {
@@ -455,10 +357,10 @@ export default {
   },
   mounted() {
     // get all Pricing
-    this.$axios.$post("/Pricing/GetPricingRequest").then((res) => {
-      this.request = res.TotalRequest;
-      this.Kpi = res.KPI;
-      this.pricing = res.quotes.data;
+
+    this.$axios.$post("/Financial/GetFinancialRequest").then((res) => {
+      this.request = res.totalRequests;
+      this.financial = res.quotes.data;
       this.totalPages = res.quotes.meta.last_page;
       this.perPage = res.quotes.meta.per_page;
       this.total = res.quotes.meta.total;
@@ -475,222 +377,34 @@ export default {
     }
 
     this.open = localStorage.getItem("open");
+    // get all customers
 
-    // get all parts
-    this.$axios.$get("/Part/GetParts").then((res) => {
-      this.partsTable = res.Parts.data;
-    });
-
-    // get all Vendors
-
-    this.$axios.$get("/Vendor/GetAllVendor").then((res) => {
-      this.vendorTable = res.Vendor.data;
-    });
-
-    // get all locations
-    this.$axios.$get("/Location/GetAllLocationDropDownList").then((res) => {
-      this.locations = res.Location;
+    this.$axios.$get("UnPaginated/allCustomerWithout").then((res) => {
+      this.Customers = res.Customers;
     });
   },
   created() {},
   methods: {
-    // filter data
-    filterData() {
-      let data = {
-        start_date: this.startDate,
-        end_date: this.endDate,
-        search: this.search,
-      };
-      this.$axios.$post("/Pricing/GetPricingRequest", data).then((res) => {
-        this.request = res.TotalRequest;
-        this.Kpi = res.KPI;
-        this.pricing = res.quotes.data;
-        this.totalPages = res.quotes.meta.last_page;
-        this.perPage = res.quotes.meta.per_page;
-        this.total = res.quotes.meta.total;
-        this.loading = false;
-      });
+    // toggle modal add new price
+    addNewPrice(status, id) {
+      document.getElementById(`addPrice` + id).classList.toggle("hidden");
     },
     // show more
     showMore(page) {
       this.page = page;
       this.currentPage = page;
     },
-    // add new parts
-    // add new part
-    addNewParts(status) {
-      document.getElementById(`addPart`).classList.toggle("hidden");
-      // tabs
-      // Select tabs and tab buttons
-      const tabs = document.querySelectorAll(".tab");
-      const tabBtns = document.querySelectorAll(".tabbtn");
-
-      // each tab button will have a  click event  listener
-      tabBtns.forEach((tabBtn) => {
-        tabBtn.addEventListener("click", () => {
-          // hiding all tabs
-          // tabs.forEach((tab) => {
-          //   tab.classList.add("hidden");
-          // });
-
-          // showing only the tab that this tab button should show
-          const tab = tabBtn.getAttribute("data-tabopen");
-          document.getElementById(tab).classList.remove("hidden");
-
-          //  we will give same styles to all tab
-          if (this.type == "Informations") {
-            tabBtns.forEach((tabBtn) => {
-              tabBtn.className =
-                " px-2 py-1 cursor-pointer ml-[26px] tab-un-active ";
-            });
-            //  we will give special styles to the active tab
-            tabBtn.className = "tab-style cursor-pointer";
-          }
-          tabBtns.forEach((tabBtn) => {
-            tabBtn.className =
-              " px-2 py-1 cursor-pointer ml-[26px] tab-un-active ";
-          });
-
-          //  we will give special styles to the active tab
-          tabBtn.className = "tab-style cursor-pointer";
-        });
-      });
-
-      // post method api
-      // validation messages
-      this.clearData();
-    },
-    // add new Alternative
-    addNewAlternative() {
-      document.getElementById(`addAlternative`).classList.toggle("hidden");
-    },
-
-    // post a new alternative
-    postnNewAlternative() {
-      // localStorage.setItem("alternative" , this.alternatives);
-      document.getElementById(`addAlternative`).classList.toggle("hidden");
-    },
-    // add alternative
-    addField() {
-      this.fieldCount++;
-      this.alternatives.push({ alternative_id: this.fieldCount, code: "" });
-    },
-    removeField(id) {
-      this.alternatives = this.alternatives.filter(
-        (obj) => obj.alternative_id !== id
-      );
-    },
-    //
-
-    // clear data of parts
-    // clear data
-    clearData() {
-      (this.model = null),
-        (this.part_name_ar = null),
-        (this.part_numberr = null),
-        (this.vat_number = null),
-        (this.branch_id = null),
-        (this.employee_email = null),
-        (this.area = null),
-        (this.start_date = null),
-        (this.end_date = null),
-        (this.vin_number = null),
-        (this.dimensions = null),
-        (this.national_id = null),
-        (this.id = ""),
-        (this.unit = null),
-        (this.breakable = false),
-        (this.warranty = false),
-        (this.alternatives = [{ alternative_id: 1, code: "" }]);
-    },
-    // save pricin index
-    SavePricingRow(price, index) {
-      console.log("Price at index", index, this.pricee);
-      const sameIndex = index;
-      if (sameIndex == index) {
-        const dataToSave = {
-          part_number: this.part_number[index],
-          vendor_id: this.vendor_id[index],
-          location_id: this.location_id[index],
-          pricing_group: this.pricing_group[index],
-          price: this.pricee[index],
-        };
-        this.$axios
-          .$post(`Pricing/UpdatePricingRequest/${price.id}`, dataToSave)
-          .then((res) => {
-            if (res.status == 200) {
-              this.$toast.success(" Pricing Saved Successfully");
-            } else {
-              this.$toast.error(res.message);
-            }
-          });
-      }
-    },
-
-    // post parts
-    // post and add part
-    postParts(status) {
-      const requiredFields = ["part_name_ar", "part_number"];
-
-      const emptyFields = requiredFields.filter(
-        (field) => this[field] === "" || this[field] === null
-      );
-
-      this.emptyField = emptyFields;
-      console.log(emptyFields);
-      if (emptyFields.length != 0) {
-        return emptyFields;
-      } else if (this.invalidEmail == true) {
-        return;
-      }
-      if (this.errorpasswordValidation == true) {
-        return;
-      } else if (emptyFields.length == 0) {
-        if (status == "add") {
-          this.loading = true;
-          let formdata = new FormData();
-
-          formdata.append("part_name_ar", this.part_name_ar);
-          formdata.append("part_number", this.part_numberr);
-          formdata.append("model", this.model);
-          formdata.append("image", this.image);
-          formdata.append("unit", this.unit);
-          if (this.warranty == false) {
-            formdata.append("warrenty", 0);
-          } else if (this.warranty == true) {
-            formdata.append("warrenty", 1);
-          }
-          if (this.breakable == false) {
-            formdata.append("breakable", 0);
-          } else if (this.breakable == true) {
-            formdata.append("breakable", 1);
-          }
-          formdata.append("dimensions", this.dimensions);
-          formdata.append("code", this.part_name_ar);
-
-          this.alternatives.forEach((value, index) => {
-            console.log(value, index);
-            formdata.append(`alternative_id[${index}]`, value.alternative_id);
-            formdata.append(`code[${index}]`, value.code);
-          });
-
-          this.$axios.$post(`/Part/AddPart`, formdata).then((res) => {
-            if (res.status == 200) {
-              this.loading = false;
-              this.$toast.success("Part Added Successfully");
-              // get data again
-              this.$axios.$get("/Part/GetParts").then((res) => {
-                this.partsTable = res.Parts.data;
-              });
-              document.getElementById(`addPart`).classList.toggle("hidden");
-              this.addNewParts();
-            } else {
-              this.$toast.error(res.message);
-              this.loading = false;
-            }
-          });
+    saveFinancial(id) {
+      let data = {
+        customer_id: this.customer_id[0],
+        pricing_group: this.pricing_group[0],
+        request_approve_status: this.approve[0],
+      };
+      this.$axios.$post(`Financial/UpdateFinancial/${id}`, data).then((res) => {
+        if (res.status == 200) {
+          this.$toast.success("saved Successfully");
         }
-      }
+      });
     },
   },
   watch: {
@@ -926,13 +640,24 @@ input[type="file"] {
   width: 20px;
   margin-left: 83px;
 }
+.arrow-select-arrabic {
+  position: absolute;
+  margin-top: 19px;
+  width: 20px;
+  margin-left: 15px;
+}
 .arrow-select-vendor {
   position: absolute;
   margin-top: 19px;
   width: 20px;
   margin-left: 118px;
 }
-
+.arrow-select-vendor-arabic {
+  position: absolute;
+  margin-top: 19px;
+  width: 20px;
+  margin-left: 15px;
+}
 .arrow-select-arabic {
   position: absolute;
   right: 331px;
@@ -942,7 +667,7 @@ input[type="file"] {
 }
 .arrow-select-arabic-city {
   position: absolute;
-  right: 655px;
+  left: 655px;
   left: 0px !important;
   margin-top: 19px;
   width: 20px;
@@ -1036,58 +761,5 @@ input[type="file"] {
 }
 .table-container {
   overflow-x: auto;
-}
-
-/* history  */
-.kpis {
-  color: var(--msgs-colors-success, #8cc051);
-  text-align: center;
-  leading-trim: both;
-  text-edge: cap;
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 900;
-  line-height: 24px; /* 133.333% */
-  letter-spacing: -0.2px;
-}
-.kpi-number {
-  color: var(--PRIMARY-Dark, #424242);
-  text-align: center;
-  leading-trim: both;
-  text-edge: cap;
-  font-size: 23px;
-  font-style: normal;
-  font-weight: 900;
-  line-height: 24px; /* 104.348% */
-  letter-spacing: -0.2px;
-}
-.total-requests {
-  margin-left: 12px;
-  color: var(--SECONDARY-1, #757777);
-  leading-trim: both;
-  text-edge: cap;
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 24px; /* 133.333% */
-  letter-spacing: -0.2px;
-}
-.date-round {
-  border-radius: 20px;
-  border: 1px solid var(--primary-dark-20, rgba(66, 66, 66, 0.2));
-  background: var(--colors-base-00, #fff);
-
-  /* Shadow/lg */
-  box-shadow: 0px 8px 11px -4px rgba(45, 54, 67, 0.04),
-    0px 20px 24px -4px rgba(45, 54, 67, 0.04);
-}
-.search-round {
-  border-radius: 20px;
-  border: 1px solid var(--primary-dark-20, rgba(66, 66, 66, 0.2));
-  background: var(--colors-base-00, #fff);
-
-  /* Shadow/lg */
-  box-shadow: 0px 8px 11px -4px rgba(45, 54, 67, 0.04),
-    0px 20px 24px -4px rgba(45, 54, 67, 0.04);
 }
 </style>

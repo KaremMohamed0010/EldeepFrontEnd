@@ -191,6 +191,12 @@ export default {
       if (localStorage.getItem("role") == "1") {
         this.$router.push("/dashboard");
       }
+      if (localStorage.getItem("role") == "6") {
+        this.$router.push("/purchase");
+      }
+      if (localStorage.getItem("role") == "7") {
+        this.$router.push("/financial");
+      }
     } else if (!this.$cookies.get("token")) {
       this.$router.push("/");
     }
@@ -249,6 +255,7 @@ export default {
             localStorage.setItem("role", res.user.Role_id);
             localStorage.setItem("token", "Bearer" + res.access_token);
             localStorage.setItem("name", res.user.Name);
+            localStorage.setItem("lang", "en");
 
             localStorage.setItem(
               "permissions",

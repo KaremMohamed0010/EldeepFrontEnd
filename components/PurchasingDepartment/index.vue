@@ -16,8 +16,6 @@
               {{ $t("Purchasing department") }}
             </p>
           </h1>
-         
-          
         </div>
       </div>
       <div class="grid grid-cols-5 gap-2 p-[20px]">
@@ -160,21 +158,40 @@
             <h1 class="apex-line-title">
               {{ $t("Top 20% runners top sold") }}
             </h1>
-            <button
-              type="button"
-              class="flex over-all-btn bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-            >
-              <!-- <p class="mr-[12px]">{{ $t("Overall") }}</p> -->
-              <input type="date">
-              <!-- <img
+            <div class="flex">
+              <button
+                @click="filter('qty')"
+                type="button"
+                class="flex over-all-btn bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+              >
+                <!-- <p class="mr-[12px]">{{ $t("Overall") }}</p> -->
+                {{ $t("quantity") }}
+                <!-- <img
                 class="w-[18px]"
                 src="../../assets/imgs/dashboard/filter-search.png"
                 alt=""
               /> -->
-            </button>
+              </button>
+              <button
+                @click="filter('price')"
+                type="button"
+                class="flex over-all-btn bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+              >
+                <!-- <p class="mr-[12px]">{{ $t("Overall") }}</p> -->
+                {{ $t("price") }}
+                <!-- <img
+                class="w-[18px]"
+                src="../../assets/imgs/dashboard/filter-search.png"
+                alt=""
+              /> -->
+              </button>
+            </div>
           </div>
 
-          <div class="relative overflow-x-auto">
+          <div
+            style="height: 300px; overflow-y: auto"
+            class="relative overflow-x-auto"
+          >
             <table class="min-w-full leading-normal table-style">
               <thead>
                 <tr>
@@ -195,7 +212,7 @@
                     class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
                   >
                     <p class="text-gray-900 whitespace-no-wrap table-headers">
-                      {{ $t("Runner name") }}
+                      {{ $t(" Part name") }}
                     </p>
                   </td>
                   <td
@@ -212,24 +229,17 @@
                       {{ $t("Quantity") }}
                     </p>
                   </td>
-                  <td
-                    class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
-                  >
-                    <p class="text-gray-900 whitespace-no-wrap table-headers">
-                      {{ $t("Time response") }}
-                    </p>
-                  </td>
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                <tr v-for="(runner, i) in runners" :key="i">
                   <td
                     class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
                   >
                     <div class="flex">
                       <div class="ml-3">
                         <p class="text-gray-900 whitespace-no-wrap table-text">
-                          External couplin
+                          {{ runner.part_number }}
                         </p>
                       </div>
                     </div>
@@ -238,54 +248,26 @@
                     class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
                   >
                     <p class="text-gray-900 whitespace-no-wrap table-text">
-                      362187361286381268
+                      {{ runner.part_name_en }}
                     </p>
                   </td>
                   <td
                     class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
                   >
                     <p class="text-gray-900 whitespace-no-wrap table-text">
-                      2000 L.E
+                      {{ runner.total_price }}
                     </p>
                   </td>
                   <td
                     class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
                   >
                     <p class="text-gray-900 whitespace-no-wrap table-text">
-                      <span
-                        class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight"
-                      >
-                        <span
-                          aria-hidden
-                          class="absolute inset-0 bg-green-200 opacity-50 rounded-full"
-                        ></span>
-                        <span class="relative">{{ $t("New") }}</span>
-                      </span>
-                    </p>
-                  </td>
-
-                  <td
-                    class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
-                  >
-                    <p class="text-gray-900 whitespace-no-wrap response-time">
-                      12/02/2023 08:00 am
+                      {{ runner.total_quantity }}
                     </p>
                   </td>
                 </tr>
               </tbody>
             </table>
-            <div class="mt-[20px]">
-              <pagination
-                :total-pages="totalPages"
-                :total="total"
-                v-model="currentPage"
-                :per-page="perPage"
-                :current-page="currentPage"
-                :has-more-pages="hasMorePages"
-                @pagechanged="showMore"
-              >
-              </pagination>
-            </div>
           </div>
         </div>
       </div>
@@ -304,6 +286,7 @@ export default {
       perPage: 4,
       currentPage: 1,
       hasMorePages: true,
+      runners: [],
 
       // pricing department
       seriesPiePricingChart: [40, 60],
@@ -339,9 +322,29 @@ export default {
       this.page = page;
       this.currentPage = page;
     },
+    // filter by
+    filter(status) {
+      if (status == "qty") {
+        this.$axios.post("Dashboard/TopRunnersRopSold" , "quantity").then((res) => {
+          console.log("response");
+          this.runners = res.data.data;
+        });
+      }
+      else{
+         this.$axios.post("Dashboard/TopRunnersRopSold" , "price").then((res) => {
+          console.log("response");
+          this.runners = res.data.data;
+        });
+      }
+    },
   },
   mounted() {
     this.lang = localStorage.getItem("lang");
+
+    this.$axios.post("Dashboard/TopRunnersRopSold").then((res) => {
+      console.log("response");
+      this.runners = res.data.data;
+    });
   },
 };
 </script>

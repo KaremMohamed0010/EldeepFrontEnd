@@ -1,5 +1,5 @@
 <template>
-  <div class="p-[12px]">
+  <div :class="lang == 'en' ? 'ml-[68px]' : 'mr-[68px]'" class="p-[12px]">
     <div v-if="loading == true" class="flex justify-center w-[100%]">
       <Loading :text="'Loading'" />
     </div>
@@ -690,6 +690,11 @@
                   {{ $t("Pricing group") }}
                 </p>
               </td>
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <p class="text-gray-900 whitespace-no-wrap table-headers">
+                  {{ $t("Price") }}
+                </p>
+              </td>
 
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <p class="text-gray-900 whitespace-no-wrap table-headers"></p>
@@ -802,72 +807,71 @@
 
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <div class="relative">
-                  <select style="padding: 12px;"
+                  <v-select
                     v-model="part_number[index + i]"
-                    class="border-select w-[117px] py-1 p-[12px] px-2 bg-white"
-                    name="whatever"
-                    id="frm-whatever"
-                  >
-                    <option
-                      v-for="(part, i) in partsTable"
-                      :value="part.id"
-                      :key="i"
-                    >
-                      {{ part.PartNum }}
-                    </option>
-                  </select>
+                    :options="partsTable"
+                    label="PartNum"
+                    class="border-select w-[133px] py-1 p-[12px] px-2 bg-white"
+                    :reduce="(part) => part.id"
+                    placeholder="Select a part"
+                  />
                 </div>
               </td>
 
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <div class="relative">
-                  <select style="padding: 12px;"
+                  <v-select
+                    style="padding: 12px"
                     v-model="vendor_id[index + i]"
-                    class="border-select w-[153px] py-1 p-[12px] px-2 bg-white"
-                    name="whatever"
-                    id="frm-whatever"
-                  >
-                    <option
-                      v-for="(vendor, i) in vendorTable"
-                      :value="vendor.vendorId"
-                      :key="i"
-                    >
-                      {{ vendor.vendor_name }}
-                    </option>
-                  </select>
+                    :options="vendorTable"
+                    label="vendor_name"
+                    class="border-select w-[214px] py-1 p-[12px] px-2 bg-white"
+                    :reduce="(vendor) => vendor.vendorId"
+                    placeholder="Select a Vendor"
+                  />
                 </div>
               </td>
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <div class="relative">
-                  <select style="padding: 12px;"
+                  <v-select
+                    style="padding: 12px"
                     v-model="location_id[index + i]"
-                    class="border-select w-[153px] py-1 p-[12px] px-2 bg-white"
-                    name="whatever"
-                    id="frm-whatever"
-                  >
-                    <option
-                      v-for="(location, i) in locations"
-                      :value="location.Id"
-                      :key="i"
-                    >
-                      {{ location.Address }}
-                    </option>
-                  </select>
+                    :options="locations"
+                    label="Address"
+                    class="border-select w-[214px] py-1 p-[12px] px-2 bg-white"
+                    :reduce="(location) => location.Id"
+                    placeholder="Select a Location"
+                  />
                 </div>
               </td>
 
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <div class="relative">
-                  <select style="padding: 12px;"
+                  <select
+                    style="padding: 12px"
                     v-model="pricing_group[index + i]"
                     class="border-select w-[153px] py-1 p-[12px] px-2 bg-white"
                     name="whatever"
                     id="frm-whatever"
                   >
                     <option value="100">100</option>
+                    <option value="110">110</option>
+                    <option value="120">120</option>
                     <option value="130">130</option>
                     <option value="140">140</option>
+                    <option value="150">150</option>
+                    <option value="160">160</option>
+                    <option value="170">170</option>
+                    <option value="180">180</option>
+                    <option value="190">190</option>
+                    <option value="200">200</option>
                   </select>
+                </div>
+              </td>
+
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <div class="relative">
+                  {{ price.Price }}
                 </div>
               </td>
 
@@ -1097,8 +1101,8 @@ export default {
         (this.alternatives = [{ alternative_id: 1, code: "" }]);
     },
     clearSavingData() {
-      (this.part_number = []),
-        (this.vendor_id = []),
+      (this.vendor_id = []),
+        (this.part_number = []),
         (this.location_id = []),
         (this.pricing_group = []),
         (this.pricee = []);
@@ -1128,6 +1132,7 @@ export default {
                 this.total = res.quotes.meta.total;
                 this.loading = false;
               });
+              this.vendor_id = [];
               this.clearSavingData();
             } else {
               this.$toast.error(res.message);
@@ -1556,5 +1561,8 @@ input[type="file"] {
 }
 .table-container {
   overflow-x: auto;
+}
+.border-select >>> .vs__dropdown-toggle {
+  border: none;
 }
 </style>

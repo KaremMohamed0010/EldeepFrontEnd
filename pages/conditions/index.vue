@@ -1,5 +1,8 @@
 <template>
-  <div class="flex p-[12px] justify-end">
+  <div
+    :class="lang == 'en' ? 'ml-[68px]' : 'mr-[68px]'"
+    class="flex p-[12px] justify-end"
+  >
     <div v-if="loading == true" class="flex justify-center w-[100%]">
       <Loading :text="'Loading'" />
     </div>
@@ -18,7 +21,7 @@
     >
       <div class="w-[100%]">
         <div
-          style="padding-top: 0px"
+          style="padding-top: 0px;"
           class="-mx-4 sm:-mx-8 px-4 py-4 overflow-x-auto add-margin-left remove-margin-left"
         >
           <div class="inline-block min-w-full rounded-lg overflow-hidden">
@@ -1284,7 +1287,9 @@
                                                         branding, index
                                                       ) in brands"
                                                       :key="index"
-                                                      :value="branding.random_id"
+                                                      :value="
+                                                        branding.random_id
+                                                      "
                                                     >
                                                       {{ branding.brand }}
                                                     </option>

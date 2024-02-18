@@ -1,5 +1,8 @@
 <template>
-  <div class="flex p-[12px] justify-end">
+  <div
+    :class="lang == 'en' ? 'ml-[68px]' : 'mr-[68px]'"
+    class="flex justify-end"
+  >
     <div v-if="loading == true" class="flex justify-center w-[100%]">
       <Loading :text="'Loading'" />
     </div>
@@ -18,7 +21,7 @@
     >
       <div class="w-[100%]">
         <div
-          style="padding-top: 0px"
+          style="padding-top: 15px"
           class="-mx-4 sm:-mx-8 px-4 py-4 overflow-x-auto add-margin-left remove-margin-left"
         >
           <div class="inline-block min-w-full overflow-hidden">
@@ -62,7 +65,8 @@
                       class="hidden sm:inline-block sm:align-middle sm:h-screen"
                       >&#8203;</span
                     >
-                    <div  style="height: 626px; overflow-y: auto"
+                    <div
+                      style="height: 626px; overflow-y: auto"
                       class="p-[30px] media inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[776px] sm:w-full"
                       role="dialog"
                       aria-modal="true"
@@ -958,7 +962,8 @@
                             class="hidden sm:inline-block sm:align-middle sm:h-screen"
                             >&#8203;</span
                           >
-                          <div style="height: 626px; overflow-y: auto"
+                          <div
+                            style="height: 626px; overflow-y: auto"
                             class="p-[30px] media inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[776px] sm:w-full"
                             role="dialog"
                             aria-modal="true"
@@ -1842,12 +1847,12 @@ export default {
     // search data
     searchData() {
       this.$axios.$get(`/Part/GetParts?search=${this.search}`).then((res) => {
-         this.partsTable = res.Parts.data;
-      this.totalPages = res.Parts.meta.last_page;
-      this.perPage = res.Parts.meta.per_page;
-      this.total = res.Parts.meta.total;
-      this.permissions = res.permission;
-      this.loading = false;
+        this.partsTable = res.Parts.data;
+        this.totalPages = res.Parts.meta.last_page;
+        this.perPage = res.Parts.meta.per_page;
+        this.total = res.Parts.meta.total;
+        this.permissions = res.permission;
+        this.loading = false;
       });
     },
     loadFile(event) {

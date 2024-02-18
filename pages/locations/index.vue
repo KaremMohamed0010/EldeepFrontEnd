@@ -1,5 +1,8 @@
 <template>
-  <div class="flex p-[12px] justify-end">
+  <div
+    :class="lang == 'en' ? 'ml-[68px]' : 'mr-[68px]'"
+    class="flex p-[12px] justify-end"
+  >
     <div v-if="loading == true" class="flex justify-center w-[100%]">
       <Loading :text="'Loading'" />
     </div>
@@ -372,7 +375,7 @@
                                 label="vendor_name"
                                 multiple
                                 style="border-radius: 25px"
-                               :placeholder="$t('select vendors')"
+                                :placeholder="$t('select vendors')"
                               >
                               </multiselect>
                               <p

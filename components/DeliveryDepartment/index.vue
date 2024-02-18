@@ -42,7 +42,7 @@
           </select>
         </div>
         <div class="flex justify-evenly">
-          <apexchart
+          <apexchart v-if="series[0].data.length"
             class="flex justify-center apex ltr"
             type="bar"
             height="350"
@@ -87,10 +87,11 @@ export default {
   data() {
     return {
       // series
+      labelss : [],
       series: [
         {
           name: "Name",
-          data: [70, 55, 65, 54, 51, 56, 59, 55],
+          data: [],
         },
       ],
       // chart options line chart
@@ -124,18 +125,6 @@ export default {
           width: 5,
           colors: ["#394889"],
         },
-        xaxis: {
-          categories: [
-            "Samy Ragheb",
-            "Nady Ahmed",
-            "Ghalal Abdel rahieem",
-            "Nour Rady  hamdad",
-            "ahmed galal rghab",
-            "Fadel Ahmed galal",
-            "Shady Abdelrahman ",
-            "Yousef Naser waSeef",
-          ],
-        },
         yaxis: {
           // title: {
           //   text: "$ (thousands)",
@@ -145,12 +134,15 @@ export default {
           opacity: 1,
           colors: ["#394889"],
         },
+        xaxis: {
+          categories: [],
+        },
       },
       branch: "Select Branch",
       namee: "Select Name",
       brand: "Select Brand",
       // chart pie
-      seriesPie: [35, 65],
+      seriesPie: [],
       chartOptionsPie: {
         colors: ["#20E3FF", "#009DFE"],
         chart: {
@@ -174,10 +166,25 @@ export default {
       },
 
       lang: "",
+      CompletedPercentage: null,
+      ReturnedPercentage: null,
     };
   },
   mounted() {
     this.lang = localStorage.getItem("lang");
+
+    this.$axios.post("/Dashboard/Faultyitemsreturnratio").then((res) => {
+      this.seriesPie = [
+        res.data.ReturnedPercentage,
+        res.data.CompletedPercentage,
+      ];
+    });
+
+    this.$axios.post("Dashboard/AvDeliveryTime").then((res) => {
+      this.series[0].data = res.data.series;
+      this.chartOptions.xaxis.categories = res.data.labels;
+
+    });
   },
 };
 </script>

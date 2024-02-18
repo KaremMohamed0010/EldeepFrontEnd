@@ -6,7 +6,7 @@
     <div v-if="loading == false" class="" :class="{ hidden: loading == true }">
       <div class="flex nuxt-app">
         <VerticalNavBar v-if="this.$route.path != '/'" />
-        <div class="flex w-[100%] flex-col">
+        <div class="flex w-[100%] flex-col ">
           <HorizontalNavBar v-if="this.$route.path != '/'" />
           <Nuxt />
         </div>
@@ -65,7 +65,28 @@ export default {
         //   this.$router.push("/pricing");
         // }
       }
-      
+       if (localStorage.getItem("role") == "6") {
+        if (this.$router.path == "/purchase") {
+          this.$router.push("/purchase");
+        }
+        // if (this.$router.path == "/history") {
+        //   this.$router.push("/history");
+        // } 
+        // else {
+        //   this.$router.push("/pricing");
+        // }
+      }
+      if (localStorage.getItem("role") == "7") {
+        if (this.$router.path == "/financial") {
+          this.$router.push("/financial");
+        }
+        // if (this.$router.path == "/history") {
+        //   this.$router.push("/history");
+        // } 
+        // else {
+        //   this.$router.push("/pricing");
+        // }
+      } 
       if (localStorage.getItem("role") == "1" && this.$route.path == "/") {
         this.$router.push("/dashboard");
       }
@@ -75,7 +96,7 @@ export default {
     setTimeout(() => {
       console.log("loading:", this.loading);
       this.loading = false;
-    }, 2000);
+    }, 4000);
     this.lang = localStorage.getItem("lang");
     if (this.lang == "en") {
       this.$i18n.locale = "en";

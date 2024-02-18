@@ -1,6 +1,10 @@
 <template>
   <div>
-    <div x-data="setup()" x-init="$refs.loading.classList.add('hidden');">
+    <div
+      style="z-index: 1; position: fixed"
+      x-data="setup()"
+      x-init="$refs.loading.classList.add('hidden');"
+    >
       <div
         class="flex h-screen antialiased text-gray-900 bg-gray-100 dark:bg-dark dark:text-light"
       >
@@ -121,10 +125,135 @@
                     : 'text-gray-500 bg-white'
                 "
               >
+                <img src="../assets/imgs/verticalNav/award.svg" alt="" />
+              </button>
+            </div>
+
+            <!-- User avatar -->
+            <div
+              class="relative flex items-center flex-shrink-0 p-2"
+              x-data="{ isOpen: false }"
+            >
+              <button @click="logOut()" class="">
                 <img
-                  src="../assets/imgs/verticalNav/award.svg"
+                  class=""
+                  src="../assets/imgs/verticalNav/btn-sidebar(3).png"
+                  alt="Ahmed Kamel"
+                />
+                <span class="sr-only">User menu</span>
+              </button>
+            </div>
+          </nav>
+
+          <!-- purchasing -->
+          <nav
+            v-if="role == '6'"
+            aria-label="Options"
+            class="z-20 flex-col items-center flex-shrink-0 hidden w-16 py-4 bg-white border-r-2 border-indigo-100 shadow-md sm:flex"
+          >
+            <!-- Logo -->
+            <div class="flex flex-col items-center flex-1 space-y-4">
+              <!-- First Page in Navbar -->
+              <button
+                @click="toggleSecondNavBar()"
+                class="transition-colors hover:text-white focus:outline-none focus:ring-offset-white focus:ring-offset-2"
+              >
+                <img
+                  src="../assets/imgs/comman/hamburger-menu-line-icon-free-vector-removebg-preview.png"
                   alt=""
                 />
+              </button>
+              <!-- First Page in Navbar -->
+              <button
+                @click="goToPurchasingPage()"
+                class="transition-colors hover:text-white focus:outline-none focus:ring-offset-white focus:ring-offset-2"
+                :class="
+                  this.$route.path == '/purchase'
+                    ? 'text-white bg-[#EBEBEB] border-4 border-r-[#D11C1C]'
+                    : 'text-gray-500 bg-white'
+                "
+              >
+                <img
+                  src="../assets/imgs/verticalNav/btn-sidebar(1).png"
+                  alt=""
+                />
+              </button>
+
+              <!-- Menu button -->
+              <button
+                @click="goToDelivery()"
+                class="transition-colors p-[10px] hover:text-white focus:outline-none focus:ring-offset-white focus:ring-offset-2"
+                :class="
+                  this.$route.path == '/delivery'
+                    ? 'text-white bg-[#EBEBEB] border-4 border-r-[#D11C1C]'
+                    : 'text-gray-500 bg-white'
+                "
+              >
+                <img src="../assets/imgs/verticalNav/award.svg" alt="" />
+              </button>
+            </div>
+
+            <!-- User avatar -->
+            <div
+              class="relative flex items-center flex-shrink-0 p-2"
+              x-data="{ isOpen: false }"
+            >
+              <button @click="logOut()" class="">
+                <img
+                  class=""
+                  src="../assets/imgs/verticalNav/btn-sidebar(3).png"
+                  alt="Ahmed Kamel"
+                />
+                <span class="sr-only">User menu</span>
+              </button>
+            </div>
+          </nav>
+
+          <!-- purchasing -->
+          <nav
+            v-if="role == '7'"
+            aria-label="Options"
+            class="z-20 flex-col items-center flex-shrink-0 hidden w-16 py-4 bg-white border-r-2 border-indigo-100 shadow-md sm:flex"
+          >
+            <!-- Logo -->
+            <div class="flex flex-col items-center flex-1 space-y-4">
+              <!-- First Page in Navbar -->
+              <button
+                @click="toggleSecondNavBar()"
+                class="transition-colors hover:text-white focus:outline-none focus:ring-offset-white focus:ring-offset-2"
+              >
+                <img
+                  src="../assets/imgs/comman/hamburger-menu-line-icon-free-vector-removebg-preview.png"
+                  alt=""
+                />
+              </button>
+              <!-- First Page in Navbar -->
+              <button
+                @click="goToFinancialPage()"
+                class="transition-colors hover:text-white focus:outline-none focus:ring-offset-white focus:ring-offset-2"
+                :class="
+                  this.$route.path == '/financial'
+                    ? 'text-white bg-[#EBEBEB] border-4 border-r-[#D11C1C]'
+                    : 'text-gray-500 bg-white'
+                "
+              >
+                <img
+                  src="../assets/imgs/verticalNav/btn-sidebar(1).png"
+                  alt=""
+                />
+              </button>
+
+              <!-- Menu button -->
+              <button
+                @click="goToDelivery()"
+                class="transition-colors p-[10px] hover:text-white focus:outline-none focus:ring-offset-white focus:ring-offset-2"
+                :class="
+                  this.$route.path == '/delivery'
+                    ? 'text-white bg-[#EBEBEB] border-4 border-r-[#D11C1C]'
+                    : 'text-gray-500 bg-white'
+                "
+              >
+                <img src="../assets/imgs/verticalNav/award.svg" alt="" />
               </button>
             </div>
 
@@ -336,7 +465,7 @@ export default {
       lang: "",
       error: false,
       permission: {},
-      role : ""
+      role: "",
     };
   },
   mounted() {
@@ -347,7 +476,7 @@ export default {
 
     const permission = localStorage.getItem("permissions");
     this.permission = JSON.parse(permission);
-    this.role = localStorage.getItem("role")
+    this.role = localStorage.getItem("role");
     // console.log(JSON.parse(permission))
   },
 
@@ -439,45 +568,37 @@ export default {
       this.$router.push("/locations");
       this.onResize();
     },
+
     // go to pages
     goToPages() {
       const permission = localStorage.getItem("permissions");
       this.permission = JSON.parse(permission);
       console.log(this.permission, "permissiion");
-      if (
-        this.permission.can_view_customer == 1
-      ) {
+      if (this.permission.can_view_customer == 1) {
         this.$router.push("/customer");
       }
-      if (
-        this.permission.can_view_vendor == 1
-      ) {
+      if (this.permission.can_view_vendor == 1) {
         this.$router.push("/vendors");
       }
-      if (
-        this.permission.can_view_employee == 1
-      ) {
+      if (this.permission.can_view_employee == 1) {
         this.$router.push("/employee");
       }
-      if (
-        this.permission.can_view_condition == 1
-      ) {
+      if (this.permission.can_view_condition == 1) {
         this.$router.push("/conditions");
       }
-      if (
-        this.permission.can_view_location == 1
-      ) {
+      if (this.permission.can_view_location == 1) {
         this.$router.push("/locations");
       }
-      if (
-        this.permission.can_view_parts == 1
-      ) {
+      if (this.permission.can_view_parts == 1) {
         this.$router.push("/parts");
+      }
+      else {
+        this.$toast.error(this.$t('You dont have access to view Pages'))
       }
     },
     // go to pricing
-    goToPricingPage (){
-       if (this.isSidebarOpen && this.currentSidebarTab == "messagesTab") {
+    goToPricingPage() {
+      if (this.isSidebarOpen && this.currentSidebarTab == "messagesTab") {
         this.isSidebarOpen = false;
       } else {
         this.isSidebarOpen = true;
@@ -486,9 +607,8 @@ export default {
       this.$router.push("/pricing");
     },
     // go to history
-    goToHistory(){
-
-       if (this.isSidebarOpen && this.currentSidebarTab == "messagesTab") {
+    goToHistory() {
+      if (this.isSidebarOpen && this.currentSidebarTab == "messagesTab") {
         this.isSidebarOpen = false;
       } else {
         this.isSidebarOpen = true;
@@ -496,13 +616,42 @@ export default {
       this.currentSidebarTab = "messagesTab";
       this.$router.push("/history");
     },
+    // go to purchasing
+    goToPurchasingPage() {
+      if (this.isSidebarOpen && this.currentSidebarTab == "messagesTab") {
+        this.isSidebarOpen = false;
+      } else {
+        this.isSidebarOpen = true;
+      }
+      this.currentSidebarTab = "messagesTab";
+      this.$router.push("/purchase");
+    },
+    // go to financial page
+    goToFinancialPage() {
+      if (this.isSidebarOpen && this.currentSidebarTab == "messagesTab") {
+        this.isSidebarOpen = false;
+      } else {
+        this.isSidebarOpen = true;
+      }
+      this.currentSidebarTab = "messagesTab";
+      this.$router.push("/financial");
+    },
+    goToDelivery() {
+      if (this.isSidebarOpen && this.currentSidebarTab == "messagesTab") {
+        this.isSidebarOpen = false;
+      } else {
+        this.isSidebarOpen = true;
+      }
+      this.currentSidebarTab = "messagesTab";
+      this.$router.push("/delivery");
+    },
     // logout
     logOut() {
       this.$cookies.set("token", "");
       localStorage.setItem("token", "Bearer", "");
       localStorage.setItem("name", "");
-      localStorage.setItem("permissions" , "");
-      localStorage.setItem("role" , "")
+      localStorage.setItem("permissions", "");
+      localStorage.setItem("role", "");
 
       // this.$router.push("/");
       location.reload();

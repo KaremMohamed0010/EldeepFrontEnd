@@ -1,4 +1,4 @@
 import Vue from "vue";
-import vSelect from "v-select";
+import vSelect from "vue-select";
 
 Vue.component("v-select", vSelect);

@@ -34,7 +34,7 @@
           </button>
         </div>
         <div id="chart">
-          <apexchart
+          <apexchart v-if="series[0].data.length"
             class="flex justify-center apex ltr"
             type="bar"
             height="350"
@@ -62,7 +62,10 @@
           </button>
         </div>
 
-        <div class="relative overflow-x-auto">
+        <div
+          style="height: 390px; overflow-y: auto"
+          class="relative overflow-x-auto"
+        >
           <table class="min-w-full leading-normal table-style">
             <thead>
               <tr>
@@ -90,35 +93,35 @@
                     {{ $t("Condition") }}
                   </p>
                 </td>
-                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <!-- <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                   <p class="text-gray-900 whitespace-no-wrap table-headers">
                     {{ $t("Request time") }}
                   </p>
-                </td>
+                </td> -->
                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                 {{ $t('reason') }}
+                  {{ $t("reason") }}
                 </td>
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr v-for="(item, i) in UnavailableItems" :key="i">
                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                   <div class="flex">
                     <div class="ml-3">
                       <p class="text-gray-900 whitespace-no-wrap table-text">
-                        External couplin
+                        {{ item.NameEn }}
                       </p>
                     </div>
                   </div>
                 </td>
                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                   <p class="text-gray-900 whitespace-no-wrap table-text">
-                    362187361286381268
+                    {{ item.PartNum }}
                   </p>
                 </td>
                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                   <p class="text-gray-900 whitespace-no-wrap table-text">
-                    2000 L.E
+                    {{ item.Price }}
                   </p>
                 </td>
                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -130,122 +133,22 @@
                         aria-hidden
                         class="absolute inset-0 bg-green-200 opacity-50 rounded-full"
                       ></span>
-                      <span class="relative">{{ $t("New") }}</span>
+                      <span class="relative">{{ item.Condition }}</span>
                     </span>
                   </p>
                 </td>
-                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <!-- <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                   <p class="text-gray-900 whitespace-no-wrap table-text">
                     12/02/2023 08:00 am
                   </p>
-                </td>
-                
-                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                 
-                </td>
-              </tr>
-                            <tr>
-                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                  <div class="flex">
-                    <div class="ml-3">
-                      <p class="text-gray-900 whitespace-no-wrap table-text">
-                        External couplin
-                      </p>
-                    </div>
-                  </div>
-                </td>
-                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                  <p class="text-gray-900 whitespace-no-wrap table-text">
-                    362187361286381268
-                  </p>
-                </td>
-                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                  <p class="text-gray-900 whitespace-no-wrap table-text">
-                    2000 L.E
-                  </p>
-                </td>
-                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                  <p class="text-gray-900 whitespace-no-wrap table-text">
-                    <span
-                      class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight"
-                    >
-                      <span
-                        aria-hidden
-                        class="absolute inset-0 bg-green-200 opacity-50 rounded-full"
-                      ></span>
-                      <span class="relative">{{ $t("New") }}</span>
-                    </span>
-                  </p>
-                </td>
-                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                  <p class="text-gray-900 whitespace-no-wrap table-text">
-                    12/02/2023 08:00 am
-                  </p>
-                </td>
-                
-                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                 
-                </td>
-              </tr>
+                </td> -->
 
-                            <tr>
                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                  <div class="flex">
-                    <div class="ml-3">
-                      <p class="text-gray-900 whitespace-no-wrap table-text">
-                        External couplin
-                      </p>
-                    </div>
-                  </div>
-                </td>
-                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                  <p class="text-gray-900 whitespace-no-wrap table-text">
-                    362187361286381268
-                  </p>
-                </td>
-                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                  <p class="text-gray-900 whitespace-no-wrap table-text">
-                    2000 L.E
-                  </p>
-                </td>
-                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                  <p class="text-gray-900 whitespace-no-wrap table-text">
-                    <span
-                      class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight"
-                    >
-                      <span
-                        aria-hidden
-                        class="absolute inset-0 bg-green-200 opacity-50 rounded-full"
-                      ></span>
-                      <span class="relative">{{ $t("New") }}</span>
-                    </span>
-                  </p>
-                </td>
-                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                  <p class="text-gray-900 whitespace-no-wrap table-text">
-                    12/02/2023 08:00 am
-                  </p>
-                </td>
-                
-                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                 
+                  {{ item.reason }}
                 </td>
               </tr>
-
             </tbody>
           </table>
-          <div class="mt-[20px]">
-            <pagination
-              :total-pages="totalPages"
-              :total="total"
-              v-model="currentPage"
-              :per-page="perPage"
-              :current-page="currentPage"
-              :has-more-pages="hasMorePages"
-              @pagechanged="showMore"
-            >
-            </pagination>
-          </div>
         </div>
       </div>
     </div>
@@ -263,6 +166,7 @@ export default {
       perPage: 4,
       currentPage: 1,
       hasMorePages: true,
+      UnavailableItems: [],
 
       // pricing department
       // series
@@ -270,13 +174,12 @@ export default {
       series: [
         {
           name: "Agent",
-          data: [70, 55, 65, 54, 51, 56, 59, 55],
+          data: [],
         },
-        {
-          name: "Time",
-          data: [70, 55, 65, 54, 51, 56, 59, 55],
-        },
-      
+        // {
+        //   name: "Time",
+        //   data: [70, 55, 65, 54, 51, 56, 59, 55],
+        // },
       ],
       // chart options line chart
       chartOptions: {
@@ -309,16 +212,7 @@ export default {
           colors: ["#41C5B8", "#394889"],
         },
         xaxis: {
-          categories: [
-            "Samy Ragheb",
-            "Nady Ahmed",
-            "Ghalal Abdel rahieem",
-            "Nour Rady  hamdad",
-            "ahmed galal rghab",
-            "Fadel Ahmed galal",
-            "Shady Abdelrahman ",
-            "Yousef Naser waSeef",
-          ],
+          categories: [],
         },
         yaxis: {
           // title: {
@@ -344,6 +238,14 @@ export default {
   },
   mounted() {
     this.lang = localStorage.getItem("lang");
+    this.$axios.post("/Dashboard/LossOfSalesOrUnavailableItems").then((res) => {
+      this.UnavailableItems = res.data.Data;
+    });
+
+    this.$axios.post("/Dashboard/AvDeliveryTime").then((res) => {
+      this.series[0].data = res.data.series;
+      this.chartOptions.xaxis.categories = res.data.labels;
+    });
   },
 };
 </script>

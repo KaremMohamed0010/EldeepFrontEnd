@@ -1,21 +1,36 @@
 <template>
   <div class="pt-[20px]">
+    <div v-if="loading" class="flex justify-center" style="padding-top: 40px">
+      <Loading :text="'Loading'" />
+    </div>
     <!-- delivery department -->
-    <DeliveryDepartment />
+    <DeliveryDepartment v-if="loading == false" 
+      :class="{ 'ml-[60px]': (lang = 'en'), 'mr-[60px]': (lang = 'ar') }"
+    />
     <!-- pricing department -->
-    <PricingDepartment />
+    <PricingDepartment v-if="loading == false" 
+      :class="{ 'ml-[60px]': (lang = 'en'), 'mr-[60px]': (lang = 'ar') }"
+    />
     <!-- purchasing department -->
-    <PurchasingDepartment />
+    <PurchasingDepartment v-if="loading == false" 
+      :class="{ 'ml-[60px]': (lang = 'en'), 'mr-[60px]': (lang = 'ar') }"
+    />
     <!-- Requester department -->
-    <RequesterDepartment />
+    <RequesterDepartment v-if="loading == false" 
+      :class="{ 'ml-[60px]': (lang = 'en'), 'mr-[60px]': (lang = 'ar') }"
+    />
     <!-- sales department -->
-    <SalesDepartment />
+    <SalesDepartment v-if="loading == false" 
+      :class="{ 'ml-[60px]': (lang = 'en'), 'mr-[60px]': (lang = 'ar') }"
+    />
   </div>
 </template>
 <script>
 export default {
   data() {
-    return {};
+    return {
+      loading: true,
+    };
   },
   mounted() {
     // change language
@@ -25,6 +40,10 @@ export default {
     } else if (this.lang == "ar") {
       this.$i18n.locale = "ar";
     }
+    setTimeout(() => {
+      console.log("loading:", this.loading);
+      this.loading = false;
+    }, 5000);
   },
   methods: {},
 };
