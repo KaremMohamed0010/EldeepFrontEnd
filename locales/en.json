@@ -215,5 +215,6 @@
   "Delivered":"Delivered",
   "quote":"quote",
   "quantity" : "quantity",
-  "price":"price"
+  "price":"price",
+  "part name":"part name"
 }

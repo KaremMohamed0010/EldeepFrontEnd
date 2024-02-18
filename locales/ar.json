@@ -229,5 +229,6 @@
   "Delivered" : "تم التوصيل",
   "quote":"كود",
   "quantity":"الكميه",
-  "price":"السعر"
+  "price":"السعر", 
+  "part name" : "اسم الجزء"
 }
