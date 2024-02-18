@@ -96,7 +96,7 @@
               {{ $t("Total Quotation sales") }}
             </p>
           </h1>
-          <select
+          <!-- <select
             v-model="filter"
             class="border-select w-[140px] h-[43px] py-1 px-2 bg-white"
             name="whatever"
@@ -113,7 +113,7 @@
             <option value="Customer">Cutomer</option>
             <option value="Location">Location</option>
             <option value="Date">Date</option>
-          </select>
+          </select> -->
         </div>
 
         <div style="height: 300px; overflow-y: auto;" class="relative overflow-x-auto">

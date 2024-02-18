@@ -21,7 +21,7 @@
           <h1 class="apex-line-title">
             {{ $t("Average time request response") }}
           </h1>
-          <button
+          <!-- <button
             type="button"
             class="flex over-all-btn bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
           >
@@ -31,7 +31,7 @@
               src="../../assets/imgs/dashboard/filter-search.png"
               alt=""
             />
-          </button>
+          </button> -->
         </div>
         <div id="chart">
           <apexchart v-if="series[0].data.length"
@@ -45,11 +45,11 @@
         </div>
       </div>
       <div class="col-span-2 bg-white p-[20px] rounded">
-        <div class="flex justify-space-between">
+        <div class="flex justify-space-between p-[16px]">
           <h1 class="apex-line-title">
             {{ $t("Loss of sales Or Unavailable items") }}
           </h1>
-          <button
+          <!-- <button
             type="button"
             class="flex over-all-btn bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
           >
@@ -59,7 +59,7 @@
               src="../../assets/imgs/dashboard/filter-search.png"
               alt=""
             />
-          </button>
+          </button> -->
         </div>
 
         <div

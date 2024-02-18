@@ -18,9 +18,8 @@
           </h1>
         </div>
       </div>
-      <div class="grid grid-cols-5 gap-2 p-[20px]">
-        <div class="rounded">
-          <!-- first card -->
+      <div class="grid grid-cols-4 gap-1 p-[20px]">
+        <!-- <div class="rounded">
           <div class="flex card-style">
             <svg
               width="60"
@@ -85,7 +84,6 @@
               <p class="card-number">3123 / 78</p>
             </h1>
           </div>
-          <!-- Second card -->
           <div class="flex card-style mt-[20px]">
             <svg
               width="60"
@@ -150,7 +148,7 @@
               <p class="card-number">899 / 60</p>
             </h1>
           </div>
-        </div>
+        </div> -->
 
         <!-- table design  -->
         <div class="col-span-4 bg-white p-[20px] rounded">

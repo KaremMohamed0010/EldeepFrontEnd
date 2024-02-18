@@ -20,9 +20,9 @@
       :class="{ 'ml-[60px]': (lang = 'en'), 'mr-[60px]': (lang = 'ar') }"
     />
     <!-- sales department -->
-    <SalesDepartment v-if="loading == false" 
+    <!-- <SalesDepartment v-if="loading == false" 
       :class="{ 'ml-[60px]': (lang = 'en'), 'mr-[60px]': (lang = 'ar') }"
-    />
+    /> -->
   </div>
 </template>
 <script>

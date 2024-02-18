@@ -22,7 +22,7 @@
           <h1 class="apex-line-title">
             {{ $t("Av. delivery time for runners") }}
           </h1>
-          <select
+          <!-- <select
             v-model="branch"
             class="border-select w-[140px] py-1 px-2 bg-white"
             name="whatever"
@@ -39,7 +39,7 @@
             <option value="Branch 1">Name</option>
             <option value="Branch 1">Branch</option>
             <option value="Branch 1">Brand</option>
-          </select>
+          </select> -->
         </div>
         <div class="flex justify-evenly">
           <apexchart v-if="series[0].data.length"
@@ -57,7 +57,7 @@
           <h1 class="apex-line-title">
             {{ $t("Faulty items return ratio") }}
           </h1>
-          <button
+          <!-- <button
             type="button"
             class="flex over-all-btn bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
           >
@@ -67,7 +67,7 @@
               src="../../assets/imgs/dashboard/filter-search.png"
               alt=""
             />
-          </button>
+          </button> -->
         </div>
         <div id="chart">
           <apexchart
