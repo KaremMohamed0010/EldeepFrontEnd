@@ -211,17 +211,18 @@ export default {
       QTY: "",
       Price: "",
       prcing_group: "",
+      lang: "",
     };
   },
   mounted() {
     // get all Pricing
 
     this.$axios.$get("/Order/GetDelivery").then((res) => {
-      this.delivery = res.quoteParts;
-      //   this.totalPages = res.quotes.meta.last_page;
-      //   this.perPage = res.quotes.meta.per_page;
-      //   this.total = res.quotes.meta.total;
-      this.loading = false;
+      this.delivery = res.quoteParts.data;
+        this.totalPages = res.quoteParts.meta.last_page;
+        this.perPage = res.quoteParts.meta.per_page;
+        this.total = res.quoteParts.meta.total;
+       this.loading = false;
     });
 
     // tabs code

@@ -403,6 +403,14 @@ export default {
       this.$axios.$post(`Financial/UpdateFinancial/${id}`, data).then((res) => {
         if (res.status == 200) {
           this.$toast.success("saved Successfully");
+          this.$axios.$post("/Financial/GetFinancialRequest").then((res) => {
+          this.request = res.totalRequests;
+          this.financial = res.quotes.data;
+          this.totalPages = res.quotes.meta.last_page;
+          this.perPage = res.quotes.meta.per_page;
+          this.total = res.quotes.meta.total;
+          this.loading = false;
+         });
         }
       });
     },
