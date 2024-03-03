@@ -21,7 +21,7 @@
     >
       <div class="w-[100%]">
         <div
-          style="padding-top: 0px;"
+          style="padding-top: 0px"
           class="-mx-4 sm:-mx-8 px-4 py-4 overflow-x-auto add-margin-left remove-margin-left"
         >
           <div class="inline-block min-w-full overflow-hidden">
@@ -2625,12 +2625,12 @@ export default {
       } else if (emptyFields.length == 0) {
         if (status == "add") {
           this.loading = true;
-
           let formdata = new FormData();
 
           formdata.append("customer_name", this.customer_name);
           formdata.append("customer_code", this.customer_code);
-          formdata.append("mobile_number", this.mobile_number);
+
+          formdata.append("mobile_number", concatenatedPhoneNumber);
           formdata.append("other_mobile_number", this.phone);
           formdata.append("credit_limit", this.credit_limit);
           formdata.append("payment_term", this.payment_term);

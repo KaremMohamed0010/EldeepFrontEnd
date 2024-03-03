@@ -216,5 +216,6 @@
   "quote":"quote",
   "quantity" : "quantity",
   "price":"price",
-  "part name":"part name"
+  "part name":"part name",
+  "Serial" : "Serial"
 }

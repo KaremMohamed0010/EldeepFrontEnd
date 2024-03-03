@@ -11,7 +11,7 @@
         <div class="flex">
           <h1 class="total-request">{{ $t("total_request") }}</h1>
           <span class="total-request-number">
-            {{ request }} {{ $t("Request") }}</span
+            {{ financial.length }} {{ $t("Request") }}</span
           >
         </div>
       </div>
@@ -27,6 +27,15 @@
                 <div class="flex">
                   <div class="ml-3">
                     <p class="text-gray-900 whitespace-no-wrap table-headers">
+                      {{ $t("Serial") }}
+                    </p>
+                  </div>
+                </div>
+              </td>
+               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <div class="flex">
+                  <div class="ml-3">
+                    <p class="text-gray-900 whitespace-no-wrap table-headers">
                       {{ $t("Req N.O.") }}
                     </p>
                   </div>
@@ -35,6 +44,11 @@
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <p class="text-gray-900 whitespace-no-wrap table-headers">
                   {{ $t("Part Name") }}
+                </p>
+              </td>
+               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <p class="text-gray-900 whitespace-no-wrap table-headers">
+                  {{ $t("customer_name") }}
                 </p>
               </td>
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -103,7 +117,13 @@
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <div class="flex"></div>
               </td>
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <div class="flex"></div>
+              </td>
               <td
+                class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+              ></td>
+               <td
                 class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
               ></td>
               <td
@@ -149,6 +169,15 @@
                 <div class="flex">
                   <div class="ml-3">
                     <p class="text-gray-900 whitespace-no-wrap">
+                      {{ price.SerialPart }}
+                    </p>
+                  </div>
+                </div>
+              </td>
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <div class="flex">
+                  <div class="ml-3">
+                    <p class="text-gray-900 whitespace-no-wrap">
                       {{ price.Req_No }}
                     </p>
                   </div>
@@ -157,6 +186,11 @@
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <p class="text-gray-900 whitespace-no-wrap">
                   {{ price.PartName }}
+                </p>
+              </td>
+                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <p class="text-gray-900 whitespace-no-wrap">
+                  {{ price.CustomerName }}
                 </p>
               </td>
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">

@@ -11,7 +11,7 @@
         <div class="flex">
           <h1 class="total-request">{{ $t("total_request") }}</h1>
           <span class="total-request-number">
-            {{ request }} {{ $t("Request") }}</span
+            {{ pricing.length }} {{ $t("Request") }}</span
           >
         </div>
         <button
@@ -623,6 +623,15 @@
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <div class="flex"></div>
               </td>
+               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <div class="flex">
+                  <div class="ml-3">
+                    <p class="text-gray-900 whitespace-no-wrap table-headers">
+                      {{ $t("Serial") }}
+                    </p>
+                  </div>
+                </div>
+              </td>
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <div class="flex">
                   <div class="ml-3">
@@ -658,6 +667,11 @@
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <p class="text-gray-900 whitespace-no-wrap table-headers">
                   {{ $t("Car Type") }}
+                </p>
+              </td>
+               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <p class="text-gray-900 whitespace-no-wrap table-headers">
+                  {{ $t("Brand") }}
                 </p>
               </td>
 
@@ -709,6 +723,9 @@
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <div class="flex"></div>
               </td>
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <div class="flex"></div>
+              </td>
               <td
                 class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
               ></td>
@@ -719,6 +736,9 @@
                 class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
               ></td>
 
+              <td
+                class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+              ></td>
               <td
                 class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
               ></td>
@@ -751,6 +771,15 @@
             </tr>
             <tr v-for="(price, i) in data.QuoteParts" :key="i">
               <td></td>
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <div class="flex">
+                  <div class="ml-3">
+                    <p class="text-gray-900 whitespace-no-wrap">
+                      {{ price.SerialPart }}
+                    </p>
+                  </div>
+                </div>
+              </td>
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <div class="flex">
                   <div class="ml-3">
@@ -796,6 +825,15 @@
               </td>
 
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <p
+                  v-if="price.brand != null"
+                  class="text-gray-900 whitespace-no-wrap"
+                >
+                  {{ price.brand }}
+                </p>
+                <p v-else class="text-gray-900 whitespace-no-wrap">--</p>
+              </td>
+               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <p
                   v-if="price.model != null"
                   class="text-gray-900 whitespace-no-wrap"
@@ -871,7 +909,7 @@
 
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <div class="relative">
-                  {{ price.Price }}
+                  <input  class="border-select w-[114px] py-1 p-[12px] px-2 bg-white" v-model="pricee[index + i]" type="text">
                 </div>
               </td>
 
@@ -965,7 +1003,6 @@ export default {
   },
   mounted() {
     // get all Pricing
-
     this.$axios.$post("/Pricing/GetPricingRequest").then((res) => {
       this.request = res.TotalRequest;
       this.pricing = res.quotes.data;
@@ -1117,7 +1154,7 @@ export default {
           vendor_id: this.vendor_id[index],
           location_id: this.location_id[index],
           pricing_group: this.pricing_group[index],
-          price: this.pricee[index],
+          price: ((this.pricee[index] * this.pricing_group[index]) / 100 ),
         };
         this.$axios
           .$post(`Pricing/UpdatePricingRequest/${price.Id}`, dataToSave)

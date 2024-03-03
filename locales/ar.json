@@ -230,5 +230,6 @@
   "quote":"كود",
   "quantity":"الكميه",
   "price":"السعر", 
-  "part name" : "اسم الجزء"
+  "part name" : "اسم الجزء",
+  "Serial" : "مسلسل"
 }

@@ -11,7 +11,7 @@
         <div class="flex">
           <h1 class="total-request">{{ $t("total_request") }}</h1>
           <span class="total-request-number">
-            {{ request }} {{ $t("Request") }}</span
+            {{ purchasing.length }} {{ $t("Request") }}</span
           >
         </div>
       </div>
@@ -24,6 +24,15 @@
                 <div class="flex"></div>
               </td>
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <div class="flex">
+                  <div class="ml-3">
+                    <p class="text-gray-900 whitespace-no-wrap table-headers">
+                      {{ $t("Serial") }}
+                    </p>
+                  </div>
+                </div>
+              </td>
+               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <div class="flex">
                   <div class="ml-3">
                     <p class="text-gray-900 whitespace-no-wrap table-headers">
@@ -106,6 +115,10 @@
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <p class="text-gray-900 whitespace-no-wrap table-headers"></p>
               </td>
+
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <p class="text-gray-900 whitespace-no-wrap table-headers"></p>
+              </td>
             </tr>
           </thead>
           <tbody v-for="(data, index) in purchasing" :key="index">
@@ -114,6 +127,9 @@
                 class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
               ></td>
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <div class="flex"></div>
+              </td>
+               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <div class="flex"></div>
               </td>
               <td
@@ -161,10 +177,22 @@
               <td
                 class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
               ></td>
+               <td
+                class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+              ></td>
             </tr>
             <tr v-for="(price, i) in data.QuoteParts" :key="i">
               <td></td>
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <div class="flex">
+                  <div class="ml-3">
+                    <p class="text-gray-900 whitespace-no-wrap">
+                      {{ price.SerialPart }}
+                    </p>
+                  </div>
+                </div>
+              </td>
+               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <div class="flex">
                   <div class="ml-3">
                     <p class="text-gray-900 whitespace-no-wrap">
@@ -228,15 +256,7 @@
                 <p v-else class="text-gray-900 whitespace-no-wrap">--</p>
               </td>
 
-              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                <p
-                  v-if="price.PartNO != null"
-                  class="text-gray-900 whitespace-no-wrap"
-                >
-                  {{ price.PartNO }}
-                </p>
-                <p v-else class="text-gray-900 whitespace-no-wrap">--</p>
-              </td>
+             
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <p
                   v-if="price.Vendor != null"
@@ -566,7 +586,7 @@
                             </div>
 
                             <!-- Deliver to -->
-                            <!-- <div class="group py-2 w-[100%]">
+                            <div class="group py-2 w-[100%]">
                               <label
                                 for="1"
                                 class="block flex flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
@@ -581,7 +601,7 @@
                                 placeholder="Request N.O:3281768"
                                 class="peer input-style p-[20px] h-10 w-full rounded-md px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
                               />
-                            </div> -->
+                            </div>
                             <!-- Date -->
                             <div class="group py-2 w-[100%]">
                               <label
@@ -647,7 +667,7 @@
         </table>
       </div>
 
-      <div class="mt-[20px]">
+      <div v-if="totalPages > 0" class="mt-[20px]">
         <pagination
           :total-pages="totalPages"
           :total="total"
