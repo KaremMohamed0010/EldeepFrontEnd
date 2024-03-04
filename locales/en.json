@@ -217,5 +217,6 @@
   "quantity" : "quantity",
   "price":"price",
   "part name":"part name",
-  "Serial" : "Serial"
+  "Serial" : "Serial",
+  "Please Fill All required Fields" : "Please Fill All required Fields"
 }

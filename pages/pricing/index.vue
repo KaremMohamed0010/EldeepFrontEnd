@@ -623,7 +623,7 @@
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <div class="flex"></div>
               </td>
-               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <div class="flex">
                   <div class="ml-3">
                     <p class="text-gray-900 whitespace-no-wrap table-headers">
@@ -669,7 +669,7 @@
                   {{ $t("Car Type") }}
                 </p>
               </td>
-               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <p class="text-gray-900 whitespace-no-wrap table-headers">
                   {{ $t("Brand") }}
                 </p>
@@ -833,7 +833,7 @@
                 </p>
                 <p v-else class="text-gray-900 whitespace-no-wrap">--</p>
               </td>
-               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <p
                   v-if="price.model != null"
                   class="text-gray-900 whitespace-no-wrap"
@@ -909,7 +909,11 @@
 
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <div class="relative">
-                  <input  class="border-select w-[114px] py-1 p-[12px] px-2 bg-white" v-model="pricee[index + i]" type="text">
+                  <input
+                    class="border-select w-[114px] py-1 p-[12px] px-2 bg-white"
+                    v-model="pricee[index + i]"
+                    type="text"
+                  />
                 </div>
               </td>
 
@@ -1146,35 +1150,54 @@ export default {
     },
     // save pricin index
     SavePricingRow(price, index) {
-      console.log(index);
-      const sameIndex = index;
-      if (sameIndex == index) {
-        const dataToSave = {
-          part_number: this.part_number[index],
-          vendor_id: this.vendor_id[index],
-          location_id: this.location_id[index],
-          pricing_group: this.pricing_group[index],
-          price: ((this.pricee[index] * this.pricing_group[index]) / 100 ),
-        };
-        this.$axios
-          .$post(`Pricing/UpdatePricingRequest/${price.Id}`, dataToSave)
-          .then((res) => {
-            if (res.status == 200) {
-              this.$toast.success(" Pricing Saved Successfully");
-              this.$axios.$post("/Pricing/GetPricingRequest").then((res) => {
-                this.request = res.TotalRequest;
-                this.pricing = res.quotes.data;
-                this.totalPages = res.quotes.meta.last_page;
-                this.perPage = res.quotes.meta.per_page;
-                this.total = res.quotes.meta.total;
-                this.loading = false;
-              });
-              this.vendor_id = [];
-              this.clearSavingData();
-            } else {
-              this.$toast.error(res.message);
-            }
-          });
+      console.log(this.part_number[index] , 'part')
+      if (
+        !this.part_number[index] ||
+        !this.vendor_id[index] ||
+        !this.location_id[index] ||
+        !this.pricing_group[index] ||
+        !this.pricee[index]
+      ) {
+        this.$toast.error(this.$t("Please Fill All required Fields"));
+        return;
+      }
+      else if (
+        this.part_number[index] &&
+        this.vendor_id[index] &&
+        this.location_id[index] &&
+        this.pricing_group[index] &&
+        this.pricee[index]
+      ) {
+        console.log(index);
+        const sameIndex = index;
+        if (sameIndex == index) {
+          const dataToSave = {
+            part_number: this.part_number[index],
+            vendor_id: this.vendor_id[index],
+            location_id: this.location_id[index],
+            pricing_group: this.pricing_group[index],
+            price: (this.pricee[index] * this.pricing_group[index]) / 100,
+          };
+          this.$axios
+            .$post(`Pricing/UpdatePricingRequest/${price.Id}`, dataToSave)
+            .then((res) => {
+              if (res.status == 200) {
+                this.$toast.success(" Pricing Saved Successfully");
+                this.$axios.$post("/Pricing/GetPricingRequest").then((res) => {
+                  this.request = res.TotalRequest;
+                  this.pricing = res.quotes.data;
+                  this.totalPages = res.quotes.meta.last_page;
+                  this.perPage = res.quotes.meta.per_page;
+                  this.total = res.quotes.meta.total;
+                  this.loading = false;
+                });
+                this.vendor_id = [];
+                this.clearSavingData();
+              } else {
+                this.$toast.error(res.message);
+              }
+            });
+        }
       }
     },
 

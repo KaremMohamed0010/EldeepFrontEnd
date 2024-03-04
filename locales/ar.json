@@ -231,5 +231,6 @@
   "quantity":"الكميه",
   "price":"السعر", 
   "part name" : "اسم الجزء",
-  "Serial" : "مسلسل"
+  "Serial" : "مسلسل",
+  "Please Fill All required Fields" : "يرجى تعبئة جميع الحقول المطلوبة"
 }

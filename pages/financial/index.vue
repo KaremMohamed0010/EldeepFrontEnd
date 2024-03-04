@@ -32,7 +32,7 @@
                   </div>
                 </div>
               </td>
-               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <div class="flex">
                   <div class="ml-3">
                     <p class="text-gray-900 whitespace-no-wrap table-headers">
@@ -46,7 +46,7 @@
                   {{ $t("Part Name") }}
                 </p>
               </td>
-               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <p class="text-gray-900 whitespace-no-wrap table-headers">
                   {{ $t("customer_name") }}
                 </p>
@@ -80,10 +80,16 @@
                   {{ $t("Model") }}
                 </p>
               </td>
+             
 
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <p class="text-gray-900 whitespace-no-wrap table-headers">
                   {{ $t("Pricing group") }}
+                </p>
+              </td>
+               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <p class="text-gray-900 whitespace-no-wrap table-headers">
+                  {{ $t("Price") }}
                 </p>
               </td>
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -123,7 +129,10 @@
               <td
                 class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
               ></td>
-               <td
+              <td
+                class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+              ></td>
+              <td
                 class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
               ></td>
               <td
@@ -188,7 +197,7 @@
                   {{ price.PartName }}
                 </p>
               </td>
-                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <p class="text-gray-900 whitespace-no-wrap">
                   {{ price.CustomerName }}
                 </p>
@@ -248,6 +257,15 @@
                   </select>
                 </div>
               </td>
+                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <p
+                  v-if="price.Price != null"
+                  class="text-gray-900 whitespace-no-wrap"
+                >
+                  {{ price.Price }}
+                </p>
+                <p v-else class="text-gray-900 whitespace-no-wrap">--</p>
+              </td>
 
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <p
@@ -304,7 +322,7 @@
                   :class="{
                     'cusror-disabled': loading,
                   }"
-                  @click="saveFinancial(price.Id)"
+                  @click="saveFinancial(price.Id , index)"
                   class="close-btn rounded-lg w-[100%] px-4 py-2 bg-gray-200 hover:bg-gray-300 duration-300"
                 >
                   {{ $t("save") }}
@@ -428,23 +446,23 @@ export default {
       this.page = page;
       this.currentPage = page;
     },
-    saveFinancial(id) {
+    saveFinancial(id , index) {
       let data = {
-        customer_id: this.customer_id[0],
-        pricing_group: this.pricing_group[0],
-        request_approve_status: this.approve[0],
+        customer_id: this.customer_id[index],
+        pricing_group: this.pricing_group[index],
+        request_approve_status: this.approve[index],
       };
       this.$axios.$post(`Financial/UpdateFinancial/${id}`, data).then((res) => {
         if (res.status == 200) {
           this.$toast.success("saved Successfully");
           this.$axios.$post("/Financial/GetFinancialRequest").then((res) => {
-          this.request = res.totalRequests;
-          this.financial = res.quotes.data;
-          this.totalPages = res.quotes.meta.last_page;
-          this.perPage = res.quotes.meta.per_page;
-          this.total = res.quotes.meta.total;
-          this.loading = false;
-         });
+            this.request = res.totalRequests;
+            this.financial = res.quotes.data;
+            this.totalPages = res.quotes.meta.last_page;
+            this.perPage = res.quotes.meta.per_page;
+            this.total = res.quotes.meta.total;
+            this.loading = false;
+          });
         }
       });
     },
