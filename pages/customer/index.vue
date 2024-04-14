@@ -490,6 +490,7 @@
                             <input
                               id="1"
                               type="text"
+                              @input="formatPlateNumber"
                               v-model="plate_number"
                               placeholder="ج ح ا ١٨٩"
                               class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
@@ -2139,14 +2140,37 @@ export default {
     }
     this.open = localStorage.getItem("open");
     // watch language
+
   },
   methods: {
+    plate_number() {
+      // Remove any existing spaces from the input plate number
+      let plateNumberWithoutSpace = this.plate_number.replace(/\s/g, "");
+      // Add space after every 3 characters
+      let formattedPlateNumber = plateNumberWithoutSpace.replace(/(.{3})/g, "$1 ");
+      // Update the formatted plate number
+      this.formattedPlateNumber = formattedPlateNumber.trim();
+    },
     // handle location select
     handleLocationSelect(selectedOption) {
       if (selectedOption.Id === 0) {
         // Call your function for adding a new location here
         this.addLocation();
       }
+    },
+    // plate number space
+    formatPlateNumber() {
+      // Remove any existing spaces from the input plate number
+      let plateNumberWithoutSpace = this.plate_number.replace(/\s/g, "");
+
+      // Add space after every 3 characters
+      let formattedPlateNumber = plateNumberWithoutSpace.replace(
+        /(.{3})/g,
+        "$1 "
+      );
+
+      // Update the formatted plate number
+      this.plate_number = formattedPlateNumber.trim(); // Remove leading/trailing spaces
     },
     handleMultiselectChange(selectedValues) {
       // Handle the selected values from the child component
@@ -2359,7 +2383,6 @@ export default {
       this.showInformation = true;
       this.showPayemnt = false;
       this.showVichels = false;
-
       this.emptyField = "";
       // show modal
       document.getElementById(`modal${id}`).classList.toggle("hidden");
@@ -2832,6 +2855,20 @@ export default {
       } else {
         this.disabledPayment = false;
       }
+    },
+    plate_number() {
+    console.log(this.plate_number , 'plate')
+      // Remove any existing spaces from the input plate number
+      let plateNumberWithoutSpace = this.plate_number.replace(/\s/g, "");
+
+      // Add space after every 3 characters
+      let formattedPlateNumber = plateNumberWithoutSpace.replace(
+        /(.{3})/g,
+        "$1 "
+      );
+
+      // Update the formatted plate number
+      this.plate_number = formattedPlateNumber.trim(); // Remove leading/trailing spaces
     },
     // email
     email: {

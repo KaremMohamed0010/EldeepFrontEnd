@@ -147,7 +147,34 @@
                               <!-- Employee Name and Employee Code -->
                               <div class="flex">
                                 <!-- Employee name -->
-
+                                <div class="group w-[50%]">
+                                  <label
+                                    for="1"
+                                    class="block flex flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                    >{{ $t("Part Name En") }}
+                                    <p class="required">*</p>
+                                    :
+                                  </label>
+                                  <input
+                                    id="1"
+                                    type="text"
+                                    v-model="part_name_en"
+                                    :class="{
+                                      'outline-error':
+                                        emptyField.includes('part_name_en'),
+                                    }"
+                                    placeholder="ABS"
+                                    class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                                  />
+                                  <p
+                                    :class="{ 'text-right': lang == 'ar' }"
+                                    v-if="emptyField.includes('part_name_en')"
+                                    class="error-message text-left"
+                                  >
+                                    {{ $t("Part Name En") }}
+                                    {{ $t("required") }}
+                                  </p>
+                                </div>
                                 <!-- register code -->
                                 <div class="group w-[50%]">
                                   <label
@@ -1050,6 +1077,40 @@
                                     <!-- Employee Name and Employee Code -->
                                     <div class="flex">
                                       <!-- Employee name -->
+                                      <div class="group w-[50%]">
+                                        <label
+                                          for="1"
+                                          class="block flex flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                          >{{ $t("Part Name En") }}
+                                          <p class="required">*</p>
+                                          :
+                                        </label>
+                                        <input
+                                          id="1"
+                                          type="text"
+                                          v-model="part_name_en"
+                                          :class="{
+                                            'outline-error':
+                                              emptyField.includes(
+                                                'part_name_en'
+                                              ),
+                                          }"
+                                          placeholder="ABS"
+                                          class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                                        />
+                                        <p
+                                          :class="{
+                                            'text-right': lang == 'ar',
+                                          }"
+                                          v-if="
+                                            emptyField.includes('part_name_en')
+                                          "
+                                          class="error-message text-left"
+                                        >
+                                          {{ $t("Part Name En") }}
+                                          {{ $t("required") }}
+                                        </p>
+                                      </div>
 
                                       <!-- register code -->
                                       <div class="group w-[50%]">
@@ -1788,6 +1849,7 @@ export default {
       // data
       model: null,
       part_name_ar: null,
+      part_name_en: null,
       part_number: null,
       vat_number: null,
       breakable: false,
@@ -1870,6 +1932,7 @@ export default {
     clearData() {
       (this.model = null),
         (this.part_name_ar = null),
+        (this.part_name_en = null),
         (this.part_number = null),
         (this.vat_number = null),
         (this.branch_id = null),
@@ -1902,6 +1965,7 @@ export default {
           this.dimensions = res.Part.Dimensions;
           this.alternatives = res.Replacements;
           this.part_name_ar = res.Part.PartNameAR;
+          this.part_name_en = res.Part.PartNameEN;
           if (res.Part.Breakable == 0) {
             this.breakable = false;
           } else if (res.Part.Breakable == 1) {
@@ -2072,7 +2136,7 @@ export default {
     },
     // post and add part
     postParts(status) {
-      const requiredFields = ["part_name_ar", "part_number"];
+      const requiredFields = ["part_name_ar", "part_number", "part_name_en"];
 
       const emptyFields = requiredFields.filter(
         (field) => this[field] === "" || this[field] === null
@@ -2093,6 +2157,7 @@ export default {
           let formdata = new FormData();
 
           formdata.append("part_name_ar", this.part_name_ar);
+          formdata.append("part_name_en", this.part_name_en);
           formdata.append("part_number", this.part_number);
           formdata.append("model", this.model);
           formdata.append("image", this.image);
@@ -2146,7 +2211,7 @@ export default {
     // edit part
     editParts() {
       // validation messages
-      const requiredFields = ["part_name_ar", "part_number"];
+      const requiredFields = ["part_name_ar", "part_number", "part_name_en"];
 
       const emptyFields = requiredFields.filter(
         (field) => this[field] === "" || this[field] == null
@@ -2163,6 +2228,7 @@ export default {
         let formdata = new FormData();
 
         formdata.append("part_name_ar", this.part_name_ar);
+        formdata.append("part_name_en", this.part_name_en);
         formdata.append("part_number", this.part_number);
         formdata.append("model", this.model);
         formdata.append("unit", this.unit);

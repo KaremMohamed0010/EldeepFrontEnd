@@ -32,7 +32,7 @@
                   </div>
                 </div>
               </td>
-               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <div class="flex">
                   <div class="ml-3">
                     <p class="text-gray-900 whitespace-no-wrap table-headers">
@@ -129,7 +129,7 @@
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <div class="flex"></div>
               </td>
-               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <div class="flex"></div>
               </td>
               <td
@@ -177,7 +177,7 @@
               <td
                 class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
               ></td>
-               <td
+              <td
                 class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
               ></td>
             </tr>
@@ -192,7 +192,7 @@
                   </div>
                 </div>
               </td>
-               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <div class="flex">
                   <div class="ml-3">
                     <p class="text-gray-900 whitespace-no-wrap">
@@ -256,7 +256,6 @@
                 <p v-else class="text-gray-900 whitespace-no-wrap">--</p>
               </td>
 
-             
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <p
                   v-if="price.Vendor != null"
@@ -427,6 +426,10 @@
                                 id="1"
                                 type="text"
                                 disabled
+                                :class="{
+                                  'outline-error':
+                                    emptyField.includes('Req_No'),
+                                }"
                                 v-model="Req_No"
                                 placeholder="Request N.O:3281768"
                                 class="peer input-style p-[20px] cursor-disabled bg-[#f3f0f0] cursor-not-allowed h-10 w-full rounded-md px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
@@ -463,6 +466,9 @@
                               </label>
                               <input
                                 id="1"
+                                :class="{
+                                  'outline-error': emptyField.includes('QTY'),
+                                }"
                                 type="text"
                                 v-model="QTY"
                                 placeholder="Request N.O:3281768"
@@ -537,6 +543,10 @@
                               </label>
                               <input
                                 id="1"
+                                :class="{
+                                  'outline-error':
+                                    emptyField.includes('picker'),
+                                }"
                                 type="text"
                                 v-model="picker"
                                 placeholder="123"
@@ -556,12 +566,43 @@
                                 id="1"
                                 type="text"
                                 v-model="Price"
+                                :class="{
+                                  'outline-error': emptyField.includes('Price'),
+                                }"
                                 placeholder="123"
                                 class="peer input-style p-[20px] h-10 w-full rounded-md px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
                               />
                             </div>
-                            <!-- Pricing group -->
                             <div class="group py-2 w-[100%]">
+                              <label
+                                for="1"
+                                class="block flex flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                                >{{ $t("Employe") }}
+                                <p class="required">*</p>
+                                :
+                              </label>
+                              <select
+                                v-model="employee_id"
+                                class="border-select w-full py-1 px-2 bg-white"
+                                name="whatever"
+                                :class="{
+                                  'outline-error':
+                                    emptyField.includes('employee_id'),
+                                }"
+                                id="frm-whatever"
+                              >
+                                <option
+                                  v-for="(employee, i) in employeeTable"
+                                  @click="deliverto(employee)"
+                                  :value="employee.UserId"
+                                  :key="i"
+                                >
+                                  {{ employee.UserName }}
+                                </option>
+                              </select>
+                            </div>
+                            <!-- Pricing group -->
+                            <!----   <div class="group py-2 w-[100%]">
                               <label
                                 for="1"
                                 class="block flex flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
@@ -583,7 +624,7 @@
                                 <option value="130">130</option>
                                 <option value="140">140</option>
                               </select>
-                            </div>
+                            </div>  -->
 
                             <!-- Deliver to -->
                             <div class="group py-2 w-[100%]">
@@ -594,13 +635,24 @@
                                 <p class="required">*</p>
                                 :
                               </label>
-                              <input
-                                id="1"
-                                type="text"
+                              <select
                                 v-model="deliver_to"
-                                placeholder="Request N.O:3281768"
-                                class="peer input-style p-[20px] h-10 w-full rounded-md px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
-                              />
+                                class="border-select w-full py-1 px-2 bg-white"
+                                name="whatever"
+                                :class="{
+                                  'outline-error':
+                                    emptyField.includes('deliver_to'),
+                                }"
+                                id="frm-whatever"
+                              >
+                                <option
+                                  v-for="(location, i) in locationss"
+                                  :key="i"
+                                  value="100"
+                                >
+                                  {{ location.area }}
+                                </option>
+                              </select>
                             </div>
                             <!-- Date -->
                             <div class="group py-2 w-[100%]">
@@ -716,6 +768,7 @@ export default {
       // data
       transmit_at: "",
       vendor_id: "",
+      employee_id: "",
       location_id: "",
       picker: "",
       deliver_to: "",
@@ -725,6 +778,8 @@ export default {
       QTY: "",
       Price: "",
       prcing_group: "",
+      employeeTable: [],
+      locationss: [],
     };
   },
   mounted() {
@@ -738,6 +793,11 @@ export default {
       this.total = res.quotes.meta.total;
       this.loading = false;
     });
+
+    this.$axios.$get("/Member/GetMemberRoles").then((res) => {
+      this.employeeTable = res.Member;
+    });
+
     // get all vendors
     this.$axios.$get("/Vendor/allVendor").then((res) => {
       this.vendorTable = res.Vendor;
@@ -748,6 +808,11 @@ export default {
 
     this.$axios.$get("/Location/GetAllLocationDropDownList").then((res) => {
       this.locations = res.Location;
+    });
+
+    // get all area location
+    this.$axios.$get("/Location/GetDeliverToLocation").then((res) => {
+      this.locationss = res.Location;
     });
     // tabs code
     this.lang = localStorage.getItem("lang");
@@ -762,6 +827,11 @@ export default {
   },
   created() {},
   methods: {
+    // deliver to pages
+    deliverto(employee) {
+      console.log(employee);
+      this.deliver_to = employee.LocationCity;
+    },
     // show more
     showMore(page) {
       this.page = page;
@@ -778,34 +848,59 @@ export default {
     },
     // save picker
     savePicker(id) {
-      let data = {
-        quotes_id: id,
-        price: this.Price,
-        delivery: this.deliver_to,
-        pick: this.picker,
-        location_id: this.location_id,
-        vendor_id: this.vendor_id,
-        due_date: this.date,
-        quantity: this.QTY,
-        transmition: this.transmit_at,
-        check: this.check,
-        req_no: this.Req_No,
-      };
-      this.$axios.$post("/Purchasing/AddQuotePurchasing", data).then((res) => {
-        if (res.status == 200) {
-          this.$toast.success("saved Successfully");
-          document.getElementById(`pick${id}`).classList.toggle("hidden");
-          this.removeData();
-          this.$axios.$post("/Purchasing/GetPurchasingRequest").then((res) => {
-            this.request = res.TotalRequest;
-            this.purchasing = res.quotes.data;
-            this.totalPages = res.quotes.meta.last_page;
-            this.perPage = res.quotes.meta.per_page;
-            this.total = res.quotes.meta.total;
-            this.loading = false;
+      const requiredFields = [
+        "Req_No",
+        "QTY",
+        "vendor_id",
+        "picker",
+        "location_id",
+        "Price",
+        "employee_id",
+        "deliver_to",
+      ];
+
+      const emptyFields = requiredFields.filter(
+        (field) => this[field] === "" || this[field] === null
+      );
+
+      if (emptyFields.length != 0) {
+        return emptyFields;
+      } else {
+        this.emptyField = emptyFields;
+        let data = {
+          quotes_id: id,
+          price: this.Price,
+          deliver_location: this.deliver_to,
+          pick: this.picker,
+          location_id: this.location_id,
+          vendor_id: this.vendor_id,
+          Employee_id: this.employee_id,
+          due_date: this.date,
+          quantity: this.QTY,
+          transmition: this.transmit_at,
+          check: this.check,
+          req_no: this.Req_No,
+        };
+        this.$axios
+          .$post("/Purchasing/AddQuotePurchasing", data)
+          .then((res) => {
+            if (res.status == 200) {
+              this.$toast.success("saved Successfully");
+              document.getElementById(`pick${id}`).classList.toggle("hidden");
+              this.removeData();
+              this.$axios
+                .$post("/Purchasing/GetPurchasingRequest")
+                .then((res) => {
+                  this.request = res.TotalRequest;
+                  this.purchasing = res.quotes.data;
+                  this.totalPages = res.quotes.meta.last_page;
+                  this.perPage = res.quotes.meta.per_page;
+                  this.total = res.quotes.meta.total;
+                  this.loading = false;
+                });
+            }
           });
-        }
-      });
+      }
     },
     // remove Data
     removeData() {

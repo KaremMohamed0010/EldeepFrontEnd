@@ -1172,7 +1172,7 @@ export default {
         const sameIndex = index;
         if (sameIndex == index) {
           const dataToSave = {
-            part_number: this.part_number[index],
+            part_id: this.part_number[index],
             vendor_id: this.vendor_id[index],
             location_id: this.location_id[index],
             pricing_group: this.pricing_group[index],
