@@ -2348,25 +2348,41 @@ export default {
       } else if (emptyFields.length == 0) {
         if (status == "add") {
           this.loading = true;
-          let formdata = new FormData();
 
-          formdata.append("vendor_name", this.vendor_name);
-          formdata.append("vendor_code", this.vendor_codee);
-          formdata.append("email", this.email);
-          formdata.append("mobile_number", this.phone);
-          formdata.append("other_mobile_number", this.mobile_number);
-          formdata.append("vat_number", this.vat_number);
-          formdata.append("ssn", this.ssn_number);
-          formdata.append("registration_code", this.registration_code);
-          formdata.append("credit_limit", this.credit_limit);
-          formdata.append("payment_term", this.payment_term);
-          formdata.append("is_active", this.active_vendor);
+          let data = {
+            vendor_name : this.vendor_name ,
+            vendor_code : this.vendor_codee,
+            email : this.email ,
+            mobile_number : this.phone,
+            other_mobile_number : this.mobile_number,
+            vat_number : this.vat_number ,
+            ssn : this.ssn_number ,
+            registration_code : this.registration_code,
+            credit_limit : this.credit_limit,
+            payment_term : this.payment_term,
+            is_active : this.active_vendor,
+            location_id: this.selectedLocations.map(value => value.Id)
+          }
 
-          this.selectedLocations.forEach((value, index) => {
-            formdata.append(`location_id[${index}]`, value.Id);
-          });
+          // let formdata = new FormData();
 
-          this.$axios.$post(`/Vendor/AddVendor`, formdata).then((res) => {
+          // formdata.append("vendor_name", this.vendor_name);
+          // formdata.append("vendor_code", this.vendor_codee);
+          // formdata.append("email", this.email);
+          // formdata.append("mobile_number", this.phone);
+          // formdata.append("other_mobile_number", this.mobile_number);
+          // formdata.append("vat_number", this.vat_number);
+          // formdata.append("ssn", this.ssn_number);
+          // formdata.append("registration_code", this.registration_code);
+          // formdata.append("credit_limit", this.credit_limit);
+          // formdata.append("payment_term", this.payment_term);
+          // formdata.append("is_active", this.active_vendor);
+
+          // this.selectedLocations.forEach((value, index) => {
+          //   formdata.append(`location_id[${index}]`, value.Id);
+          // });
+
+          this.$axios.$post(`/Vendor/AddVendor`, data).then((res) => {
             if (res.status == 200) {
               this.loading = false;
               this.$toast.success("Vendor Added Successfully");
@@ -2408,26 +2424,42 @@ export default {
         return;
       } else {
         this.loading = true;
-        let formdata = new FormData();
+        // let formdata = new FormData();
 
-        formdata.append("vendor_name", this.vendor_name);
-        formdata.append("vendor_code", this.vendor_codee);
-        formdata.append("email", this.email);
-        formdata.append("mobile_number", this.phone);
-        formdata.append("other_mobile_number", this.mobile_number);
-        formdata.append("vat_number", this.vat_number);
-        formdata.append("ssn", this.ssn_number);
-        formdata.append("registration_code", this.registration_code);
-        formdata.append("credit_limit", this.credit_limit);
-        formdata.append("payment_term", this.payment_term);
-        formdata.append("is_active", this.active_vendor);
+        // formdata.append("vendor_name", this.vendor_name);
+        // formdata.append("vendor_code", this.vendor_codee);
+        // formdata.append("email", this.email);
+        // formdata.append("mobile_number", this.phone);
+        // formdata.append("other_mobile_number", this.mobile_number);
+        // formdata.append("vat_number", this.vat_number);
+        // formdata.append("ssn", this.ssn_number);
+        // formdata.append("registration_code", this.registration_code);
+        // formdata.append("credit_limit", this.credit_limit);
+        // formdata.append("payment_term", this.payment_term);
+        // formdata.append("is_active", this.active_vendor);
 
-        this.selectedLocations.forEach((value, index) => {
-          formdata.append(`location_id[${index}]`, value.Id);
-        });
+        // this.selectedLocations.forEach((value, index) => {
+        //   formdata.append(`location_id[${index}]`, value.Id);
+        // });
+
+         let data = {
+            vendor_name : this.vendor_name ,
+            vendor_code : this.vendor_codee,
+            email : this.email ,
+            mobile_number : this.phone,
+            other_mobile_number : this.mobile_number,
+            vat_number : this.vat_number ,
+            ssn : this.ssn_number ,
+            registration_code : this.registration_code,
+            credit_limit : this.credit_limit,
+            payment_term : this.payment_term,
+            is_active : this.active_vendor,
+            location_id: this.selectedLocations.map(value => value.Id)
+          }
+
 
         this.$axios
-          .$post(`/Vendor/UpdateVendor/${this.id}`, formdata)
+          .$post(`/Vendor/UpdateVendor/${this.id}`, data)
           .then((res) => {
             if (res.status == 200) {
               this.loading = false;

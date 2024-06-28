@@ -2300,17 +2300,25 @@ export default {
         if (status == "add") {
         }
       }
+      let data = {
+        country : this.country_name,
+        city : this.city_name,
+        area : this.area,
+        street : this.street,
+        floor : this.floor,
+        building_number: this.building_number
+      }
 
-      let formdata = new FormData();
+      // let formdata = new FormData();
 
-      formdata.append("country", this.country_name);
-      formdata.append("city", this.city_name);
-      formdata.append("area", this.area);
-      formdata.append("street", this.street);
-      formdata.append("floor", this.floor);
-      formdata.append("bulding_number", this.building_number);
+      // formdata.append("country", this.country_name);
+      // formdata.append("city", this.city_name);
+      // formdata.append("area", this.area);
+      // formdata.append("street", this.street);
+      // formdata.append("floor", this.floor);
+      // formdata.append("bulding_number", this.building_number);
 
-      this.$axios.$post(`/Location/AddLocation`, formdata).then((res) => {
+      this.$axios.$post(`/Location/AddLocation`, data).then((res) => {
         if (res.status == 200) {
           document.getElementById(`addLocation`).classList.toggle("hidden");
           // this.loading = false;
@@ -2424,10 +2432,10 @@ export default {
             this.address = res.Customer.address;
           }
           if (res.Customer.snn == "null") {
-            this.national_id = null;
+            this.registration_code = null;
           }
           if (res.Customer.snn != "null") {
-            this.national_id = res.Customer.snn;
+            this.registration_code = res.Customer.snn;
           }
           if (res.Customer.vat_number == "null") {
             this.vat_number = null;
@@ -2648,39 +2656,60 @@ export default {
       } else if (emptyFields.length == 0) {
         if (status == "add") {
           this.loading = true;
-          let formdata = new FormData();
-
-          formdata.append("customer_name", this.customer_name);
-          formdata.append("customer_code", this.customer_code);
-
-          formdata.append("mobile_number", concatenatedPhoneNumber);
-          formdata.append("other_mobile_number", this.phone);
-          formdata.append("credit_limit", this.credit_limit);
-          formdata.append("payment_term", this.payment_term);
-          if (this.active_user == true) {
-            formdata.append("is_active", 1);
-          } else if (this.active_user == false) {
-            formdata.append("is_active", 0);
+          let data ={
+            customer_name : this.customer_name,
+            customer_code : this.customer_code,
+            mobile_number : parseInt(this.mobile_number),
+            other_mobile_number : parseInt(this.phone),
+            credit_limit : parseInt(this.credit_limit),
+            payment_term  : parseInt(this.payment_term),
+            active_user : this.active_user,
+            corporate : this.isCooperate,
+            address : this.address,
+            snn : parseInt(this.registration_code),
+            vat_number : this.vat_number,
+            registry_number : parseInt(this.register_number),
+            registration_code : parseInt(this.registration_code),
+            email : this.email,
+            plate_number : parseInt(this.plate_number),
+            location_id: this.selectedLocations.map(value => value.Id)
           }
-          if (this.isCooperate == true) {
-            formdata.append("corporate", 1);
-          }
-          if (this.isCooperate == false) {
-            formdata.append("corporate", 0);
-          }
-          formdata.append("address", this.address);
-          formdata.append("snn", this.national_id);
-          formdata.append("vat_number", this.vat_number);
-          formdata.append("registry_number", this.register_number);
-          formdata.append("registration_code", this.registration_code);
-          formdata.append("email", this.email);
-          formdata.append("plate_number", this.plate_number);
+          
+          //  this.selectedLocations.forEach((value, index) => {
+          //   // formdata.append(`location_id[${index}]`, value.Id);
+          //   const locationIds = this.selectedLocations.map(value => value.Id);
+          // });
+          // let formdata = new FormData();
 
-          this.selectedLocations.forEach((value, index) => {
-            formdata.append(`location_id[${index}]`, value.Id);
-          });
+          // formdata.append("customer_name", this.customer_name);
+          // formdata.append("customer_code", this.customer_code);
 
-          this.$axios.$post(`/Customer/AddCustomer`, formdata).then((res) => {
+          // formdata.append("mobile_number", this.mobile_number);
+          // formdata.append("other_mobile_number", this.phone);
+          // formdata.append("credit_limit", this.credit_limit);
+          // formdata.append("payment_term", this.payment_term);
+          // if (this.active_user == true) {
+          //   formdata.append("is_active", 1);
+          // } else if (this.active_user == false) {
+          //   formdata.append("is_active", 0);
+          // }
+          // if (this.isCooperate == true) {
+          //   formdata.append("corporate", 1);
+          // }
+          // if (this.isCooperate == false) {
+          //   formdata.append("corporate", 0);
+          // }
+          // formdata.append("address", this.address);
+          // formdata.append("snn", this.national_id);
+          // formdata.append("vat_number", this.vat_number);
+          // formdata.append("registry_number", this.register_number);
+          // formdata.append("registration_code", this.registration_code);
+          // formdata.append("email", this.email);
+          // formdata.append("plate_number", this.plate_number);
+
+         
+
+          this.$axios.$post(`/Customer/AddCustomer`, data).then((res) => {
             if (res.status == 200) {
               this.loading = false;
               this.$toast.success("Customer Added Successfully");
@@ -2726,39 +2755,57 @@ export default {
         return;
       } else {
         this.loading = true;
+         let data ={
+            customer_name : this.customer_name,
+            customer_code : this.customer_code,
+            mobile_number : parseInt(this.mobile_number),
+            other_mobile_number : parseInt(this.phone),
+            credit_limit : parseInt(this.credit_limit),
+            payment_term  : parseInt(this.payment_term),
+            active_user : this.active_user,
+            corporate : this.isCooperate,
+            address : this.address,
+            snn : parseInt(this.registration_code),
+            vat_number : this.vat_number,
+            registry_number : parseInt(this.register_number),
+            registration_code : parseInt(this.registration_code),
+            email : this.email,
+            plate_number : parseInt(this.plate_number),
+            location_id: this.selectedLocations.map(value => value.Id)
+          }
 
-        let formdata = new FormData();
+        // let formdata = new FormData();
 
-        formdata.append("customer_name", this.customer_name);
-        formdata.append("customer_code", this.customer_code);
-        formdata.append("mobile_number", this.mobile_number);
-        formdata.append("other_mobile_number", this.phone);
-        formdata.append("registration_code", this.registration_code);
-        formdata.append("credit_limit", this.credit_limit);
-        formdata.append("payment_term", this.payment_term);
-        formdata.append("plate_number", this.plate_number);
-        if (this.active_user == true) {
-          formdata.append("is_active", 1);
-        } else if (this.active_user == false) {
-          formdata.append("is_active", 0);
-        }
-        if (this.isCooperate == true) {
-          formdata.append("corporate", 1);
-        }
-        if (this.isCooperate == false) {
-          formdata.append("corporate", 0);
-        }
-        formdata.append("address", this.address);
-        formdata.append("snn", this.national_id);
-        formdata.append("vat_number", this.vat_number);
-        formdata.append("registry_number", this.register_number);
-        formdata.append("email", this.email);
-        this.selectedLocations.forEach((value, index) => {
-          formdata.append(`location_id[${index}]`, value.Id);
-        });
+        // formdata.append("customer_name", this.customer_name);
+        // formdata.append("customer_code", this.customer_code);
+        // formdata.append("mobile_number", this.mobile_number);
+        // formdata.append("other_mobile_number", this.phone);
+        // formdata.append("registration_code", this.registration_code);
+        // formdata.append("credit_limit", this.credit_limit);
+        // formdata.append("payment_term", this.payment_term);
+        // formdata.append("plate_number", this.plate_number);
+        // if (this.active_user == true) {
+        //   formdata.append("is_active", 1);
+        // } else if (this.active_user == false) {
+        //   formdata.append("is_active", 0);
+        // }
+        // if (this.isCooperate == true) {
+        //   formdata.append("corporate", 1);
+        // }
+        // if (this.isCooperate == false) {
+        //   formdata.append("corporate", 0);
+        // }
+        // formdata.append("address", this.address);
+        // formdata.append("snn", this.national_id);
+        // formdata.append("vat_number", this.vat_number);
+        // formdata.append("registry_number", this.register_number);
+        // formdata.append("email", this.email);
+        // this.selectedLocations.forEach((value, index) => {
+        //   formdata.append(`location_id[${index}]`, value.Id);
+        // });
 
         this.$axios
-          .$post(`/Customer/UpdateCustomer/${this.id}`, formdata)
+          .$post(`/Customer/UpdateCustomer/${this.id}`, data)
           .then((res) => {
             if (res.status == 200) {
               this.loading = false;

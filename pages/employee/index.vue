@@ -3238,16 +3238,25 @@ export default {
         return;
       }
 
-      let formdata = new FormData();
+       let data = {
+        country : this.country_name,
+        city : this.city_name,
+        area : this.area,
+        street : this.street,
+        floor : this.floor,
+        building_number: this.building_number
+      }
 
-      formdata.append("country", this.country_name);
-      formdata.append("city", this.city_name);
-      formdata.append("area", this.area);
-      formdata.append("street", this.street);
-      formdata.append("floor", this.floor);
-      formdata.append("bulding_number", this.building_number);
+      // let formdata = new FormData();
 
-      this.$axios.$post(`/Location/AddLocation`, formdata).then((res) => {
+      // formdata.append("country", this.country_name);
+      // formdata.append("city", this.city_name);
+      // formdata.append("area", this.area);
+      // formdata.append("street", this.street);
+      // formdata.append("floor", this.floor);
+      // formdata.append("bulding_number", this.building_number);
+
+      this.$axios.$post(`/Location/AddLocation`, data).then((res) => {
         if (res.status == 200) {
           document.getElementById(`addLocation`).classList.toggle("hidden");
           // this.loading = false;

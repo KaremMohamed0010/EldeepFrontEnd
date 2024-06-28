@@ -1697,33 +1697,45 @@ export default {
       } else if (emptyFields.length == 0) {
         if (status == "add") {
           this.loading = true;
-          let formdata = new FormData();
+          let data = {
+            country: this.country_name,
+            city: this.city_name,
+            area: this.area,
+            street: this.street,
+            floor: this.floor,
+            building_number: this.building_number,
+            customer_id: this.selectedCustomers.map(value => value.id),
+            vendor_id : this.selectedVendors.map(value => value.vendorId),
+            user_id : this.selectedEmployee.map(value => value.EmployeeId)
+          };
 
-          formdata.append("country", this.country_name);
-          formdata.append("city", this.city_name);
-          formdata.append("area", this.area);
-          formdata.append("street", this.street);
-          formdata.append("floor", this.floor);
-          formdata.append("bulding_number", this.building_number);
+          // let formdata = new FormData();
 
-          if (this.type == "customer") {
-            this.selectedCustomers.forEach((value, index) => {
-              formdata.append(`customer_id[${index}]`, value.id);
-            });
-          }
-          if (this.type == "vendor") {
-            this.selectedVendors.forEach((value, index) => {
-              formdata.append(`vendor_id[${index}]`, value.vendorId);
-            });
-          }
+          // formdata.append("country", this.country_name);
+          // formdata.append("city", this.city_name);
+          // formdata.append("area", this.area);
+          // formdata.append("street", this.street);
+          // formdata.append("floor", this.floor);
+          // formdata.append("bulding_number", this.building_number);
 
-          if (this.type == "employee") {
-            this.selectedEmployee.forEach((value, index) => {
-              formdata.append(`user_id[${index}]`, value.EmployeeId);
-            });
-          }
+          // if (this.type == "customer") {
+          //   this.selectedCustomers.forEach((value, index) => {
+          //     formdata.append(`customer_id[${index}]`, value.id);
+          //   });
+          // }
+          // if (this.type == "vendor") {
+          //   this.selectedVendors.forEach((value, index) => {
+          //     formdata.append(`vendor_id[${index}]`, value.vendorId);
+          //   });
+          // }
 
-          this.$axios.$post(`/Location/AddLocation`, formdata).then((res) => {
+          // if (this.type == "employee") {
+          //   this.selectedEmployee.forEach((value, index) => {
+          //     formdata.append(`user_id[${index}]`, value.EmployeeId);
+          //   });
+          // }
+
+          this.$axios.$post(`/Location/AddLocation`, data).then((res) => {
             if (res.status == 200) {
               this.loading = false;
               this.$toast.success("Location Added Successfully");

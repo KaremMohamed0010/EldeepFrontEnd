@@ -114,7 +114,7 @@
                     <!-- Employee Name and Employee Code -->
                     <div class="flex">
                       <!-- Employee name -->
-
+                    
                       <!-- register code -->
                       <div class="group w-[50%]">
                         <label
@@ -145,6 +145,36 @@
                         </p>
                       </div>
                     </div>
+
+                      <!-- Employee name -->
+                      <div class="group w-[50%] my-3">
+                        <label
+                          for="1"
+                          class="block flex flex text-left label-form w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+                          >{{ $t("Part Name En") }}
+                          <p class="required">*</p>
+                          :
+                        </label>
+                        <input
+                          id="1"
+                          type="text"
+                          v-model="part_name_en"
+                          :class="{
+                            'outline-error':
+                              emptyField.includes('part_name_en'),
+                          }"
+                          placeholder="ABS"
+                          class="peer input-style h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+                        />
+                        <p
+                          :class="{ 'text-right': lang == 'ar' }"
+                          v-if="emptyField.includes('part_name_en')"
+                          class="error-message text-left"
+                        >
+                          {{ $t("Part Name En") }}
+                          {{ $t("required") }}
+                        </p>
+                      </div>
 
                     <!-- Employee Group and Employee position -->
                     <div class="flex mt-[20px]">
@@ -626,7 +656,7 @@
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <div class="flex">
                   <div class="ml-3">
-                    <p class="text-gray-900 whitespace-no-wrap table-headers">
+                    <p class="text-gray-900 font-semibold text-lg whitespace-no-wrap table-headers">
                       {{ $t("Serial") }}
                     </p>
                   </div>
@@ -635,83 +665,83 @@
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <div class="flex">
                   <div class="ml-3">
-                    <p class="text-gray-900 whitespace-no-wrap table-headers">
+                    <p class="text-gray-900 font-semibold text-lg  whitespace-no-wrap table-headers">
                       {{ $t("Req N.O.") }}
                     </p>
                   </div>
                 </div>
               </td>
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                <p class="text-gray-900 whitespace-no-wrap table-headers">
+                <p class="text-gray-900 font-semibold text-lg  whitespace-no-wrap table-headers">
                   {{ $t("Part Name") }}
                 </p>
               </td>
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                <p class="text-gray-900 whitespace-no-wrap table-headers">
+                <p class="text-gray-900 font-semibold text-lg  whitespace-no-wrap table-headers">
                   {{ $t("Condition") }}
                 </p>
               </td>
 
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                <p class="text-gray-900 whitespace-no-wrap table-headers">
+                <p class="text-gray-900 font-semibold text-lg  whitespace-no-wrap table-headers">
                   {{ $t("QTY") }}
                 </p>
               </td>
 
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                <p class="text-gray-900 whitespace-no-wrap table-headers">
+                <p class="text-gray-900 font-semibold text-lg  whitespace-no-wrap table-headers">
                   {{ $t("Vin Car") }}
                 </p>
               </td>
 
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                <p class="text-gray-900 whitespace-no-wrap table-headers">
+                <p class="text-gray-900 font-semibold text-lg  whitespace-no-wrap table-headers">
                   {{ $t("Car Type") }}
                 </p>
               </td>
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                <p class="text-gray-900 whitespace-no-wrap table-headers">
+                <p class="text-gray-900 font-semibold text-lg  whitespace-no-wrap table-headers">
                   {{ $t("Brand") }}
                 </p>
               </td>
 
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                <p class="text-gray-900 whitespace-no-wrap table-headers">
+                <p class="text-gray-900 font-semibold text-lg  whitespace-no-wrap table-headers">
                   {{ $t("Model") }}
                 </p>
               </td>
 
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                <p class="text-gray-900 whitespace-no-wrap table-headers">
+                <p class="text-gray-900 font-semibold text-lg  whitespace-no-wrap table-headers">
                   {{ $t("Part N.O.") }}
                 </p>
               </td>
 
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                <p class="text-gray-900 whitespace-no-wrap table-headers">
+                <p class="text-gray-900 font-semibold text-lg  whitespace-no-wrap table-headers">
                   {{ $t("Vendor") }}
                 </p>
               </td>
 
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                <p class="text-gray-900 whitespace-no-wrap table-headers">
+                <p class="text-gray-900 font-semibold text-lg  whitespace-no-wrap table-headers">
                   {{ $t("Location") }}
                 </p>
               </td>
 
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                <p class="text-gray-900 whitespace-no-wrap table-headers">
+                <p class="text-gray-900 font-semibold text-lg  whitespace-no-wrap table-headers">
                   {{ $t("Pricing group") }}
                 </p>
               </td>
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                <p class="text-gray-900 whitespace-no-wrap table-headers">
+                <p class="text-gray-900 font-semibold text-lg  whitespace-no-wrap table-headers">
                   {{ $t("Price") }}
                 </p>
               </td>
 
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                <p class="text-gray-900 whitespace-no-wrap table-headers"></p>
+                <p class="text-gray-900 font-semibold text-lg  whitespace-no-wrap table-headers"></p>
               </td>
             </tr>
           </thead>
@@ -774,7 +804,9 @@
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <div class="flex">
                   <div class="ml-3">
-                    <p class="text-gray-900 whitespace-no-wrap">
+                    <p
+                      class="text-gray-900 font-semibold text-lg whitespace-no-wrap"
+                    >
                       {{ price.SerialPart }}
                     </p>
                   </div>
@@ -783,24 +815,32 @@
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <div class="flex">
                   <div class="ml-3">
-                    <p class="text-gray-900 whitespace-no-wrap">
+                    <p
+                      class="text-gray-900 font-semibold text-lg whitespace-no-wrap"
+                    >
                       {{ price.Req_No }}
                     </p>
                   </div>
                 </div>
               </td>
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                <p class="text-gray-900 whitespace-no-wrap">
+                <p
+                  class="text-gray-900 font-semibold text-lg whitespace-no-wrap"
+                >
                   {{ price.PartName }}
                 </p>
               </td>
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                <p class="text-gray-900 whitespace-no-wrap">
+                <p
+                  class="text-gray-900 font-semibold text-lg whitespace-no-wrap"
+                >
                   {{ price.Condition }}
                 </p>
               </td>
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                <p class="text-gray-900 whitespace-no-wrap">
+                <p
+                  class="text-gray-900 font-semibold text-lg whitespace-no-wrap"
+                >
                   {{ price.QTY }}
                 </p>
               </td>
@@ -808,7 +848,7 @@
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <p
                   v-if="price.VinNumber != null"
-                  class="text-gray-900 whitespace-no-wrap"
+                  class="text-gray-900 font-semibold text-lg whitespace-no-wrap"
                 >
                   {{ price.VinNumber }}
                 </p>
@@ -817,7 +857,7 @@
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <p
                   v-if="price.CarType != null"
-                  class="text-gray-900 whitespace-no-wrap"
+                  class="text-gray-900 font-semibold text-lg whitespace-no-wrap"
                 >
                   {{ price.CarType }}
                 </p>
@@ -827,7 +867,7 @@
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <p
                   v-if="price.brand != null"
-                  class="text-gray-900 whitespace-no-wrap"
+                  class="text-gray-900 font-semibold text-lg whitespace-no-wrap"
                 >
                   {{ price.brand }}
                 </p>
@@ -836,7 +876,7 @@
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <p
                   v-if="price.model != null"
-                  class="text-gray-900 whitespace-no-wrap"
+                  class="text-gray-900 font-semibold text-lg whitespace-no-wrap"
                 >
                   {{ price.model }}
                 </p>
@@ -1150,7 +1190,7 @@ export default {
     },
     // save pricin index
     SavePricingRow(price, index) {
-      console.log(this.part_number[index] , 'part')
+      console.log(this.part_number[index], "part");
       if (
         !this.part_number[index] ||
         !this.vendor_id[index] ||
@@ -1160,8 +1200,7 @@ export default {
       ) {
         this.$toast.error(this.$t("Please Fill All required Fields"));
         return;
-      }
-      else if (
+      } else if (
         this.part_number[index] &&
         this.vendor_id[index] &&
         this.location_id[index] &&
